@@ -14,14 +14,14 @@ namespace WebSite
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            int siteId = -1; // TODO;
+            //int siteId = -1; // TODO;
 
-            DependencyManager.RouteManager.GetAllRoutes(siteId).ForEach(
-                x => routes.MapRoute(
-                    name:x.Name,
-                    url: x.Url,
-                    defaults: new { Controller = x.Controller, action = x.Action }
-                    ));
+            //DependencyManager.RouteManager.GetAllRoutes(siteId).ForEach(
+            //    x => routes.MapRoute(
+            //        name:x.Name,
+            //        url: x.Url,
+            //        defaults: new { Controller = x.Controller, action = x.Action }
+            //        ));
 
             routes.MapRoute(
                 name: "Default",

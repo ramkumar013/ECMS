@@ -1,4 +1,4 @@
-J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.csprojResolveAssemblyReference.cache
+J:\MyProjects\ecms\WebSite\bin\App_Data\1\urls.json
 J:\MyProjects\ecms\WebSite\bin\WebSite.dll
 J:\MyProjects\ecms\WebSite\bin\WebSite.pdb
 J:\MyProjects\ecms\WebSite\bin\Antlr3.Runtime.dll
@@ -9,6 +9,8 @@ J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OAuth.dll
 J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OpenId.dll
 J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OpenId.RelyingParty.dll
 J:\MyProjects\ecms\WebSite\bin\ECMS.Core.dll
+J:\MyProjects\ecms\WebSite\bin\ECMS.HttpModules.dll
+J:\MyProjects\ecms\WebSite\bin\ECMS.Services.dll
 J:\MyProjects\ecms\WebSite\bin\EntityFramework.dll
 J:\MyProjects\ecms\WebSite\bin\Microsoft.Practices.ServiceLocation.dll
 J:\MyProjects\ecms\WebSite\bin\Microsoft.Web.Infrastructure.dll
@@ -29,7 +31,11 @@ J:\MyProjects\ecms\WebSite\bin\WebActivator.dll
 J:\MyProjects\ecms\WebSite\bin\WebGrease.dll
 J:\MyProjects\ecms\WebSite\bin\WebMatrix.Data.dll
 J:\MyProjects\ecms\WebSite\bin\WebMatrix.WebData.dll
+J:\MyProjects\ecms\WebSite\bin\NLog.Interface.dll
+J:\MyProjects\ecms\WebSite\bin\NLog.dll
 J:\MyProjects\ecms\WebSite\bin\ECMS.Core.pdb
+J:\MyProjects\ecms\WebSite\bin\ECMS.Services.pdb
+J:\MyProjects\ecms\WebSite\bin\ECMS.HttpModules.pdb
 J:\MyProjects\ecms\WebSite\bin\Microsoft.Practices.ServiceLocation.pdb
 J:\MyProjects\ecms\WebSite\bin\Microsoft.Practices.ServiceLocation.xml
 J:\MyProjects\ecms\WebSite\bin\Newtonsoft.Json.xml
@@ -54,9 +60,8 @@ J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OAuth.Consumer.xml
 J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OAuth.xml
 J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OpenId.xml
 J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.dll
-J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.pdb
-J:\MyProjects\ecms\WebSite\bin\NLog.Interface.dll
-J:\MyProjects\ecms\WebSite\bin\NLog.dll
 J:\MyProjects\ecms\WebSite\bin\NLog.Interface.xml
 J:\MyProjects\ecms\WebSite\bin\NLog.xml
+J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.csprojResolveAssemblyReference.cache
+J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.dll
+J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.pdb

@@ -15,5 +15,7 @@ namespace ECMS.Core
 
         public static ILogger Logger { get; set; }
 
+        public static ICachingService CachingService { get; set; }
+
     }
 }

@@ -7,8 +7,8 @@
     <ProjectGuid>{04424668-44A0-4C98-8D26-32A87DEA42FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ECMS.URLRewriter</RootNamespace>
-    <AssemblyName>ECMS.URLRewriter</AssemblyName>
+    <RootNamespace>ECMS.HttpModules</RootNamespace>
+    <AssemblyName>ECMS.HttpModules</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

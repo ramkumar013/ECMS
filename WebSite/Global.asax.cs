@@ -6,7 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-
+using ECMS.Core;
+using ECMS.Services;
 namespace WebSite
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -23,6 +24,10 @@ namespace WebSite
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            DependencyManager.URLRepository = new ValidUrlFileRepository();
+            DependencyManager.CachingService = new InProcCachingService();
+            
         }
     }
 }

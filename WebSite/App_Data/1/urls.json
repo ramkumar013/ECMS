@@ -1,0 +1,23 @@
+﻿{
+	"url": {
+        "friendlyurl": "/",
+        "View": "/flights/home",
+        "Active": "True",
+        "Indexing": "True",
+        "StatusCode": 200
+    },
+    "url": {
+        "friendlyurl": "/flights/cheap-flights-to-new-york-city",
+        "View": "/flights/destination-city",
+        "Active": "True",
+        "Indexing": "True",
+        "StatusCode": 200
+    },
+	 "url": {
+        "friendlyurl": "/flights/cheap-flights-to-las-vegas",
+        "View": "/flights/destination-city",
+        "Active": "True",
+        "Indexing": "True",
+        "StatusCode": 200
+    }
+}

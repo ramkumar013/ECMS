@@ -14,7 +14,7 @@ namespace ECMS.HttpModules
         
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Init(HttpApplication context)
@@ -25,28 +25,30 @@ namespace ECMS.HttpModules
         void context_BeginRequest(object sender, EventArgs e)
         {
             string url = string.Empty;
-            int siteId=-1;
+            int siteId=1; // TODO : Remove HardCoding
+            
             try
             {
-                url = HttpContext.Current.Request.Url.AbsolutePath;
+                HttpContext context = HttpContext.Current;
+                url = context.Request.Url.AbsolutePath;
                 ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url);
                 if (validUrl != null)
                 {
-                    HttpContext.Current.Items.Add("validUrl",validUrl);
+                    context.Items.Add("validUrl", validUrl);
                     switch (validUrl.StatusCode)
                     {
                         case 200:
-                            //TODO:
+                            context.RewritePath("/Template/Compose");
                             break;
                         case 301:
-                            //TODO:
+                            throw new NotImplementedException();
                             break;
                         case 302:
-                            //TODO:
+                            throw new NotImplementedException();
                             break;
                         case 404:                            
                         default:
-                            //TODO:
+                            throw new NotImplementedException();
                             break;
                     }
                 }
@@ -56,7 +58,6 @@ namespace ECMS.HttpModules
                 throw ex;
             }
 
-            throw new NotImplementedException();
         }
     }
 }

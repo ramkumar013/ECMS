@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.HttpModules", "ECMS.UR
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{73B71608-CBB9-4B17-971B-879579B93943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.ServicesTests", "ECMS.ServicesTests\ECMS.ServicesTests.csproj", "{9F40BB3D-B451-4472-B257-E2917EC2CBBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,11 +41,16 @@ Global
 		{04424668-44A0-4C98-8D26-32A87DEA42FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04424668-44A0-4C98-8D26-32A87DEA42FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04424668-44A0-4C98-8D26-32A87DEA42FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F40BB3D-B451-4472-B257-E2917EC2CBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F40BB3D-B451-4472-B257-E2917EC2CBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F40BB3D-B451-4472-B257-E2917EC2CBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F40BB3D-B451-4472-B257-E2917EC2CBBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A5B93315-7BE2-4000-AA13-F988D17AD484} = {73B71608-CBB9-4B17-971B-879579B93943}
+		{9F40BB3D-B451-4472-B257-E2917EC2CBBE} = {73B71608-CBB9-4B17-971B-879579B93943}
 	EndGlobalSection
 EndGlobal

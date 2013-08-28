@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ECMS.Core.Interfaces
 {
-    interface ICachingService
+    public interface ICachingService
     {
+        T Get<T>(string key_);
+        void Set<T>(string key_, T value_);
     }
 }

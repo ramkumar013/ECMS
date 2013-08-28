@@ -1,7 +1,5 @@
-J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.URLRewriter.dll
-J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.URLRewriter.pdb
-J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.URLRewriter.dll
-J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.URLRewriter.pdb
+J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.HttpModules.dll
+J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.HttpModules.pdb
 J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.Core.dll
 J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\NLog.Interface.dll
 J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\NLog.dll
@@ -9,3 +7,5 @@ J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.Core.pdb
 J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\NLog.Interface.xml
 J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\NLog.xml
 J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.HttpModules.csprojResolveAssemblyReference.cache
+J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.HttpModules.dll
+J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.HttpModules.pdb

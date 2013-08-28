@@ -242,7 +242,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="App_Data\urls.json" />
+    <Content Include="App_Data\1\urls.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -310,6 +312,14 @@
     <ProjectReference Include="..\ECMS.Core\ECMS.Core.csproj">
       <Project>{badb8a53-b156-4ea0-857f-649ece87efd1}</Project>
       <Name>ECMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ECMS.Services\ECMS.Services.csproj">
+      <Project>{34a3c906-5c96-4356-83a4-c73fa7c05727}</Project>
+      <Name>ECMS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ECMS.URLRewriter\ECMS.HttpModules.csproj">
+      <Project>{04424668-44a0-4c98-8d26-32a87dea42fa}</Project>
+      <Name>ECMS.HttpModules</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

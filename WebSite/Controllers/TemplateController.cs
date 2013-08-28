@@ -20,6 +20,5 @@ namespace WebSite.Controllers
         {
             return View();
         }
-
     }
 }

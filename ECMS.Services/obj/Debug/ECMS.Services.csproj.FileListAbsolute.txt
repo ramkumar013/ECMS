@@ -2,3 +2,10 @@ J:\MyProjects\ecms\ECMS.Services\bin\Debug\ECMS.Services.dll
 J:\MyProjects\ecms\ECMS.Services\bin\Debug\ECMS.Services.pdb
 J:\MyProjects\ecms\ECMS.Services\obj\Debug\ECMS.Services.dll
 J:\MyProjects\ecms\ECMS.Services\obj\Debug\ECMS.Services.pdb
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\ECMS.Core.dll
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\NLog.dll
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\NLog.Interface.dll
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\ECMS.Core.pdb
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\NLog.xml
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\NLog.Interface.xml
+J:\MyProjects\ecms\ECMS.Services\obj\Debug\ECMS.Services.csprojResolveAssemblyReference.cache

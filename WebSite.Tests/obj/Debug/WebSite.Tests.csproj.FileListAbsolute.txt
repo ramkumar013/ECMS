@@ -55,3 +55,7 @@ J:\MyProjects\ecms\WebSite.Tests\bin\Debug\DotNetOpenAuth.OpenId.RelyingParty.xm
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\DotNetOpenAuth.OpenId.xml
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.dll
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.pdb
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.Interface.dll
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.dll
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.Interface.xml
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.xml

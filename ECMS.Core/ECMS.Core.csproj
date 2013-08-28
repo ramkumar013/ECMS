@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Interface">
+      <HintPath>..\packages\NLog.Interface.1.0.0\lib\net40\NLog.Interface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -49,12 +55,13 @@
     <Compile Include="Entities\ValidUrl.cs" />
     <Compile Include="Entities\AppRoute.cs" />
     <Compile Include="Interfaces\ICachingService.cs" />
-    <Compile Include="Interfaces\ILoggingService.cs" />
     <Compile Include="Interfaces\IRouteManager.cs" />
     <Compile Include="Interfaces\IValidURLRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

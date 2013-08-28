@@ -56,3 +56,7 @@ J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OpenId.xml
 J:\MyProjects\ecms\WebSite\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.dll
 J:\MyProjects\ecms\WebSite\obj\Debug\WebSite.pdb
+J:\MyProjects\ecms\WebSite\bin\NLog.Interface.dll
+J:\MyProjects\ecms\WebSite\bin\NLog.dll
+J:\MyProjects\ecms\WebSite\bin\NLog.Interface.xml
+J:\MyProjects\ecms\WebSite\bin\NLog.xml

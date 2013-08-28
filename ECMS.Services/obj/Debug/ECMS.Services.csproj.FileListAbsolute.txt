@@ -1,0 +1,4 @@
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\ECMS.Services.dll
+J:\MyProjects\ecms\ECMS.Services\bin\Debug\ECMS.Services.pdb
+J:\MyProjects\ecms\ECMS.Services\obj\Debug\ECMS.Services.dll
+J:\MyProjects\ecms\ECMS.Services\obj\Debug\ECMS.Services.pdb

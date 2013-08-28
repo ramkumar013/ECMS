@@ -1,0 +1,4 @@
+J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.URLRewriter.dll
+J:\MyProjects\ecms\ECMS.URLRewriter\bin\Debug\ECMS.URLRewriter.pdb
+J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.URLRewriter.dll
+J:\MyProjects\ecms\ECMS.URLRewriter\obj\Debug\ECMS.URLRewriter.pdb

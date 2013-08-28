@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECMS.HttpModules.URLRewriter
+namespace ECMS.Core.Interfaces
 {
-    public class Class1
+    interface ICachingService
     {
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ECMS.Core
+namespace ECMS.Core.Entities
 {
     public class AppRoute
     {

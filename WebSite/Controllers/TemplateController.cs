@@ -6,12 +6,17 @@ using System.Web.Mvc;
 
 namespace WebSite.Controllers
 {
-    public class PageController : Controller
+    public class TemplateController : Controller
     {
         //
         // GET: /Content/
 
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Compose()
         {
             return View();
         }

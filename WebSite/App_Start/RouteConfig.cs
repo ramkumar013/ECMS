@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ECMS.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,15 @@ namespace WebSite
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            int siteId = -1; // TODO;
+
+            DependencyManager.RouteManager.GetAllRoutes(siteId).ForEach(
+                x => routes.MapRoute(
+                    name:x.Name,
+                    url: x.Url,
+                    defaults: new { Controller = x.Controller, action = x.Action }
+                    ));
 
             routes.MapRoute(
                 name: "Default",

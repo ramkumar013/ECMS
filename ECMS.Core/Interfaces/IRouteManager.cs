@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace ECMS.Core
+namespace ECMS.Core.Interfaces
 {
-    interface IRouteManager
+    public interface IRouteManager
     {
-        List<Route> GetAllRoutes(int siteId_);
+        List<AppRoute> GetAllRoutes(int siteId_);
     }
 }

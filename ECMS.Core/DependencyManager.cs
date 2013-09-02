@@ -17,5 +17,7 @@ namespace ECMS.Core
 
         public static ICachingService CachingService { get; set; }
 
+        public static IContentRepository ContentRepository { get; set; }
+
     }
 }

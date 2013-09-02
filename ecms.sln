@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite", "WebSite\WebSite.csproj", "{71A8EAE8-66E2-4E5C-86C9-7C6C34FC6FB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebSite\WebApp.csproj", "{71A8EAE8-66E2-4E5C-86C9-7C6C34FC6FB6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite.Tests", "WebSite.Tests\WebSite.Tests.csproj", "{A5B93315-7BE2-4000-AA13-F988D17AD484}"
 EndProject

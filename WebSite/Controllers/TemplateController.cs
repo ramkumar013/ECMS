@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebSite.App_Code;
 
 namespace WebSite.Controllers
 {
-    public class TemplateController : Controller
+    public class TemplateController : CMSBaseController
     {
         //
         // GET: /Content/
@@ -18,7 +19,7 @@ namespace WebSite.Controllers
 
         public ActionResult Compose()
         {
-            return View();
+            return View(this.CurrentUrl.View);
         }
     }
 }

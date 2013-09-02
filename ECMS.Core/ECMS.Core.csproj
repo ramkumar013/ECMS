@@ -52,9 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
+    <Compile Include="Entities\ContentBase.cs" />
     <Compile Include="Entities\ValidUrl.cs" />
     <Compile Include="Entities\AppRoute.cs" />
     <Compile Include="Interfaces\ICachingService.cs" />
+    <Compile Include="Interfaces\IContentRepository.cs" />
     <Compile Include="Interfaces\IRouteManager.cs" />
     <Compile Include="Interfaces\IValidURLRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

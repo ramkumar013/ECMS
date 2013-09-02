@@ -102,9 +102,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebSite\WebSite.csproj">
+    <ProjectReference Include="..\WebSite\WebApp.csproj">
       <Project>{71A8EAE8-66E2-4E5C-86C9-7C6C34FC6FB6}</Project>
-      <Name>WebSite</Name>
+      <Name>WebApp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

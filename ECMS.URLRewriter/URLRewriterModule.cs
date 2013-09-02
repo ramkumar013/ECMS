@@ -30,6 +30,10 @@ namespace ECMS.HttpModules
             try
             {
                 HttpContext context = HttpContext.Current;
+                if (!IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
+                {
+                    return;
+                }
                 url = context.Request.Url.AbsolutePath;
                 ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url);
                 if (validUrl != null)
@@ -58,6 +62,11 @@ namespace ECMS.HttpModules
                 throw ex;
             }
 
+        }
+
+        private bool IsValidUrlForRewrite(HttpContextBase httpContext)
+        {
+            throw new NotImplementedException();
         }
     }
 }

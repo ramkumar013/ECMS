@@ -13,7 +13,6 @@ J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Web.Razor.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Web.WebPages.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Web.WebPages.Razor.dll
-J:\MyProjects\ecms\WebSite.Tests\bin\Debug\WebSite.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\Microsoft.Practices.ServiceLocation.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\EntityFramework.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Web.Optimization.dll
@@ -32,7 +31,6 @@ J:\MyProjects\ecms\WebSite.Tests\bin\Debug\DotNetOpenAuth.OpenId.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.Interface.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\Antlr3.Runtime.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.dll
-J:\MyProjects\ecms\WebSite.Tests\bin\Debug\WebSite.pdb
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\Newtonsoft.Json.xml
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Net.Http.Formatting.xml
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\System.Web.Helpers.xml
@@ -62,3 +60,5 @@ J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.xml
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.csprojResolveAssemblyReference.cache
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.dll
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.pdb
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\WebApp.dll
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\WebApp.pdb

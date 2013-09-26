@@ -6,4 +6,3 @@ J:\MyProjects\ecms\ECMS.Core\bin\Debug\NLog.xml
 J:\MyProjects\ecms\ECMS.Core\bin\Debug\NLog.Interface.xml
 J:\MyProjects\ecms\ECMS.Core\obj\Debug\ECMS.Core.dll
 J:\MyProjects\ecms\ECMS.Core\obj\Debug\ECMS.Core.pdb
-J:\MyProjects\ecms\ECMS.Core\obj\Debug\ECMS.Core.csprojResolveAssemblyReference.cache

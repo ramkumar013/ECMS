@@ -302,6 +302,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\1\home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\admin\" />

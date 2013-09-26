@@ -19,7 +19,7 @@ namespace WebSite.Controllers
 
         public ActionResult Compose()
         {
-            return View(this.CurrentUrl.View);
+            return View("~/Views/"+this.CurrentUrl.SiteId  + this.CurrentUrl.View);
         }
     }
 }

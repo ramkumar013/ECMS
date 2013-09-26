@@ -14,5 +14,6 @@ namespace ECMS.Core.Entities
         public bool Active { get; set; }
         public DateTime LastModified { get; set; }
         public int StatusCode { get; set; }
+        public int SiteId { get; set; }
     }
 }

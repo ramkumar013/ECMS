@@ -36,6 +36,7 @@ namespace ECMS.Services
                 dict = LoadFromDisk(siteId_);
                 DependencyManager.CachingService.Set<Dictionary<string, ValidUrl>>(siteId_.ToString(), dict);
             }
+
             return dict[friendlyurl_];
         }
 

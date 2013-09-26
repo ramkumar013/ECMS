@@ -38,11 +38,12 @@ namespace ECMS.HttpModules
                 ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url);
                 if (validUrl != null)
                 {
+                    validUrl.SiteId = siteId;
                     context.Items.Add("validUrl", validUrl);
                     switch (validUrl.StatusCode)
                     {
                         case 200:
-                            context.RewritePath("/Template/Compose");
+                            context.RewritePath("/Template/Compose"); // TODO: Remove HardCoding
                             break;
                         case 301:
                             throw new NotImplementedException();

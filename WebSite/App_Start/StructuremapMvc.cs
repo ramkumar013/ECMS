@@ -20,9 +20,10 @@ using System.Web.Mvc;
 using StructureMap;
 using WebSite.DependencyResolution;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(WebSite.App_Start.StructuremapMvc), "Start")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(WebApp.App_Start.StructuremapMvc), "Start")]
 
-namespace WebSite.App_Start {
+namespace WebApp.App_Start
+{
     public static class StructuremapMvc {
         public static void Start() {
 			IContainer container = IoC.Initialize();

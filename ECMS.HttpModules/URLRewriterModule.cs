@@ -30,7 +30,7 @@ namespace ECMS.HttpModules
             try
             {
                 HttpContext context = HttpContext.Current;
-                if (!IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
+                if (!Utility.IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {
                     return;
                 }
@@ -61,12 +61,6 @@ namespace ECMS.HttpModules
             {
                 throw ex;
             }
-
-        }
-
-        private bool IsValidUrlForRewrite(HttpContextBase httpContext)
-        {
-            throw new NotImplementedException();
         }
     }
 }

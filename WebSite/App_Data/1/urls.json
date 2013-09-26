@@ -1,7 +1,7 @@
 ﻿{
 	"url": {
         "friendlyurl": "/",
-        "View": "/flights/home",
+        "View": "/home",
         "Active": "True",
         "Indexing": "True",
         "StatusCode": 200

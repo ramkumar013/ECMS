@@ -15,5 +15,6 @@ namespace ECMS.Core.Entities
         public DateTime LastModified { get; set; }
         public int StatusCode { get; set; }
         public int SiteId { get; set; }
+        public Guid Id { get; set; }
     }
 }

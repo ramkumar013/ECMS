@@ -64,7 +64,7 @@ namespace ECMS.Services
                         {
                             switch (jreader.Value.ToString())
                             {
-                                case "friendlyurl":
+                                case "FriendlyUrl":
                                     jreader.Read();
                                     temp.FriendlyUrl = jreader.Value.ToString();
                                     break;
@@ -81,6 +81,10 @@ namespace ECMS.Services
                                     temp.Index = Convert.ToBoolean(jreader.Value.ToString());
                                     break;
                                 case "StatusCode":
+                                    jreader.Read();
+                                    temp.StatusCode = Convert.ToInt32(jreader.Value.ToString());
+                                    break;
+                                case "Id":
                                     jreader.Read();
                                     temp.StatusCode = Convert.ToInt32(jreader.Value.ToString());
                                     break;

@@ -3,23 +3,13 @@
     ViewBag.Title = "home";    
 }
 
-<h2>Welcome Home !!! @Model.FirstName @Model.LastName</h2>
-<h2>Flat no: @Model.FlatNo</h2>
-
-<h2>Welcome Home !!! @Model.FirstName1 @Model.LastName1</h2>
-<h2>Flat no: @Model.FlatNo1</h2>
-
-<h2>Welcome Home !!! @Model.FirstName2 @Model.LastName2</h2>
-<h2>Flat no: @Model.FlatNo2</h2>
-
-<h2>Welcome Home !!! @Model.FirstName3 @Model.LastName3</h2>
-<h2>Flat no: @Model.FlatNo3</h2>
-
-<h2>Welcome Home !!! @Model.FirstName4 @Model.LastName4</h2>
-<h2>Flat no: @Model.FlatNo4</h2>
-
-<h2>Welcome Home !!! @Model.FirstName5 @Model.LastName5</h2>
-<h2>Flat no: @Model.FlatNo5</h2>
-
-<h2>Welcome Home !!! @Model.FirstName6 @Model.LastName6</h2>
-<h2>Flat no: @Model.FlatNo6</h2>
+<h2>Welcome Home !!! @Model["FirstName"]</h2>
+<ui>
+@foreach (var item in @Model["Models"])
+{ 
+    
+        <li>
+        @item["Make"]
+    </li>
+}   
+    </ui>

@@ -1,7 +1,7 @@
 ﻿{
 	"url": {
         "FriendlyUrl": "/",
-        "View": "/home2",
+        "View": "/home",
         "Active": "True",
         "Indexing": "True",
         "StatusCode": 200,

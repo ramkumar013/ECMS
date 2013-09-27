@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using WebSite.App_Code;
-
+using Newtonsoft;
+using Newtonsoft.Json;
 namespace WebSite.Controllers
 {
     public class TemplateController : CMSBaseController
@@ -20,8 +21,10 @@ namespace WebSite.Controllers
 
         public ActionResult Compose()
         {
-            var model = new JavaScriptSerializer().Deserialize("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }", typeof(System.Object));
+            //var model = new JavaScriptSerializer().Deserialize("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }", typeof(System.Object));
+            var model = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }");
             //return View("~/Views/" + this.CurrentUrl.SiteId + this.CurrentUrl.View + ".cshtml", new MvcHelpers.ReflectionDynamicObject() { RealObject = model });
+
             return View("~/Views/" + this.CurrentUrl.SiteId + this.CurrentUrl.View + ".cshtml", model);
         }
     }

@@ -3,13 +3,13 @@
     ViewBag.Title = "home";    
 }
 
-<h2>Welcome Home !!! @Model["FirstName"]</h2>
+<h2>Welcome Home !!! @Model.FirstName</h2>
 <ui>
-@foreach (var item in @Model["Models"])
+@foreach (var item in @Model.Models)
 { 
     
         <li>
-        @item["Make"]
+        @item.Make
     </li>
 }   
     </ui>

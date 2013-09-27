@@ -1,7 +1,7 @@
 ﻿{
 	"url": {
         "FriendlyUrl": "/",
-        "View": "/home",
+        "View": "/home2",
         "Active": "True",
         "Indexing": "True",
         "StatusCode": 200,
@@ -12,7 +12,7 @@
         "View": "/flights/destination-city",
         "Active": "True",
         "Indexing": "True",
-        "StatusCode": 200
+        "StatusCode": 200,
 		"Id":"DDC59F96-327A-41D8-9E7D-20E23669D6B9",
     },
 	 "url": {
@@ -20,7 +20,7 @@
         "View": "/flights/destination-city",
         "Active": "True",
         "Indexing": "True",
-        "StatusCode": 200
+        "StatusCode": 200,
 		"Id":"B3F259F2-7DAA-4668-A919-9E82D4E71847",
     }
 }

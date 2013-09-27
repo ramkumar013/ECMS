@@ -86,7 +86,7 @@ namespace ECMS.Services
                                     break;
                                 case "Id":
                                     jreader.Read();
-                                    temp.StatusCode = Convert.ToInt32(jreader.Value.ToString());
+                                    temp.Id = Guid.Parse(jreader.Value.ToString());
                                     break;
                             }
                         }

@@ -19,16 +19,18 @@ namespace WebSite.Controllers
 
         public ActionResult Compose()
         {
-            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id);
+            //var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id);
+            var model = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }");
             return View(this.GetView(), model);
         }
 
         public ActionResult HandleServerError()
         {
             this.ControllerContext.HttpContext.Response.StatusCode = this.GetErrorStatusCode();
+            ViewBag.ErrorMessage = this.GetErrorMessage();
             return View(this.GetErrorHandlerView());
         }
 
-        
+       
     }
 }

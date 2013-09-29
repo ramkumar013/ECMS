@@ -51,18 +51,25 @@ namespace ECMS.HttpModules
                             context.Response.RedirectPermanent(validUrl.Action, true);
                             break;
                         case 302:
-                             context.Response.RedirectLocation = validUrl.Action;
-                             context.Response.Redirect(validUrl.Action, true);
-                             break;
+                            context.Response.RedirectLocation = validUrl.Action;
+                            context.Response.Redirect(validUrl.Action, true);
+                            break;
                         case 404:
-                             HandleError(context, validUrl.SiteId, 404);
-                             break;
+                            HandleError(context, validUrl.SiteId, 404);
+                            break;
                     }
                 }
             }
+            catch (KeyNotFoundException ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
+                HandleError(context, siteId, 404);
+            }
             catch (Exception ex)
             {
-                DependencyManager.Logger.Log(LogLevel.Error, ex.ToString());
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
                 HandleError(context, siteId, 500);
             }
         }

@@ -29,7 +29,19 @@ namespace WebApp
             DependencyManager.URLRepository = new ValidUrlFileRepository();
             DependencyManager.CachingService = new InProcCachingService();
             DependencyManager.Logger = new NLog.Interface.LoggerAdapter(NLog.LogManager.GetLogger("default"));
-            
+        }
+
+
+        public override void Init()
+        {
+            base.Init();
+            this.Error += Application_Error;
+        }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            HttpApplication app = (HttpApplication)sender;
+            app.Context.RewritePath("/Template/HandleServerError");
         }
     }
 }

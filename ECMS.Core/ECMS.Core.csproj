@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
+    <Compile Include="ECMSSettings.cs" />
     <Compile Include="Entities\ContentBase.cs" />
     <Compile Include="Entities\ValidUrl.cs" />
     <Compile Include="Entities\AppRoute.cs" />

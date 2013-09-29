@@ -6,6 +6,7 @@
         "Indexing": "True",
         "StatusCode": 200,
 		"Id":"2AF06EED-3850-4E78-B8AE-C3B325849F00",
+		"Action":"/Template/Compose",
     },
     "url": {
         "FriendlyUrl": "/flights/cheap-flights-to-new-york-city",
@@ -14,6 +15,7 @@
         "Indexing": "True",
         "StatusCode": 200,
 		"Id":"DDC59F96-327A-41D8-9E7D-20E23669D6B9",
+		"Action":"/Template/Compose",
     },
 	 "url": {
         "FriendlyUrl": "/flights/cheap-flights-to-las-vegas",
@@ -21,6 +23,7 @@
         "Active": "True",
         "Indexing": "True",
         "StatusCode": 200,
-		"Id":"B3F259F2-7DAA-4668-A919-9E82D4E71847",
+		"Id":"D8AEE472-70DF-492A-B378-7F3AFFB94CCA",
+		"Action":"/Template/Compose",
     }
 }

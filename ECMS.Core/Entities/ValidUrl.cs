@@ -16,5 +16,6 @@ namespace ECMS.Core.Entities
         public int StatusCode { get; set; }
         public int SiteId { get; set; }
         public Guid Id { get; set; }
+        public string Action { get; set; }
     }
 }

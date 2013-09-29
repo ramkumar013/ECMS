@@ -42,6 +42,7 @@ namespace ECMS.Services
 
         private Dictionary<string, ValidUrl> LoadFromDisk(int siteId_)
         {
+            
             Dictionary<string, ValidUrl> dict = new Dictionary<string, ValidUrl>();
             string path = ConfigurationManager.AppSettings["UrlFilePath"] + siteId_ + "\\urls.json";
             ValidUrl temp = null;
@@ -55,6 +56,7 @@ namespace ECMS.Services
                     }
                     while (jreader.Depth >= 1)
                     {
+                        // TODO : Add code to read next record in case of any exception and send alert about this exception.
                         jreader.Read();
                         if (jreader.TokenType == JsonToken.StartObject)
                         {
@@ -87,6 +89,10 @@ namespace ECMS.Services
                                 case "Id":
                                     jreader.Read();
                                     temp.Id = Guid.Parse(jreader.Value.ToString());
+                                    break;
+                                case "Action":
+                                    jreader.Read();
+                                    temp.Action = jreader.Value.ToString();
                                     break;
                             }
                         }

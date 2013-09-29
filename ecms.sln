@@ -18,9 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eclipse.HttpModules.Test", "Eclipse.HttpModules.Test\Eclipse.HttpModules.Test.csproj", "{C9074162-B72B-438D-A86B-9101683E91F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93A87373-28FE-43CD-B9B6-D32C51BBACF8}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,25 +7,28 @@ using System.Web.Script.Serialization;
 using WebSite.App_Code;
 using Newtonsoft;
 using Newtonsoft.Json;
+using ECMS.Core;
 namespace WebSite.Controllers
 {
     public class TemplateController : CMSBaseController
     {
-        //
-        // GET: /Content/
-
         public ActionResult Index()
         {
-            return View();
+            return Compose();
         }
 
         public ActionResult Compose()
         {
-            //var model = new JavaScriptSerializer().Deserialize("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }", typeof(System.Object));
-            var model = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }");
-            //return View("~/Views/" + this.CurrentUrl.SiteId + this.CurrentUrl.View + ".cshtml", new MvcHelpers.ReflectionDynamicObject() { RealObject = model });
-
-            return View("~/Views/" + this.CurrentUrl.SiteId + this.CurrentUrl.View + ".cshtml", model);
+            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id);
+            return View(this.GetView(), model);
         }
+
+        public ActionResult HandleServerError()
+        {
+            this.ControllerContext.HttpContext.Response.StatusCode = this.GetErrorStatusCode();
+            return View(this.GetErrorHandlerView());
+        }
+
+        
     }
 }

@@ -15,5 +15,27 @@ namespace WebSite.App_Code
                 return (ControllerContext.HttpContext.Items["validUrl"] != null ? ControllerContext.HttpContext.Items["validUrl"] as ValidUrl : null);
             }
         }
+
+        public string GetView()
+        {
+            return "~/Views/" + this.CurrentUrl.SiteId + this.CurrentUrl.View + ".cshtml";
+        }
+
+        public string GetErrorHandlerView()
+        {
+            return "~/Views/" + this.CurrentUrl.SiteId + "Ecms-Error-Handler.cshtml";
+        }
+
+        public int GetErrorStatusCode()
+        {
+            if (this.HttpContext != null && this.HttpContext.Items[""] != null)
+            {
+                return Convert.ToInt32(this.HttpContext.Items["ResponseStatusCode"]);
+            }
+            else {
+                return 500;
+            }
+
+        }
     }
 }

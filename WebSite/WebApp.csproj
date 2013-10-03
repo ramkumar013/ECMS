@@ -323,8 +323,6 @@
     <Content Include="Views\Ecms-Error-Handler.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\admin\" />
-    <Folder Include="Content\public\" />
     <Folder Include="Views\Public\" />
   </ItemGroup>
   <ItemGroup>

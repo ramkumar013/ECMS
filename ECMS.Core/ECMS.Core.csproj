@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
-    <Compile Include="ECMSSettings.cs" />
+    <Compile Include="Framework\ContentRepositoryBase.cs" />
+    <Compile Include="Utility\ECMSSettings.cs" />
     <Compile Include="Entities\ContentBase.cs" />
+    <Compile Include="Entities\TemplateSettings.cs" />
     <Compile Include="Entities\ValidUrl.cs" />
     <Compile Include="Entities\AppRoute.cs" />
     <Compile Include="Interfaces\ICachingService.cs" />
@@ -65,6 +67,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

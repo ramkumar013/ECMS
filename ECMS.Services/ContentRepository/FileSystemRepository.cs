@@ -5,27 +5,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using ECMS.Core.Framework;
 
 namespace ECMS.Services.ContentRepository
 {
-    public class FileSystemRepository : IContentRepository
+    public class FileSystemRepository : ContentRepositoryBase
     {
-        public ContentBase GetById(Guid id_)
+        public override ContentBase GetById(Guid id_)
+        {
+            // TODO : parameter type.
+            VerifyContentWithDefault(JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }"));
+            throw new NotImplementedException();
+        }
+
+        public override ContentBase GetByUrl(string incomingUrl_)
         {
             throw new NotImplementedException();
         }
 
-        public ContentBase GetByUrl(string incomingUrl_)
+        public override void Save(ContentBase content_)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(ContentBase content_)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(ContentBase content_)
+        public override void Delete(ContentBase content_)
         {
             throw new NotImplementedException();
         }

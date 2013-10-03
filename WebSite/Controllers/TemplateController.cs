@@ -19,8 +19,8 @@ namespace WebSite.Controllers
 
         public ActionResult Compose()
         {
-            //var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id);
-            var model = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\"}]  }");
+            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id);
+            //var model = 
             return View(this.GetView(), model);
         }
 
@@ -30,7 +30,5 @@ namespace WebSite.Controllers
             ViewBag.ErrorMessage = this.GetErrorMessage();
             return View(this.GetErrorHandlerView());
         }
-
-       
     }
 }

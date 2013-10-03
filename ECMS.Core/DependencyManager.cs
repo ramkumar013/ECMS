@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ECMS.Core.Interfaces;
 using NLog.Interface;
+using ECMS.Core.Framework;
 
 namespace ECMS.Core
 {
@@ -17,7 +18,7 @@ namespace ECMS.Core
 
         public static ICachingService CachingService { get; set; }
 
-        public static IContentRepository ContentRepository { get; set; }
+        public static ContentRepositoryBase ContentRepository { get; set; }
 
     }
 }

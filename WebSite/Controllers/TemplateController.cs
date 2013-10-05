@@ -8,6 +8,7 @@ using WebSite.App_Code;
 using Newtonsoft;
 using Newtonsoft.Json;
 using ECMS.Core;
+using ECMS.Core.Utility;
 namespace WebSite.Controllers
 {
     public class TemplateController : CMSBaseController
@@ -19,8 +20,9 @@ namespace WebSite.Controllers
 
         public ActionResult Compose()
         {
-            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id);
-            //var model = 
+            //var model = ECMSUtility.ParseExpression(DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id), this.CurrentUrl, this.HttpContext);
+
+            var model = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\", \"Year\":\"@DateTime.Now.Year.ToString()\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\", \"Year\":\"@DateTime.Now.Year.ToString()\"}]  }");
             return View(this.GetView(), model);
         }
 

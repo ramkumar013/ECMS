@@ -9,7 +9,8 @@
 { 
     
         <li>
-        @item.Make
+        @item.Make -- @Html.Raw(item.Year)
     </li>
 }   
     </ui>
+@Context.ApplicationInstance.Request.QueryString["CityName"]

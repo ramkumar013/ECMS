@@ -12,6 +12,7 @@ namespace ECMS.Core.Entities
         public string KeyWords { get; set; }
         public string Description { get; set; }
         public string CopyRight { get; set; }
+        public string PageMetaTags { get; set; }
         public Guid ContentId { get; set; }
     }
 }

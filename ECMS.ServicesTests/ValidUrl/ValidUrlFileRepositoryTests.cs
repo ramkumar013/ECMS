@@ -8,6 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ECMS.Core.Entities;
 using ECMS.Services;
 using ECMS.Core;
+using ECMS.Core.Framework;
+using Newtonsoft.Json;
 namespace ECMS.Services.ValidUrlService.Tests
 {
     [TestClass()]
@@ -34,6 +36,33 @@ namespace ECMS.Services.ValidUrlService.Tests
             Assert.AreEqual(true, url.Active);
             Assert.AreEqual(true, url.Index);
             Assert.AreEqual(200, url.StatusCode);
+        }
+
+        [TestMethod()]
+        public void VerifyContentWithDefault_Assert_Dynamic_Properties_Test()
+        {
+            DependencyManager.CachingService = new InProcCachingService();
+            ValidUrlFileRepository fileRepository = new ValidUrlFileRepository();
+            dynamic contentItem = JsonConvert.DeserializeObject(@"{'Title':'This is page title','Keywords':'keywords... keywords..... keywords.....','Description':'This is a test content.'}");
+            dynamic actual = ContentRepositoryBase.VerifyContentWithDefault(contentItem);
+
+            Assert.AreEqual(contentItem.Title, actual.Title);
+            Assert.AreEqual(contentItem.Keywords, actual.Keywords);
+            Assert.AreEqual(contentItem.Description, actual.Description);
+        }
+
+        [TestMethod()]
+        public void VerifyContentWithDefault_Assert_With_HardCoded_Values_Test()
+        {
+            // Note : This is expected to fail after change in method.
+            DependencyManager.CachingService = new InProcCachingService();
+            ValidUrlFileRepository fileRepository = new ValidUrlFileRepository();
+            dynamic contentItem = JsonConvert.DeserializeObject(@"{'Title':'This is page title','Keywords':'keywords... keywords..... keywords.....','Description':'This is a test content.'}");
+            dynamic actual = ContentRepositoryBase.VerifyContentWithDefault(contentItem);
+
+            Assert.AreEqual("This is page title.. ok pass", actual.Title.ToString());
+            Assert.AreEqual("keywords... keywords..... keywords....... ok pass", actual.Keywords.ToString());
+            Assert.AreEqual("This is a test content... ok pass", actual.Description.ToString());
         }
     }
 }

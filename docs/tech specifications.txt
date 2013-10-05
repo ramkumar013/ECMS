@@ -1,3 +1,5 @@
 1) While returning url content, overwrite default title, keyword, description given in template setting if url also has it.
 
 2) Every Image/CSS/JS path must be prefixed with some dynamic variable so that any point of time content can be moved to cdn.
+
+3) Data function should be called with "@" syntax.

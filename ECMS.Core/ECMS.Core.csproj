@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
     <Compile Include="Framework\ContentRepositoryBase.cs" />
+    <Compile Include="Interfaces\IExpressionParser.cs" />
     <Compile Include="Utility\ECMSSettings.cs" />
     <Compile Include="Entities\ContentBase.cs" />
     <Compile Include="Entities\TemplateSettings.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Interfaces\IRouteManager.cs" />
     <Compile Include="Interfaces\IValidURLRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ECMSUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

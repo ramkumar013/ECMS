@@ -62,3 +62,6 @@ J:\MyProjects\ecms\WebSite.Tests\bin\Debug\NLog.xml
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.csprojResolveAssemblyReference.cache
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.dll
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.pdb
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\RazorEngine.dll
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\RazorEngine.pdb
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\RazorEngine.xml

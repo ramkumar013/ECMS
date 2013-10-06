@@ -10,22 +10,14 @@ namespace ECMS.Core.Framework
 {
     public abstract class ContentRepositoryBase : IContentRepository
     {
-        public static dynamic VerifyContentWithDefault(dynamic contentItem_) // TODO :  Decide Type
-        {
-            //contentItem_.Title = contentItem_.Title + ".. ok pass";
-            //contentItem_.Keywords = contentItem_.Keywords + ".. ok pass";
-            //contentItem_.Description = contentItem_.Description + ".. ok pass";
-            //return contentItem_;
+        public abstract ContentItem GetById(ValidUrl url_);
 
-            throw new NotImplementedException();
-        }
+        public abstract ContentItem GetByUrl(ValidUrl url_);
 
-        public abstract ContentBase GetById(Guid id_);
+        public abstract void Save(ContentItem content_);
 
-        public abstract ContentBase GetByUrl(string incomingUrl_);
+        public abstract void Delete(ContentItem content_);
 
-        public abstract void Save(ContentBase content_);
-
-        public abstract void Delete(ContentBase content_);
+        public abstract ContentItemHead GetHeadContentByViewName(ValidUrl url_);
     }
 }

@@ -12,7 +12,7 @@ namespace WebSite.App_Code
 {
     public class CMSBaseController : Controller
     {
-        public ContentBase PageContent { get; set; }
+        public ContentItem PageContent { get; set; }
         public ValidUrl CurrentUrl {
             get {
                 return (ControllerContext.HttpContext.Items["validUrl"] != null ? ControllerContext.HttpContext.Items["validUrl"] as ValidUrl : null);

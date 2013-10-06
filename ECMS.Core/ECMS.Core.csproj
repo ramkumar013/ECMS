@@ -55,7 +55,7 @@
     <Compile Include="Framework\ContentRepositoryBase.cs" />
     <Compile Include="Interfaces\IExpressionParser.cs" />
     <Compile Include="Utility\ECMSSettings.cs" />
-    <Compile Include="Entities\ContentBase.cs" />
+    <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\TemplateSettings.cs" />
     <Compile Include="Entities\ValidUrl.cs" />
     <Compile Include="Entities\AppRoute.cs" />

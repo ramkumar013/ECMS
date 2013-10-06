@@ -12,24 +12,31 @@ namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        public override ContentBase GetById(Guid id_)
+        public override ContentItem GetById(ValidUrl url_)
         {
-            // TODO : parameter type.
-            VerifyContentWithDefault(JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\", \"Year\":\"@DateTime.Now.Year.ToString()\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\", \"Year\":\"@DateTime.Now.Year.ToString()\"}]  }"));
-            throw new NotImplementedException();
+            ContentItem item = new ContentItem();
+            item.Url = url_;
+            item.Body = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\", \"Year\":\"@DateTime.Now.Year.ToString()\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\", \"Year\":\"@DateTime.Now.Year.ToString()\"}]  }");
+            item.Head = GetHeadContentByViewName(url_);
+            return item;
         }
 
-        public override ContentBase GetByUrl(string incomingUrl_)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Save(ContentBase content_)
+        public override ContentItem GetByUrl(ValidUrl url_)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(ContentBase content_)
+        public override void Save(ContentItem content_)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete(ContentItem content_)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ContentItemHead GetHeadContentByViewName(ValidUrl url_)
         {
             throw new NotImplementedException();
         }

@@ -9,9 +9,10 @@ namespace ECMS.Core.Interfaces
 {
     public interface IContentRepository
     {
-        ContentBase GetById(Guid id_);
-        ContentBase GetByUrl(string incomingUrl_);
-        void Save(ContentBase content_);
-        void Delete(ContentBase content_);
+        ContentItem GetById(ValidUrl url_);
+        ContentItem GetByUrl(ValidUrl url_);
+        void Save(ContentItem content_);
+        void Delete(ContentItem content_);
+        ContentItemHead GetHeadContentByViewName(ValidUrl url_);
     }
 }

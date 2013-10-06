@@ -21,8 +21,8 @@ namespace WebSite.Controllers
         public ActionResult Compose()
         {
             //var model = ECMSUtility.ParseExpression(DependencyManager.ContentRepository.GetById(this.CurrentUrl.Id), this.CurrentUrl, this.HttpContext);
-
             var model = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\", \"Year\":\"@DateTime.Now.Year.ToString()\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\", \"Year\":\"@DateTime.Now.Year.ToString()\"}]  }");
+            ViewData["Test1"] = "DateTime.Now.ToString()";
             return View(this.GetView(), model);
         }
 

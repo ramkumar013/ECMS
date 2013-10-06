@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp.Locale.en_us {
+namespace WebApp.Locale.en_us._1 {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WebApp.Locale.en_us {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebApp.Locale.en_us.ECMSResources", typeof(ECMSResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebApp.Locale.en_us._1.ECMSResources", typeof(ECMSResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

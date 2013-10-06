@@ -60,5 +60,6 @@ namespace ECMS.Core.Utility
         {
             throw new NotImplementedException();
         }
+        
     }
 }

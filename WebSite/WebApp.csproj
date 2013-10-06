@@ -194,7 +194,7 @@
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
-    <Compile Include="Locale\en-us\ECMSResources.Designer.cs">
+    <Compile Include="Locale\en-us\1\ECMSResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ECMSResources.resx</DependentUpon>
@@ -267,6 +267,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config" />
+    <Content Include="Configs\1\ECMSApp.config" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -349,7 +350,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Locale\en-us\ECMSResources.resx">
+    <EmbeddedResource Include="Locale\en-us\1\ECMSResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ECMSResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

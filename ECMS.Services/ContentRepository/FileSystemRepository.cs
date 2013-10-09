@@ -38,7 +38,9 @@ namespace ECMS.Services.ContentRepository
 
         public override ContentItemHead GetHeadContentByViewName(ValidUrl url_)
         {
-            throw new NotImplementedException();
+            //TODO: dummy implementation to be change
+            ContentItemHead itemhead = JsonConvert.DeserializeObject<ContentItemHead>("{ \"Title\" : \"page title\", \"KeyWords\" : \"page keywords\", \"Description\" : \"test page\"}");
+            return itemhead;
         }
     }
 }

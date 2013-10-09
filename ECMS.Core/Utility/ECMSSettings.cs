@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,18 +10,30 @@ namespace ECMS.Core
 {
     public class ECMSSettings
     {
+        #region Constants
         public const string DEFAULT_LOGGER = "default";
-        public const string HTTPERROR_LOCALE_PREFIX = "HTTPError.";
-        public static Dictionary<int, ECMSSettings> AppSettings = null;
+        public const string HTTPERROR_LOCALE_PREFIX = "HTTPError."; 
+        #endregion
 
-        public string CDNPath { get; set; }
+        #region Static Properties
+        public static Dictionary<int, ECMSSettings> AppSettings = null; 
+        #endregion
+
+        #region Instance Properties
+        public string CDNPath { get; set; } 
+        #endregion
+
+        #region Static Constructor
         static ECMSSettings()
         {
             BeginLoadAppSettings();
         }
+        #endregion
 
-        private static void BeginLoadAppSettings()
+        #region Private Static Methods
+        public static void BeginLoadAppSettings()
         {
+            //TODO: expose this method on http.
             AppSettings = new Dictionary<int, ECMSSettings>();
             string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory);
             foreach (string dir in dirinfo)
@@ -31,9 +44,13 @@ namespace ECMS.Core
 
         private static ECMSSettings LoadAppSettings(string dirPath_)
         {
-            //ECMSSettings setting = new ECMSSettings();
-            //return setting;
-            throw new NotImplementedException();
-        }
+            ECMSSettings setting = new ECMSSettings();
+            DataSet ds = new DataSet("Configuration");
+            ds.ReadXml(dirPath_);
+            setting.CDNPath = Convert.ToString(ds.Tables["configuration"].Rows[0]["CDNPath"]);
+            return setting;
+        }  
+        #endregion
+       
     }
 }

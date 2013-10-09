@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp.Locale.en_us._1 {
+namespace ECMS.Locale {
     using System;
     
     

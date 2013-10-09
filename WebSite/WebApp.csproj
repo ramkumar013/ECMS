@@ -328,6 +328,8 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Ecms-Error-Handler.cshtml" />
     <Content Include="Views\1\Partial1.cshtml" />
+    <Content Include="Views\1\Test1.cshtml" />
+    <Content Include="Views\1\Test2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Public\" />

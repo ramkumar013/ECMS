@@ -10,7 +10,7 @@ namespace WebApp.AppCode
     {
         public static string Eval(string expression)
         {
-            return Razor.Parse(expression);
+            return Razor.Parse(expression, expression);
         }
     }
 }

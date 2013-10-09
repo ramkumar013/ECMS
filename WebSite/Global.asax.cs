@@ -9,6 +9,7 @@ using System.Web.Routing;
 using ECMS.Core;
 using ECMS.Services;
 using NLog;
+using ECMS.Services.ContentRepository;
 namespace WebApp
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -27,6 +28,7 @@ namespace WebApp
             AuthConfig.RegisterAuth();
 
             DependencyManager.URLRepository = new ValidUrlFileRepository();
+            DependencyManager.ContentRepository = new FileSystemRepository();
             DependencyManager.CachingService = new InProcCachingService();
             DependencyManager.Logger = new NLog.Interface.LoggerAdapter(NLog.LogManager.GetLogger("default"));
         }

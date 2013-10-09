@@ -26,4 +26,24 @@
 		"Id":"D8AEE472-70DF-492A-B378-7F3AFFB94CCA",
 		"Action":"/Template/Compose",
     }
+	,
+	 "url": {
+        "FriendlyUrl": "/test1",
+        "View": "/test1",
+        "Active": "True",
+        "Indexing": "True",
+        "StatusCode": 200,
+		"Id":"1329114F-4E30-4CBB-980E-BBB35DCEEDA0",
+		"Action":"/Template/Compose",
+    }
+	,
+	 "url": {
+        "FriendlyUrl": "/test2",
+        "View": "/test2",
+        "Active": "True",
+        "Indexing": "True",
+        "StatusCode": 200,
+		"Id":"BA84B6CF-4899-479C-B737-F960E1B03207",
+		"Action":"/Template/Compose",
+    }
 }

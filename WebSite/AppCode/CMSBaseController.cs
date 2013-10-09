@@ -1,12 +1,12 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
+using ECMS.Locale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using WebApp.Locale.en_us;
 
 namespace WebSite.App_Code
 {

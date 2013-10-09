@@ -1,12 +1,12 @@
 ﻿@using WebApp.AppCode;
 
 @{
-    ViewBag.Title = "home";    
+    ViewBag.Title = Model.Head.Title;
 }
 
-<h2>Welcome Home !!! @Model.FirstName</h2>
+<h2>Welcome Home !!! @Model.Body.FirstName</h2>
 <ui>
-@foreach (var item in @Model.Models)
+@foreach (var item in @Model.Body.Models)
 { 
         <li>
         @item.Make -- @ECMSViewHelper.Eval(item.Year.ToString())

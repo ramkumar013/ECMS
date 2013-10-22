@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ECMS.Core
 {
@@ -35,22 +36,49 @@ namespace ECMS.Core
         {
             //TODO: expose this method on http.
             AppSettings = new Dictionary<int, ECMSSettings>();
-            string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory);
+            string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\configs");
             foreach (string dir in dirinfo)
             {
-                AppSettings.Add(Convert.ToInt32(new DirectoryInfo(dir).Name), new ECMSSettings());
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                AppSettings.Add(Convert.ToInt32(dirInfo.Name), LoadAppSettings(dirInfo));
             }
         }
 
-        private static ECMSSettings LoadAppSettings(string dirPath_)
+        private static ECMSSettings LoadAppSettings(DirectoryInfo dirInfo_)
         {
             ECMSSettings setting = new ECMSSettings();
-            DataSet ds = new DataSet("Configuration");
-            ds.ReadXml(dirPath_);
-            setting.CDNPath = Convert.ToString(ds.Tables["configuration"].Rows[0]["CDNPath"]);
+            try
+            {
+                using (DataSet ds = new DataSet("Configuration"))
+                {
+                    ds.ReadXml(dirInfo_.FullName + "\\site.config");
+                    setting.CDNPath = Convert.ToString(ds.Tables["configuration"].Rows[0]["CDNPath"]) + dirInfo_.Name;
+                } 
+            }
+            catch (Exception ex)
+            {
+                DependencyManager.Logger.Debug(string.Format("Error while reading config file at : {0}", dirInfo_.FullName) + "\r\n" + ex.ToString());
+            }
             return setting;
         }  
         #endregion
-       
+
+        public static ECMSSettings Current { 
+            get{
+                if (HttpContext.Current != null && HttpContext.Current.Items["siteid"]!=null)
+                {
+                    return AppSettings[Convert.ToInt32(HttpContext.Current.Items["siteid"])];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public static ECMSSettings GetCurrentBySiteId(int siteId_)
+        {
+            return AppSettings[siteId_];
+        }
     }
 }

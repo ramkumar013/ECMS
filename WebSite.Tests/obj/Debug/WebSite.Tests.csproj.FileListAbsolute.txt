@@ -64,3 +64,6 @@ J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.dll
 J:\MyProjects\ecms\WebSite.Tests\obj\Debug\WebSite.Tests.pdb
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\RazorEngine.dll
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\RazorEngine.xml
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\CsvHelper.dll
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\CsvHelper.pdb
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\CsvHelper.xml

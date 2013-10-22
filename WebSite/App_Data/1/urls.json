@@ -15,7 +15,7 @@
         "Indexing": "True",
         "StatusCode": 200,
 		"Id":"2ECA40A9-E580-4589-B89B-17458B61590D",
-		"Action":"/Template/Compose",
+		"Action":"/Template/Compose?cityname=orlando",
     },
     "url": {
         "FriendlyUrl": "/flights/cheap-flights-to-new-york-city",

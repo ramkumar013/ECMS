@@ -39,6 +39,7 @@ namespace ECMS.HttpModules
                 if (validUrl != null)
                 {
                     validUrl.SiteId = siteId;
+                    context.Items.Add("siteid", validUrl.SiteId);
                     context.Items.Add("validUrl", validUrl);
                     switch (validUrl.StatusCode)
                     {

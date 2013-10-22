@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ECMS.Core" GeneratedClassName="ECMSGlobal">
+  <Profiles />
+  <Settings>
+    <Setting Name="CDNPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">cdn.explotravel.com</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

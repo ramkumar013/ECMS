@@ -56,8 +56,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.Interface.1.0.0\lib\net40\NLog.Interface.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine">
-      <HintPath>..\packages\RazorEngine.3.3.0\lib\net40\RazorEngine.dll</HintPath>
+    <Reference Include="RazorEngine, Version=2.1.5060.2055, Culture=neutral, PublicKeyToken=1f722ed313f51831, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\admin\Downloads\RazorEngine-master\RazorEngine-master\src\Core\RazorEngine.Core\bin\Debug\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
@@ -82,8 +83,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\admin\Downloads\RazorEngine-master\RazorEngine-master\src\Core\RazorEngine.Core\bin\Debug\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -270,6 +271,11 @@
     <Content Include="App_Data\1\content.ect" />
     <Content Include="App_Data\1\default-template.et" />
     <Content Include="Configs\1\site.config" />
+    <Content Include="App_Data\0\content.ect" />
+    <Content Include="App_Data\0\default-template.et" />
+    <Content Include="App_Data\0\urls.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -335,6 +341,7 @@
     <Content Include="Views\1\Header-Default.cshtml" />
     <Content Include="Views\1\Footer-Default.cshtml" />
     <Content Include="Views\1\Layout-Default.cshtml" />
+    <Content Include="Views\1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Public\" />

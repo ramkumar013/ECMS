@@ -12,5 +12,11 @@ namespace WebApp.AppCode
         {
             return Razor.Parse(expression, expression);
         }
+
+        public static string GetHref(string url_,string text, string attributes_)
+        {
+            // TODO : Check if url is active or not.
+            return string.Format("<a href={0}>{1}</a>", url_, text);
+        }
     }
 }

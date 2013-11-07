@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="Caching\InProcCachingService.cs" />
     <Compile Include="ContentRepository\FileSystemRepository.cs" />
-    <Compile Include="ExpressionParser\HttpRequestExpressionParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidUrl\ValidUrlFileRepository.cs" />
   </ItemGroup>

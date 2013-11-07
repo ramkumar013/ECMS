@@ -76,8 +76,8 @@ namespace ECMS.ServicesTests
             ValidUrl validUrl_ = null; // TODO: Initialize to an appropriate value
             HttpContextBase context_ = null; // TODO: Initialize to an appropriate value
             string expected = string.Empty; // TODO: Initialize to an appropriate value
-            string actual;
-            actual = ECMSUtility.ParseExpression(content_, validUrl_, context_);
+            string actual=null;
+            //actual = ECMSUtility.ParseExpression(content_, validUrl_, context_);
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("Verify the correctness of this test method.");
         }

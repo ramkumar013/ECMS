@@ -3,14 +3,5 @@
 @{
     ViewBag.Title = Model.Head.Title;
 }
-
-<h2>Welcome Home !!! @Model.Body.FirstName</h2>
-<ui>
-@foreach (var item in @Model.Body.Models)
-{ 
-        <li>
-        @item.Make -- @ECMSViewHelper.Eval(item.Year.ToString())
-    </li>
-}   
-    </ui>
-@Html.Partial("/Views/1/Partial1.cshtml");
+@Model.Body.SearchWidgetHeading to @Request.QueryString["CityName"]
+@Html.Partial("/Views/0/Partial1.cshtml");

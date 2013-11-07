@@ -58,7 +58,6 @@
       <DependentUpon>ECMSGlobal.settings</DependentUpon>
     </Compile>
     <Compile Include="Framework\ContentRepositoryBase.cs" />
-    <Compile Include="Interfaces\IExpressionParser.cs" />
     <Compile Include="Utility\ECMSSettings.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\TemplateSettings.cs" />

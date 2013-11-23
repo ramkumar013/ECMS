@@ -9,6 +9,15 @@
 		"Action":"/Template/Compose",
     },
 	"url": {
+        "FriendlyUrl": "/flights-to-london",
+        "View": "/index",
+        "Active": "True",
+        "Indexing": "True",
+        "StatusCode": 200,
+		"Id":"A1ED7FDF-498D-43EE-BC81-9E23F0294C56",
+		"Action":"/Template/Compose",
+    },
+	"url": {
         "FriendlyUrl": "/about",
         "View": "/Layout-Default",
         "Active": "True",

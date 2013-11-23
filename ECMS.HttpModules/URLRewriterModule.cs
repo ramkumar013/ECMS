@@ -26,7 +26,7 @@ namespace ECMS.HttpModules
         void context_BeginRequest(object sender, EventArgs e)
         {
             string url = string.Empty;
-            int siteId=0; // TODO : Remove HardCoding
+            int siteId=1; // TODO : Remove HardCoding
             HttpContext context = HttpContext.Current;
             try
             {

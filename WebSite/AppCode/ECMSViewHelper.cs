@@ -1,8 +1,10 @@
-﻿using RazorEngine;
+﻿using ECMS.Core;
+using RazorEngine;
 using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 namespace WebApp.AppCode
 {
@@ -10,7 +12,8 @@ namespace WebApp.AppCode
     {
         public static string Eval(string expression)
         {
-            return Razor.Parse(expression, expression);
+            TemplateService service = new TemplateService();
+            return service.Run(DependencyManager.CachingService.Get<ITemplate>(expression.GetHashCode().ToString()), null);
         }
 
         public static string GetHref(string url_,string text, string attributes_)

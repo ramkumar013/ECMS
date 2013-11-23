@@ -342,6 +342,7 @@
     <Content Include="Views\1\Footer-Default.cshtml" />
     <Content Include="Views\1\Layout-Default.cshtml" />
     <Content Include="Views\1\Index.cshtml" />
+    <Content Include="Views\1\Header-Default-Demo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Public\" />

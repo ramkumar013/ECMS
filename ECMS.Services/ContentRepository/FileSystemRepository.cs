@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using ECMS.Core.Framework;
 using System.IO;
 using CsvHelper;
+using RazorEngine.Templating;
+using ECMS.Core;
 
 namespace ECMS.Services.ContentRepository
 {
@@ -38,11 +40,27 @@ namespace ECMS.Services.ContentRepository
 
         public override ContentItem GetById(ValidUrl url_)
         {
+            List<Task> tasks = new List<Task>();
             ContentItem item = new ContentItem();
             item.Url = url_;
             //item.Body = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\", \"Year\":\"@DateTime.Now.Year.ToString()\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\", \"Year\":\"@DateTime.Now.Year.ToString()\"}]  }");
             item.Body = ContentBodyList[url_.Id];
+            using (TextReader sreader = new StringReader(JsonConvert.SerializeObject(item.Body)))
+            {
+                JsonReader jreader = new JsonTextReader(sreader);
+                while (jreader.Read())
+                {
+                    if (jreader.TokenType == JsonToken.String && jreader.Value.ToString().Contains("@"))
+                    {
+                       var task= Task.Factory.StartNew(() => CreateTemplateAndSetInCache(jreader.Value.ToString()));
+                       tasks.Add(task);
+                    }
+                }
+            }            
             item.Head = GetHeadContentByViewName(url_);
+
+            Task.WaitAll(tasks.ToArray());
+
             return item;
         }
 
@@ -67,6 +85,13 @@ namespace ECMS.Services.ContentRepository
             //ContentItemHead itemhead = JsonConvert.DeserializeObject<ContentItemHead>("{ \"Title\" : \"page title\", \"KeyWords\" : \"page keywords\", \"Description\" : \"test page\"}");
             ContentItemHead itemhead = ContentHeadList[0];
             return itemhead;
+        }
+
+        private void CreateTemplateAndSetInCache(string template_)
+        {
+            TemplateService service = new TemplateService();
+            ITemplate template = service.CreateTemplate(template_, null, null);
+            DependencyManager.CachingService.Set<ITemplate>(template_.GetHashCode().ToString(), template);
         }
     }
 }

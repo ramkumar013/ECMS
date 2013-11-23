@@ -1,7 +1,6 @@
 ﻿@using ECMS.Core
 @using WebApp.AppCode
 @model ECMS.Core.Entities.ContentItem
-
 @{
     Layout = null;
 }
@@ -15,9 +14,10 @@
 </head>
 <body>
     @Html.Partial("~/Views/1/Header-Default.cshtml");
+    @ECMSViewHelper.Eval("<h2>Test1</h2>");
         <div id="about">
             <div id="about-section-left">
-                <h1>@ECMSViewHelper.Eval(Model.Body.MainHeading)</h1>                
+                <h1>@Model.Body.MainHeading</h1>                
                 <div class="line"></div>
                 <h2 align="justify">
                     @Model.Body.Para1Content.ToString()
@@ -32,7 +32,7 @@
                 <img src="@ECMSSettings.Current.CDNPath/img/partners.jpg" width="323" height="373" /><img src="@ECMSSettings.Current.CDNPath/img/banner.jpg" width="323" height="271" />
             </div>
         </div>
-
+    @ECMSViewHelper.Eval("<h2>Test1</h2>");
      @Html.Partial("~/Views/1/Footer-Default.cshtml");
 </body>
 </html>

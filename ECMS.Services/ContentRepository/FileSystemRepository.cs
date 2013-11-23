@@ -43,8 +43,9 @@ namespace ECMS.Services.ContentRepository
             List<Task> tasks = new List<Task>();
             ContentItem item = new ContentItem();
             item.Url = url_;
-            //item.Body = JsonConvert.DeserializeObject("{ \"FirstName\" : \"Vishal\", \"LastName\" : \"Sharma\", \"FlatNo\" : \"2104A\", \"Models\" : [{\"Make\":\"Maruti\",\"Model\":\"Alto\", \"Year\":\"@DateTime.Now.Year.ToString()\"},{\"Make\":\"Ranault\",\"Model\":\"Duster\", \"Year\":\"@DateTime.Now.Year.ToString()\"}]  }");
             item.Body = ContentBodyList[url_.Id];
+            
+            //TODO: optimize this looping & serializing.
             using (TextReader sreader = new StringReader(JsonConvert.SerializeObject(item.Body)))
             {
                 JsonReader jreader = new JsonTextReader(sreader);
@@ -52,14 +53,15 @@ namespace ECMS.Services.ContentRepository
                 {
                     if (jreader.TokenType == JsonToken.String && jreader.Value.ToString().Contains("@"))
                     {
-                       var task= Task.Factory.StartNew(() => CreateTemplateAndSetInCache(jreader.Value.ToString()));
-                       tasks.Add(task);
+                        var temp = jreader.Value.ToString();
+                        var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(temp));
+                        DependencyManager.CachingService.Set<Task>("Task."+jreader.Value.GetHashCode().ToString(), task);
                     }
                 }
             }            
             item.Head = GetHeadContentByViewName(url_);
 
-            Task.WaitAll(tasks.ToArray());
+            //Task.WaitAll(tasks.ToArray());
 
             return item;
         }

@@ -12,6 +12,11 @@ namespace WebApp.AppCode
     {
         public static string Eval(string expression)
         {
+            var task = DependencyManager.CachingService.Get<Task>("Task." + expression.GetHashCode().ToString());
+            if (task.IsCompleted == false)
+            {
+                task.Wait();
+            }
             TemplateService service = new TemplateService();
             return service.Run(DependencyManager.CachingService.Get<ITemplate>(expression.GetHashCode().ToString()), null);
         }

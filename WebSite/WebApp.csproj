@@ -269,7 +269,7 @@
     </Content>
     <Content Include="NLog.config" />
     <Content Include="App_Data\1\content.ect" />
-    <Content Include="App_Data\1\default-template.et" />
+    <None Include="App_Data\1\default-template.ect" />
     <Content Include="Configs\1\site.config" />
     <Content Include="App_Data\0\content.ect" />
     <Content Include="App_Data\0\default-template.et" />

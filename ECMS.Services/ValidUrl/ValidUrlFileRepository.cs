@@ -16,6 +16,7 @@ namespace ECMS.Services
 {
     public class ValidUrlFileRepository : IValidURLRepository
     {
+        private static object UrlLock = new object();
         public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_)
         {
             return GetFromCache(siteId_, friendlyurl_);
@@ -28,13 +29,18 @@ namespace ECMS.Services
 
         private ValidUrl GetFromCache(int siteId_, string friendlyurl_)
         {
-            // TODO : Lock no file before reading.
             Dictionary<string, ValidUrl> dict = DependencyManager.CachingService.Get<Dictionary<string, ValidUrl>>(siteId_.ToString());
 
             if (dict == null)
             {
-                dict = LoadFromDisk(siteId_);
-                DependencyManager.CachingService.Set<Dictionary<string, ValidUrl>>(siteId_.ToString(), dict);
+                lock (UrlLock)
+                {
+                    if (dict ==null)
+                    {
+                        dict = LoadFromDisk(siteId_);
+                        DependencyManager.CachingService.Set<Dictionary<string, ValidUrl>>(siteId_.ToString(), dict);
+                    }
+                }
             }
 
             return dict[friendlyurl_];
@@ -47,7 +53,7 @@ namespace ECMS.Services
             ValidUrl temp = null;
             using (StreamReader sreader = new StreamReader(path))
             {
-                using (Newtonsoft.Json.JsonReader jreader = new JsonTextReader(sreader))
+                using (JsonReader jreader = new JsonTextReader(sreader))
                 {
                     while (jreader.Depth <= 0)
                     {
@@ -55,52 +61,58 @@ namespace ECMS.Services
                     }
                     while (jreader.Depth >= 1)
                     {
-                        // TODO : Add code to read next record in case of any exception and send alert about this exception.
-                        jreader.Read();
-                        if (jreader.TokenType == JsonToken.StartObject)
+                        try
                         {
-                            temp = new ValidUrl();
-                        }
-                        else if (jreader.TokenType == JsonToken.PropertyName)
-                        {
-                            switch (jreader.Value.ToString())
+                            jreader.Read();
+                            if (jreader.TokenType == JsonToken.StartObject)
                             {
-                                case "FriendlyUrl":
-                                    jreader.Read();
-                                    temp.FriendlyUrl = jreader.Value.ToString();
-                                    break;
-                                case "View":
-                                    jreader.Read();
-                                    temp.View = jreader.Value.ToString();
-                                    break;
-                                case "Active":
-                                    jreader.Read();
-                                    temp.Active = Convert.ToBoolean(jreader.Value.ToString());
-                                    break;
-                                case "Indexing":
-                                    jreader.Read();
-                                    temp.Index = Convert.ToBoolean(jreader.Value.ToString());
-                                    break;
-                                case "StatusCode":
-                                    jreader.Read();
-                                    temp.StatusCode = Convert.ToInt32(jreader.Value.ToString());
-                                    break;
-                                case "Id":
-                                    jreader.Read();
-                                    temp.Id = Guid.Parse(jreader.Value.ToString());
-                                    break;
-                                case "Action":
-                                    jreader.Read();
-                                    temp.Action = jreader.Value.ToString();
-                                    break;
+                                temp = new ValidUrl();
+                            }
+                            else if (jreader.TokenType == JsonToken.PropertyName)
+                            {
+                                switch (jreader.Value.ToString())
+                                {
+                                    case "FriendlyUrl":
+                                        jreader.Read();
+                                        temp.FriendlyUrl = jreader.Value.ToString();
+                                        break;
+                                    case "View":
+                                        jreader.Read();
+                                        temp.View = jreader.Value.ToString();
+                                        break;
+                                    case "Active":
+                                        jreader.Read();
+                                        temp.Active = Convert.ToBoolean(jreader.Value);
+                                        break;
+                                    case "Indexing":
+                                        jreader.Read();
+                                        temp.Index = Convert.ToBoolean(jreader.Value);
+                                        break;
+                                    case "StatusCode":
+                                        jreader.Read();
+                                        temp.StatusCode = Convert.ToInt32(jreader.Value);
+                                        break;
+                                    case "Id":
+                                        jreader.Read();
+                                        temp.Id = Guid.Parse(jreader.Value.ToString());
+                                        break;
+                                    case "Action":
+                                        jreader.Read();
+                                        temp.Action = jreader.Value.ToString();
+                                        break;
+                                }
+                            }
+                            else if (jreader.TokenType == JsonToken.EndObject)
+                            {
+                                if (!dict.ContainsKey(temp.FriendlyUrl.ToLower())) // TODO : To remove this if condition
+                                {
+                                    dict.Add(temp.FriendlyUrl.ToLower(), temp);
+                                }
                             }
                         }
-                        else if (jreader.TokenType == JsonToken.EndObject)
+                        catch (Exception ex)
                         {
-                            if (!dict.ContainsKey(temp.FriendlyUrl.ToLower())) // TODO : To remove this if condition
-                            {
-                                dict.Add(temp.FriendlyUrl.ToLower(), temp);
-                            }
+                            DependencyManager.Logger.Fatal("Error while reading urls for siteid: " + siteId_ + "\r\n" + ex.ToString());
                         }
                     }
                 }

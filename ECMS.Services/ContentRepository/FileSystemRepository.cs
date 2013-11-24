@@ -11,13 +11,15 @@ using System.IO;
 using CsvHelper;
 using RazorEngine.Templating;
 using ECMS.Core;
+using Newtonsoft.Json.Linq;
+using ECMS.Core.Extensions;
 
 namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        public static Dictionary<int,Dictionary<string, ContentItemHead>> ContentHeadList = null;
-        public static Dictionary<int,Dictionary<Guid, dynamic>> ContentBodyList = null;  
+        private static Dictionary<int, Dictionary<string, JObject>> ContentHeadList = null;
+        private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;  
       
         static FileSystemRepository()
         {
@@ -32,15 +34,15 @@ namespace ECMS.Services.ContentRepository
 
         private static void LoadMetaTags(DirectoryInfo dirInfo)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\default-template.et"))
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\default-template.ect"))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
-                    ContentHeadList = new Dictionary<int, Dictionary<string, ContentItemHead>>();
-                    var temp = new Dictionary<string, ContentItemHead>();
+                    ContentHeadList = new Dictionary<int, Dictionary<string, JObject>>();
+                    var temp = new Dictionary<string, JObject>();
                     while (csv.Read())
                     {
-                        temp[csv.GetField("ViewName")] = csv.GetRecord<ContentItemHead>();
+                        temp[csv.GetField("ViewName")] = JObject.FromObject(csv.GetRecord<object>());
                     }
                     ContentHeadList[Convert.ToInt32(dirInfo.Name)] = temp;
                 }
@@ -53,11 +55,11 @@ namespace ECMS.Services.ContentRepository
             {
                 using (var csv = new CsvReader(streamReader))
                 {
-                    ContentBodyList = new Dictionary<int, Dictionary<Guid, dynamic>>();
-                    var temp = new Dictionary<Guid, dynamic>();
+                    ContentBodyList = new Dictionary<int, Dictionary<Guid, JObject>>();
+                    var temp = new Dictionary<Guid, JObject>();
                     while (csv.Read())
                     {
-                        temp[Guid.Parse(csv.GetField("UrlId"))] = csv.GetRecord(typeof(object));
+                        temp[Guid.Parse(csv.GetField("UrlId"))] = JObject.FromObject(csv.GetRecord<object>());
                     }
                     ContentBodyList[Convert.ToInt32(dirInfo.Name)] = temp;
                 }
@@ -70,27 +72,27 @@ namespace ECMS.Services.ContentRepository
             List<Task> tasks = new List<Task>();
             ContentItem item = new ContentItem();
             item.Url = url_;
-            item.Body = ContentBodyList[url_.SiteId][url_.Id];
-
-            //TODO: optimize this looping & serializing.
-            using (TextReader sreader = new StringReader(JsonConvert.SerializeObject(item.Body)))
+            JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
+            item.Body = jsonBody;
+            item.Head = GetHeadContentByViewName(url_);
+            
+            string temp2 = null;
+            foreach (JToken token in jsonBody.Children())
             {
-                JsonReader jreader = new JsonTextReader(sreader);
-                while (jreader.Read())
+                if (token is JProperty)
                 {
-                    if (jreader.TokenType == JsonToken.String && jreader.Value.ToString().Contains("@"))
+                    temp2 = (token as JProperty).Value.ToString();
+                    if (temp2.Contains("@"))
                     {
-                        var temp = jreader.Value.ToString();
-                        var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(temp));
+                        var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(temp2));
                         tasks.Add(task);
+                        DependencyManager.CachingService.Set<List<Task>>("Task." + url_.Id, tasks);
                     }
                 }
-                DependencyManager.CachingService.Set<List<Task>>("Task." + url_.Id, tasks);
             }
-            item.Head = GetHeadContentByViewName(url_);
             return item;
         }
-
+        
         public override ContentItem GetByUrl(ValidUrl url_)
         {
             throw new NotImplementedException();
@@ -108,9 +110,11 @@ namespace ECMS.Services.ContentRepository
 
         public override ContentItemHead GetHeadContentByViewName(ValidUrl url_)
         {
-            //TODO: dummy implementation to be change
-            //ContentItemHead itemhead = JsonConvert.DeserializeObject<ContentItemHead>("{ \"Title\" : \"page title\", \"KeyWords\" : \"page keywords\", \"Description\" : \"test page\"}");
-            ContentItemHead itemhead = ContentHeadList[url_.SiteId][url_.View];
+            JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
+            JObject jsonHead = ContentHeadList[url_.SiteId][url_.View];
+            jsonHead.MergeInto(jsonBody);
+            ContentItemHead itemhead = new ContentItemHead();
+            itemhead.LoadFromJObject(jsonHead);            
             return itemhead;
         }
 

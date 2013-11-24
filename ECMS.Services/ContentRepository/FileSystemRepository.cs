@@ -16,24 +16,32 @@ namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        public static List<ContentItemHead> ContentHeadList = null;
+        public static Dictionary<string, ContentItemHead> ContentHeadList = null;
         public static Dictionary<Guid, dynamic> ContentBodyList = null;
 
         static FileSystemRepository()
         {
             using (StreamReader streamReader = new StreamReader(@"J:\MyProjects\ecms\WebSite\App_Data\1\default-template.et"))
             {
-                var csv = new CsvReader(streamReader);
-                ContentHeadList = csv.GetRecords<ContentItemHead>().ToList<ContentItemHead>();
+                using (var csv = new CsvReader(streamReader))
+                {
+                    ContentHeadList = new Dictionary<string, ContentItemHead>();
+                    while (csv.Read())
+                    {
+                        ContentHeadList[csv.GetField("ViewName")] = csv.GetRecord<ContentItemHead>();
+                    }
+                }
             }
 
             using (StreamReader streamReader = new StreamReader(@"J:\MyProjects\ecms\WebSite\App_Data\1\content.ect"))
             {
-                var csv = new CsvReader(streamReader);
-                ContentBodyList = new Dictionary<Guid, dynamic>();
-                while (csv.Read())
+                using (var csv = new CsvReader(streamReader))
                 {
-                    ContentBodyList[Guid.Parse(csv.GetField("UrlId"))] = csv.GetRecord(typeof(object));
+                    ContentBodyList = new Dictionary<Guid, dynamic>();
+                    while (csv.Read())
+                    {
+                        ContentBodyList[Guid.Parse(csv.GetField("UrlId"))] = csv.GetRecord(typeof(object));
+                    }
                 }
             }
         }
@@ -44,7 +52,7 @@ namespace ECMS.Services.ContentRepository
             ContentItem item = new ContentItem();
             item.Url = url_;
             item.Body = ContentBodyList[url_.Id];
-            
+
             //TODO: optimize this looping & serializing.
             using (TextReader sreader = new StringReader(JsonConvert.SerializeObject(item.Body)))
             {
@@ -55,14 +63,12 @@ namespace ECMS.Services.ContentRepository
                     {
                         var temp = jreader.Value.ToString();
                         var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(temp));
-                        DependencyManager.CachingService.Set<Task>("Task."+jreader.Value.GetHashCode().ToString(), task);
+                        tasks.Add(task);
                     }
                 }
-            }            
+                DependencyManager.CachingService.Set<List<Task>>("Task." + url_.Id, tasks);
+            }
             item.Head = GetHeadContentByViewName(url_);
-
-            //Task.WaitAll(tasks.ToArray());
-
             return item;
         }
 
@@ -85,7 +91,7 @@ namespace ECMS.Services.ContentRepository
         {
             //TODO: dummy implementation to be change
             //ContentItemHead itemhead = JsonConvert.DeserializeObject<ContentItemHead>("{ \"Title\" : \"page title\", \"KeyWords\" : \"page keywords\", \"Description\" : \"test page\"}");
-            ContentItemHead itemhead = ContentHeadList[0];
+            ContentItemHead itemhead = ContentHeadList[url_.View];
             return itemhead;
         }
 

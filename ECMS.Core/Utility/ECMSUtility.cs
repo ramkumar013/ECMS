@@ -12,8 +12,17 @@ namespace ECMS.Core.Utility
 {
     public class ECMSUtility
     {
-        static ECMSUtility()
+        public static int GetSiteId(string host)
         {
+            var settings = ECMSSettings.CMSSettingsList.Values.ToList();
+            foreach (KeyValuePair<int, ECMSSettings> pair in ECMSSettings.CMSSettingsList)
+            {
+                if (pair.Value.HostAliases.Split(new char[] { ',' }).Any(x => x == host))
+                {
+                    return pair.Key;
+                }
+            }
+            return -1;
         }
     }
 }

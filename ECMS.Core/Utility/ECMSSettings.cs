@@ -17,11 +17,13 @@ namespace ECMS.Core
         #endregion
 
         #region Static Properties
-        public static Dictionary<int, ECMSSettings> AppSettings = null; 
+        public static Dictionary<int, ECMSSettings> CMSSettingsList { get; set; }
         #endregion
 
         #region Instance Properties
-        public string CDNPath { get; set; } 
+        public string CDNPath { get; set; }
+        public string AppBasePath { get; set; }
+        public string HostAliases { get; set; }
         #endregion
 
         #region Static Constructor
@@ -35,12 +37,12 @@ namespace ECMS.Core
         public static void BeginLoadAppSettings()
         {
             //TODO: expose this method on http.
-            AppSettings = new Dictionary<int, ECMSSettings>();
+            CMSSettingsList = new Dictionary<int, ECMSSettings>();
             string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\configs");
             foreach (string dir in dirinfo)
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(dir);
-                AppSettings.Add(Convert.ToInt32(dirInfo.Name), LoadAppSettings(dirInfo));
+                CMSSettingsList.Add(Convert.ToInt32(dirInfo.Name), LoadAppSettings(dirInfo));
             }
         }
 
@@ -53,6 +55,8 @@ namespace ECMS.Core
                 {
                     ds.ReadXml(dirInfo_.FullName + "\\site.config");
                     setting.CDNPath = Convert.ToString(ds.Tables["configuration"].Rows[0]["CDNPath"]) + dirInfo_.Name;
+                    setting.AppBasePath = AppDomain.CurrentDomain.BaseDirectory;
+                    setting.HostAliases = Convert.ToString(ds.Tables["configuration"].Rows[0]["HttpAliases"]);
                 } 
             }
             catch (Exception ex)
@@ -67,9 +71,9 @@ namespace ECMS.Core
             get{
                 if (HttpContext.Current != null && HttpContext.Current.Items["siteid"]!=null)
                 {
-                    return AppSettings[Convert.ToInt32(HttpContext.Current.Items["siteid"])];
+                    return CMSSettingsList[Convert.ToInt32(HttpContext.Current.Items["siteid"])];
                 }
-                else
+                else 
                 {
                     return null;
                 }
@@ -78,7 +82,7 @@ namespace ECMS.Core
 
         public static ECMSSettings GetCurrentBySiteId(int siteId_)
         {
-            return AppSettings[siteId_];
+            return CMSSettingsList[siteId_];
         }
     }
 }

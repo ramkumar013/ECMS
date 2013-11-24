@@ -7,6 +7,7 @@ using System.Web;
 using ECMS.Core;
 using ECMS.Core.Entities;
 using NLog;
+using ECMS.Core.Utility;
 
 namespace ECMS.HttpModules
 {
@@ -26,11 +27,12 @@ namespace ECMS.HttpModules
         void context_BeginRequest(object sender, EventArgs e)
         {
             string url = string.Empty;
-            int siteId=1; // TODO : Remove HardCoding
+            int siteId=-1; 
             HttpContext context = HttpContext.Current;
             try
             {
-                if (!Utility.IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
+                siteId = ECMSUtility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
+                if (siteId < 0 && !Utility.IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {
                     return;
                 }

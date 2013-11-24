@@ -52,11 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
-    <Compile Include="ECMSGlobal.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>ECMSGlobal.settings</DependentUpon>
-    </Compile>
     <Compile Include="Framework\ContentRepositoryBase.cs" />
     <Compile Include="Utility\ECMSSettings.cs" />
     <Compile Include="Entities\ContentItem.cs" />
@@ -72,10 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ECMSGlobal.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>ECMSGlobal.Designer.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

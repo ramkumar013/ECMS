@@ -42,9 +42,8 @@ namespace ECMS.Services
 
         private Dictionary<string, ValidUrl> LoadFromDisk(int siteId_)
         {
-            
             Dictionary<string, ValidUrl> dict = new Dictionary<string, ValidUrl>();
-            string path = ConfigurationManager.AppSettings["UrlFilePath"] + siteId_ + "\\urls.json";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + siteId_ + "\\urls.json";
             ValidUrl temp = null;
             using (StreamReader sreader = new StreamReader(path))
             {

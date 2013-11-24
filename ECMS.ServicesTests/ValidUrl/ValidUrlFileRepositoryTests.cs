@@ -32,7 +32,7 @@ namespace ECMS.Services.ValidUrlService.Tests
             DependencyManager.CachingService = new InProcCachingService();
             ValidUrlFileRepository fileRepository = new ValidUrlFileRepository();
             ValidUrl url = fileRepository.GetByFriendlyUrl(1, "/");
-            Assert.AreEqual("/flights/home", url.View);
+            Assert.AreEqual("/index", url.View);
             Assert.AreEqual(true, url.Active);
             Assert.AreEqual(true, url.Index);
             Assert.AreEqual(200, url.StatusCode);

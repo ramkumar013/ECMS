@@ -16,42 +16,61 @@ namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        public static Dictionary<string, ContentItemHead> ContentHeadList = null;
-        public static Dictionary<Guid, dynamic> ContentBodyList = null;
-
+        public static Dictionary<int,Dictionary<string, ContentItemHead>> ContentHeadList = null;
+        public static Dictionary<int,Dictionary<Guid, dynamic>> ContentBodyList = null;  
+      
         static FileSystemRepository()
         {
-            using (StreamReader streamReader = new StreamReader(@"J:\MyProjects\ecms\WebSite\App_Data\1\default-template.et"))
+            string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\app_data");
+            foreach (string dir in dirinfo)
             {
-                using (var csv = new CsvReader(streamReader))
-                {
-                    ContentHeadList = new Dictionary<string, ContentItemHead>();
-                    while (csv.Read())
-                    {
-                        ContentHeadList[csv.GetField("ViewName")] = csv.GetRecord<ContentItemHead>();
-                    }
-                }
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                LoadMetaTags(dirInfo);
+                LoadPageContents(dirInfo);
             }
+        }
 
-            using (StreamReader streamReader = new StreamReader(@"J:\MyProjects\ecms\WebSite\App_Data\1\content.ect"))
+        private static void LoadMetaTags(DirectoryInfo dirInfo)
+        {
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\default-template.et"))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
-                    ContentBodyList = new Dictionary<Guid, dynamic>();
+                    ContentHeadList = new Dictionary<int, Dictionary<string, ContentItemHead>>();
+                    var temp = new Dictionary<string, ContentItemHead>();
                     while (csv.Read())
                     {
-                        ContentBodyList[Guid.Parse(csv.GetField("UrlId"))] = csv.GetRecord(typeof(object));
+                        temp[csv.GetField("ViewName")] = csv.GetRecord<ContentItemHead>();
                     }
+                    ContentHeadList[Convert.ToInt32(dirInfo.Name)] = temp;
                 }
             }
         }
+
+        private static void LoadPageContents(DirectoryInfo dirInfo)
+        {
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.ect"))
+            {
+                using (var csv = new CsvReader(streamReader))
+                {
+                    ContentBodyList = new Dictionary<int, Dictionary<Guid, dynamic>>();
+                    var temp = new Dictionary<Guid, dynamic>();
+                    while (csv.Read())
+                    {
+                        temp[Guid.Parse(csv.GetField("UrlId"))] = csv.GetRecord(typeof(object));
+                    }
+                    ContentBodyList[Convert.ToInt32(dirInfo.Name)] = temp;
+                }
+            }
+        }
+       
 
         public override ContentItem GetById(ValidUrl url_)
         {
             List<Task> tasks = new List<Task>();
             ContentItem item = new ContentItem();
             item.Url = url_;
-            item.Body = ContentBodyList[url_.Id];
+            item.Body = ContentBodyList[url_.SiteId][url_.Id];
 
             //TODO: optimize this looping & serializing.
             using (TextReader sreader = new StringReader(JsonConvert.SerializeObject(item.Body)))
@@ -91,7 +110,7 @@ namespace ECMS.Services.ContentRepository
         {
             //TODO: dummy implementation to be change
             //ContentItemHead itemhead = JsonConvert.DeserializeObject<ContentItemHead>("{ \"Title\" : \"page title\", \"KeyWords\" : \"page keywords\", \"Description\" : \"test page\"}");
-            ContentItemHead itemhead = ContentHeadList[url_.View];
+            ContentItemHead itemhead = ContentHeadList[url_.SiteId][url_.View];
             return itemhead;
         }
 

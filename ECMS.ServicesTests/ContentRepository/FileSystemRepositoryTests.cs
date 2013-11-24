@@ -17,7 +17,7 @@ namespace ECMS.Services.ContentRepository.Tests
         {
             DependencyManager.CachingService = new InProcCachingService();
             FileSystemRepository repo = new FileSystemRepository();
-            ContentItem item = repo.GetById(new ValidUrl() { Id = Guid.Parse("2ECA40A9-E580-4589-B89B-17458B61590D"), View = "Layout-Default" });
+            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("2ECA40A9-E580-4589-B89B-17458B61590D"), View = "Layout-Default" });
             Assert.IsNotNull(item);
         }
     }

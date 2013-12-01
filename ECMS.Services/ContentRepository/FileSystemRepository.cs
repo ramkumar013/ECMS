@@ -69,7 +69,6 @@ namespace ECMS.Services.ContentRepository
 
         public override ContentItem GetById(ValidUrl url_)
         {
-            List<Task> tasks = new List<Task>();
             ContentItem item = new ContentItem();
             item.Url = url_;
             JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
@@ -84,9 +83,12 @@ namespace ECMS.Services.ContentRepository
                     temp2 = (token as JProperty).Value.ToString();
                     if (temp2.Contains("@"))
                     {
-                        var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(temp2));
-                        tasks.Add(task);
-                        DependencyManager.CachingService.Set<List<Task>>("Task." + url_.Id, tasks);
+                        string hashCode = temp2.GetHashCode().ToString();
+                        if (DependencyManager.CachingService.Get<ITemplate>(hashCode) == null)
+                        {
+                            var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(hashCode, (token as JProperty).Value.ToString()));                            
+                            DependencyManager.CachingService.Set<Task>("Task." + hashCode, task);
+                        }
                     }
                 }
             }
@@ -118,11 +120,11 @@ namespace ECMS.Services.ContentRepository
             return itemhead;
         }
 
-        private void CreateTemplateAndSetInCache(string template_)
+        private void CreateTemplateAndSetInCache(string key_, string template_)
         {
             TemplateService service = new TemplateService();
             ITemplate template = service.CreateTemplate(template_, null, null);
-            DependencyManager.CachingService.Set<ITemplate>(template_.GetHashCode().ToString(), template);
+            DependencyManager.CachingService.Set<ITemplate>(key_, template);
         }
     }
 }

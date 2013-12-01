@@ -10,8 +10,6 @@ namespace ECMS.Core
 {
     public class DependencyManager
     {
-        public static IRouteManager RouteManager { get; set; }
-
         public static IValidURLRepository URLRepository { get; set; }
 
         public static ILogger Logger { get; set; }

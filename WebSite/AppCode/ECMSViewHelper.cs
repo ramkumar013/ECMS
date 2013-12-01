@@ -10,15 +10,20 @@ namespace WebApp.AppCode
 {
     public class ECMSViewHelper
     {
-        public static string Eval(string expression)
+        public static string Eval(object expression)
         {
+            throw new Exception();
             var task = DependencyManager.CachingService.Get<Task>("Task." + expression.GetHashCode().ToString());
-            if (task.IsCompleted == false)
+            if (task != null && task.IsCompleted == false)
             {
                 task.Wait();
+                TemplateService service = new TemplateService();
+                return service.Run(DependencyManager.CachingService.Get<ITemplate>(expression.GetHashCode().ToString()), null);
             }
-            TemplateService service = new TemplateService();
-            return service.Run(DependencyManager.CachingService.Get<ITemplate>(expression.GetHashCode().ToString()), null);
+            else
+            {
+                return expression.ToString();
+            }
         }
 
         public static string GetHref(string url_,string text, string attributes_)

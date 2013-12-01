@@ -111,7 +111,7 @@ namespace ECMS.Services.ContentRepository
         public override ContentItemHead GetHeadContentByViewName(ValidUrl url_)
         {
             JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
-            JObject jsonHead = ContentHeadList[url_.SiteId][url_.View];
+            JObject jsonHead = ContentHeadList[url_.SiteId][url_.View.Trim(new char[] { '/' })];
             jsonHead.MergeInto(jsonBody);
             ContentItemHead itemhead = new ContentItemHead();
             itemhead.LoadFromJObject(jsonHead);            

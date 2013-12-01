@@ -26,11 +26,11 @@ namespace WebSite.Controllers
             return View(this.GetView(), model);
         }
 
-        public ActionResult HandleServerError()
-        {
-            this.ControllerContext.HttpContext.Response.StatusCode = this.GetErrorStatusCode();
-            ViewBag.ErrorMessage = this.GetErrorMessage();
-            return View(this.GetErrorHandlerView());
-        }
+        //public ActionResult HandleServerError()
+        //{
+        //    this.ControllerContext.HttpContext.Response.StatusCode = this.GetErrorStatusCode();
+        //    ViewBag.ErrorMessage = this.GetErrorMessage();
+        //    return View(this.GetErrorHandlerView());
+        //}
     }
 }

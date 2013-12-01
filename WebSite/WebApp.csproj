@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppCode\CMSBaseController.cs" />
+    <Compile Include="AppCode\CustomErrorHandlerAttribute.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
     <Compile Include="AppCode\ECMSViewHelper.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -190,7 +191,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
@@ -272,10 +275,11 @@
     <None Include="App_Data\1\default-template.ect" />
     <Content Include="Configs\1\site.config" />
     <Content Include="App_Data\0\content.ect" />
-    <Content Include="App_Data\0\default-template.et" />
+    <None Include="App_Data\0\default-template.ect" />
     <Content Include="App_Data\0\urls.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configs\0\site.config" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -343,6 +347,13 @@
     <Content Include="Views\1\Layout-Default.cshtml" />
     <Content Include="Views\1\Index.cshtml" />
     <Content Include="Views\1\Header-Default-Demo.cshtml" />
+    <Content Include="Views\1\Ecms-Error-Handler.cshtml" />
+    <Content Include="Views\0\Ecms-Error-Handler.cshtml" />
+    <Content Include="Views\0\Footer-Default.cshtml" />
+    <Content Include="Views\0\Header-Default-Demo.cshtml" />
+    <Content Include="Views\0\Header-Default.cshtml" />
+    <Content Include="Views\0\Index.cshtml" />
+    <Content Include="Views\0\Layout-Default.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Public\" />

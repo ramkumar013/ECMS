@@ -28,7 +28,7 @@ namespace WebSite.App_Code
         {
             if (this.CurrentUrl!=null)
             {
-                return "~/Views/" + this.CurrentUrl.SiteId + "Ecms-Error-Handler.cshtml";    
+                return "~/Views/" + this.CurrentUrl.SiteId + "/Ecms-Error-Handler.cshtml";    
             }
             else
             {

@@ -22,6 +22,7 @@ TestResults
 # Build results
 [Bb]in/[Dd]ebug/
 [Bb]in/[Rr]elease/
+[Oo]bj/[Dd]ebug/
 [Dd]ebug/
 [Rr]elease/
 x64/
@@ -99,6 +100,7 @@ AppPackages/
 TestResults
 [Tt]est[Rr]esult*
 *.Cache
+*.cache
 ClientBin
 [Ss]tyle[Cc]op.*
 ~$*

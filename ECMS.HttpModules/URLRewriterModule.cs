@@ -32,7 +32,7 @@ namespace ECMS.HttpModules
             try
             {
                 siteId = ECMSUtility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
-                if (siteId < 0 && !Utility.IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
+                if (siteId < 0 || !Utility.IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {
                     return;
                 }

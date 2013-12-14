@@ -50,27 +50,13 @@
             viewrecords: true,
             sortorder: "asc",
             //editurl: 'server.php', // this is dummy existing url
-            caption: "Url Management",
-            gridComplete: function () {
-                //var ids = jQuery('#grdUrlList').jqGrid('getDataIDs');
-                //for (var i = 0; i < ids.length; i++) {
-                //    //be = "<div class=\"ui-pg-div\" onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + cl + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
-                //    be = "<input style='height:22px;width:50px;' type='button' value='Edit' onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + ids[i] + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" />";
-                //    var result = $('#grdUrlList').jqGrid('setRowData', ids[i], { act: be });
-                //    console.log(result);
-                //}
-                console.log('grid complete');
-            },
-            loadComplete: function (data) {
-                console.log(data);
-            }
+            caption: "Url Management"
         });
         function displayButtons(cellvalue, options, rowObject) {
-            var edit = "<div class=\"ui-pg-div\" onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + options.rowId + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
-                // save = "<input style='...' type='button' value='Save' onclick=\"jQuery('#theGrid').saveRow('" + options.rowId + "');\"  />",
-                // restore = "<input style='...' type='button' value='Restore' onclick=\"jQuery('#theGrid').restoreRow('" + options.rowId + "');\" />";
+            var edit = "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:520,height:280,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+            console.log(edit);
             return edit;
         }
-        jQuery("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 1360, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 1360, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
     });
 </script>

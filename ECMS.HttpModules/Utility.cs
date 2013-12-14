@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ECMS.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -35,6 +36,12 @@ namespace ECMS.HttpModules
                 }
             }
             return result;
+        }
+
+
+        public static ValidUrl GetValidUrlFromContext(HttpContextBase contextBase_)
+        {
+            return (contextBase_.Items["validUrl"] != null ? contextBase_.Items["validUrl"] as ValidUrl : null);
         }
     }
 }

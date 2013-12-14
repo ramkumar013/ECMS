@@ -65,7 +65,7 @@ namespace ECMS.HttpModules
             }
             catch (KeyNotFoundException ex)
             {
-                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, url + "::" + ex.ToString());
                 DependencyManager.Logger.Log(info);
                 HandleError(context, siteId, 404);
             }

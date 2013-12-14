@@ -354,6 +354,7 @@
     <Content Include="Views\0\Header-Default.cshtml" />
     <Content Include="Views\0\Index.cshtml" />
     <Content Include="Views\0\Layout-Default.cshtml" />
+    <Content Include="Views\Guid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Filters\" />

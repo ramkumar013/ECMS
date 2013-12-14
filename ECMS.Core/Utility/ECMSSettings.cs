@@ -67,7 +67,13 @@ namespace ECMS.Core
         }  
         #endregion
 
+        /// <summary>
+        /// Site id must be injected either from app_begin_request or action filter to make ECMSSettings of current portal available using this static property.
+        /// </summary>
         public static ECMSSettings Current { 
+
+
+            
             get{
                 if (HttpContext.Current != null && HttpContext.Current.Items["siteid"]!=null)
                 {

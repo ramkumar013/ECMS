@@ -1,4 +1,4 @@
-﻿using ECMS.Core.Utility;
+﻿using ECMS.Core.Utilities;
 using Newtonsoft.Json.Linq;
 namespace Newtonsoft.Json.Linq
 {

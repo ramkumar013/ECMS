@@ -9,9 +9,9 @@ using System.Reflection;
 using System.Web.Configuration;
 using System.IO;
 using Newtonsoft.Json.Linq;
-namespace ECMS.Core.Utility
+namespace ECMS.Core.Utilities
 {
-    public class ECMSUtility
+    public class Utility
     {
         public static int GetSiteId(string host)
         {
@@ -24,6 +24,10 @@ namespace ECMS.Core.Utility
                 }
             }
             return -1;
+        }
+        public static ValidUrl GetValidUrlFromContext(HttpContextBase contextBase_)
+        {
+            return (contextBase_.Items["validUrl"] != null ? contextBase_.Items["validUrl"] as ValidUrl : null);
         }
     }
 }

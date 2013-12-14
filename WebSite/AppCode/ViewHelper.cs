@@ -1,5 +1,6 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
+using ECMS.Core.Utilities;
 using ECMS.HttpModules;
 using NLog;
 using RazorEngine;

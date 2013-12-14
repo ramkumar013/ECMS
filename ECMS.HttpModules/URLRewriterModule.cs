@@ -7,7 +7,8 @@ using System.Web;
 using ECMS.Core;
 using ECMS.Core.Entities;
 using NLog;
-using ECMS.Core.Utility;
+using ECMS.Core.Utilities;
+using System.Configuration;
 
 namespace ECMS.HttpModules
 {
@@ -31,8 +32,8 @@ namespace ECMS.HttpModules
             HttpContext context = HttpContext.Current;
             try
             {
-                siteId = ECMSUtility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
-                if (siteId < 0 || !Utility.IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
+                siteId = Utility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
+                if (siteId < 0 || !IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {
                     return;
                 }
@@ -82,6 +83,29 @@ namespace ECMS.HttpModules
             context_.Items.Add("ResponseStatusCode", statusCode_);
             context_.RewritePath("\\Template\\HandleServerError");
             context_.Response.TrySkipIisCustomErrors = true;
+        }
+
+        public static bool IsValidUrlForRewrite(HttpContextBase httpContext)
+        {
+            UrlValidationConfig configSection = (UrlValidationConfig)ConfigurationManager.GetSection("UrlValidationConfig");
+            string url = httpContext.Request.Url.AbsolutePath.ToLower();
+            bool result = true;
+            foreach (UrlValidationElement item in configSection.ConfigCollection)
+            {
+                switch (item.Action)
+                {
+                    case "contains":
+                        string[] strs = item.InvalidValue.Split(new char[] { ',' });
+                        result = !strs.Any(x => url.Contains(x.ToLower()));
+                        break;
+                    case "action":
+                        result = url == item.InvalidValue;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return result;
         }
     }
 }

@@ -8,7 +8,7 @@ using WebSite.App_Code;
 using Newtonsoft;
 using Newtonsoft.Json;
 using ECMS.Core;
-using ECMS.Core.Utility;
+using ECMS.Core.Utilities;
 using ECMS.Services.Logging;
 namespace WebSite.Controllers
 {
@@ -17,6 +17,11 @@ namespace WebSite.Controllers
         public ActionResult Index()
         {
             return Compose();
+        }
+
+        public ActionResult Guid()
+        {
+            return View("~/Views/Guid.cshtml");
         }
 
         [ViewExecutionActionFilter]

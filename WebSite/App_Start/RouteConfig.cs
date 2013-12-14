@@ -1,5 +1,5 @@
 ﻿using ECMS.Core;
-using ECMS.Core.Utility;
+using ECMS.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

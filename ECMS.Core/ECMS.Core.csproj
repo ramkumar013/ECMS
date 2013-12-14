@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
+    <Compile Include="ECMSContextActionFilter.cs" />
     <Compile Include="Framework\ContentRepositoryBase.cs" />
     <Compile Include="Utility\ECMSExtensions.cs" />
     <Compile Include="Utility\ECMSSettings.cs" />

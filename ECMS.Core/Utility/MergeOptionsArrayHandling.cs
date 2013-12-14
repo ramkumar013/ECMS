@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECMS.Core.Utility
+namespace ECMS.Core.Utilities
 {
     //Code taken from this repo - https://github.com/MrAntix/Newtonsoft.Json
     /// <summary>

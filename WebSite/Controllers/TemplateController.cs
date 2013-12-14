@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using ECMS.Core;
 using ECMS.Core.Utilities;
 using ECMS.Services.Logging;
+using ECMS.Core.Framework;
 namespace WebSite.Controllers
 {
     public class TemplateController : CMSBaseController
@@ -27,7 +28,7 @@ namespace WebSite.Controllers
         [ViewExecutionActionFilter]
         public ActionResult Compose()
         {
-            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl);
+            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl, this.ViewType);
             return View(this.GetView(), model);
         }
 

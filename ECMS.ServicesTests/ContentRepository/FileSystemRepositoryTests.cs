@@ -7,6 +7,7 @@ using ECMS.Services.ContentRepository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ECMS.Core.Entities;
 using ECMS.Core;
+using ECMS.Core.Framework;
 namespace ECMS.Services.ContentRepository.Tests
 {
     [TestClass()]
@@ -17,7 +18,7 @@ namespace ECMS.Services.ContentRepository.Tests
         {
             DependencyManager.CachingService = new InProcCachingService();
             FileSystemRepository repo = new FileSystemRepository();
-            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("2ECA40A9-E580-4589-B89B-17458B61590D"), View = "Layout-Default" });
+            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("2ECA40A9-E580-4589-B89B-17458B61590D"), View = "Layout-Default" },ContentViewType.PUBLISH);
             Assert.IsNotNull(item);
             Assert.AreEqual("Explo Travel - Demo", item.Head.Title);
             Assert.AreEqual("Explo Travel", item.Head.KeyWords);
@@ -30,7 +31,7 @@ namespace ECMS.Services.ContentRepository.Tests
         {
             DependencyManager.CachingService = new InProcCachingService();
             FileSystemRepository repo = new FileSystemRepository();
-            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C57"), View = "Layout-Default" });
+            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C57"), View = "Layout-Default" }, ContentViewType.PUBLISH);
             Assert.IsNotNull(item);
             Assert.AreEqual("I am actual title", item.Head.Title);
             Assert.AreEqual("Explo Travel", item.Head.KeyWords);
@@ -43,7 +44,7 @@ namespace ECMS.Services.ContentRepository.Tests
         {
             DependencyManager.CachingService = new InProcCachingService();
             FileSystemRepository repo = new FileSystemRepository();
-            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C58"), View = "Layout-Default" });
+            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C58"), View = "Layout-Default" }, ContentViewType.PUBLISH);
             Assert.IsNotNull(item);
             //uncomment below line if you want to individual run this test.
             //Assert.AreEqual("Explo Travel - Demo", item.Head.Title);
@@ -57,7 +58,7 @@ namespace ECMS.Services.ContentRepository.Tests
         {
             DependencyManager.CachingService = new InProcCachingService();
             FileSystemRepository repo = new FileSystemRepository();
-            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C59"), View = "Layout-Default" });
+            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C59"), View = "Layout-Default" }, ContentViewType.PUBLISH);
             Assert.IsNotNull(item);
             //uncomment below line if you want to individual run this test.
             //Assert.AreEqual("Explo Travel - Demo", item.Head.Title);
@@ -70,7 +71,7 @@ namespace ECMS.Services.ContentRepository.Tests
         {
             DependencyManager.CachingService = new InProcCachingService();
             FileSystemRepository repo = new FileSystemRepository();
-            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C60"), View = "Layout-Default" });
+            ContentItem item = repo.GetById(new ValidUrl() { SiteId = 1, Id = Guid.Parse("A1ED7FDF-498D-43EE-BC81-9E23F0294C60"), View = "Layout-Default" }, ContentViewType.PUBLISH);
             Assert.IsNotNull(item);
             //uncomment below line if you want to individual run this test.
             //Assert.AreEqual("Explo Travel - Demo", item.Head.Title);

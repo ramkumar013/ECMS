@@ -18,7 +18,7 @@ namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        private static Dictionary<int, Dictionary<string, JObject>> ContentHeadList = null;
+        private static Dictionary<string, Dictionary<string, JObject>> ContentHeadList = null;
         private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;
         private const string ECMS_FILE_EXTENSION = ".etxt";
         static FileSystemRepository()
@@ -26,25 +26,29 @@ namespace ECMS.Services.ContentRepository
             string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\app_data");
             foreach (string dir in dirinfo)
             {
-                DirectoryInfo dirInfo = new DirectoryInfo(dir);
-                LoadMetaTags(dirInfo);
+                string[] contentTypes = new string[] { "10", "20" };
+                foreach (var type in contentTypes)
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                    LoadMetaTags(dirInfo, type);
+                }
                 //LoadPageContents(dirInfo);
             }
         }
 
-        private static void LoadMetaTags(DirectoryInfo dirInfo)
+        private static void LoadMetaTags(DirectoryInfo dirInfo, string contentTypeDir_)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\default-template.etxt"))
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\" + contentTypeDir_ + "\\default-template.etxt"))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
-                    ContentHeadList = new Dictionary<int, Dictionary<string, JObject>>();
+                    ContentHeadList = new Dictionary<string, Dictionary<string, JObject>>();
                     var temp = new Dictionary<string, JObject>();
                     while (csv.Read())
                     {
                         temp[csv.GetField("ViewName")] = JObject.FromObject(csv.GetRecord<object>());
                     }
-                    ContentHeadList[Convert.ToInt32(dirInfo.Name)] = temp;
+                    ContentHeadList[GetCacheKeyForContent(dirInfo.Name, contentTypeDir_)] = temp;
                 }
             }
         }
@@ -66,9 +70,10 @@ namespace ECMS.Services.ContentRepository
             }
         }
 
-        private JObject LoadPageContents(ValidUrl url_)
+        private JObject LoadPageContents(ValidUrl url_, ContentViewType viewType_)
         {
-            using (StreamReader streamReader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + url_.Id + ECMS_FILE_EXTENSION))
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + "\\" + url_.Id + ECMS_FILE_EXTENSION;
+            using (StreamReader streamReader = new StreamReader(filePath))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
@@ -79,13 +84,13 @@ namespace ECMS.Services.ContentRepository
         }
 
 
-        public override ContentItem GetById(ValidUrl url_)
+        public override ContentItem GetById(ValidUrl url_, ContentViewType viewType_)
         {
             ContentItem item = new ContentItem();
             item.Url = url_;
-            JObject jsonBody = LoadPageContents(url_);
+            JObject jsonBody = LoadPageContents(url_, viewType_);
             item.Body = jsonBody;
-            item.Head = GetHeadContentByViewName(url_, jsonBody);
+            item.Head = GetHeadContentByViewName(url_, jsonBody, viewType_);
 
             string temp2 = null;
             foreach (JToken token in jsonBody.Children())
@@ -107,34 +112,34 @@ namespace ECMS.Services.ContentRepository
             return item;
         }
 
-        public override ContentItem GetByUrl(ValidUrl url_)
+        public override ContentItem GetByUrl(ValidUrl url_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override void Save(ContentItem content_)
+        public override void Save(ContentItem content_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(ContentItem content_)
+        public override void Delete(ContentItem content_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override ContentItemHead GetHeadContentByViewName(ValidUrl url_)
+        public override ContentItemHead GetHeadContentByViewName(ValidUrl url_, ContentViewType viewType_)
         {
             JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
-            JObject jsonHead = ContentHeadList[url_.SiteId][url_.View.Trim(new char[] { '/' })];
+            JObject jsonHead = ContentHeadList[GetCacheKeyForContent(url_.SiteId.ToString(), Convert.ToInt32(viewType_).ToString())][url_.View.Trim(new char[] { '/' })];
             jsonHead.MergeInto(jsonBody);
             ContentItemHead itemhead = new ContentItemHead();
             itemhead.LoadFromJObject(jsonHead);
             return itemhead;
         }
 
-        public ContentItemHead GetHeadContentByViewName(ValidUrl url_, JObject jsonBody)
+        public ContentItemHead GetHeadContentByViewName(ValidUrl url_, JObject jsonBody, ContentViewType viewType_)
         {
-            JObject jsonHead = ContentHeadList[url_.SiteId][url_.View.Trim(new char[] { '/' })];
+            JObject jsonHead = ContentHeadList[GetCacheKeyForContent(url_.SiteId.ToString(), Convert.ToInt32(viewType_).ToString())][url_.View.Trim(new char[] { '/' })];
             jsonHead.MergeInto(jsonBody);
             ContentItemHead itemhead = new ContentItemHead();
             itemhead.LoadFromJObject(jsonHead);
@@ -146,6 +151,11 @@ namespace ECMS.Services.ContentRepository
             TemplateService service = new TemplateService();
             ITemplate template = service.CreateTemplate(template_, null, null);
             DependencyManager.CachingService.Set<ITemplate>(key_, template);
+        }
+
+        private static string GetCacheKeyForContent(string val1_, string val2_)
+        {
+            return string.Format("{0}-{1}", val1_, val2_);
         }
     }
 }

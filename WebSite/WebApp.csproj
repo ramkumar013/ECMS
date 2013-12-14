@@ -214,7 +214,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\0\test1.txt" />
     <Content Include="Content\jqGrid-4.5.4\css\ellipsis-xbl.xml" />
     <Content Include="Content\jqGrid-4.5.4\css\ui.jqgrid.css" />
     <Content Include="Content\jqGrid-4.5.4\js\Changes.txt" />
@@ -399,17 +398,23 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config" />
-    <Content Include="App_Data\0\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
-    <Content Include="App_Data\0\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
-    <Content Include="App_Data\0\default-template.etxt" />
+    <Content Include="App_Data\0\20\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
+    <Content Include="App_Data\0\20\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
+    <Content Include="App_Data\0\20\default-template.etxt" />
     <Content Include="Configs\1\site.config" />
     <Content Include="App_Data\0\urls.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configs\0\site.config" />
-    <Content Include="App_Data\1\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
-    <Content Include="App_Data\1\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
-    <Content Include="App_Data\1\default-template.etxt" />
+    <Content Include="App_Data\1\20\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
+    <Content Include="App_Data\1\20\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
+    <Content Include="App_Data\1\20\default-template.etxt" />
+    <Content Include="App_Data\1\10\default-template.etxt" />
+    <Content Include="App_Data\1\10\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
+    <Content Include="App_Data\1\10\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
+    <Content Include="App_Data\0\10\default-template.etxt" />
+    <Content Include="App_Data\0\10\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
+    <Content Include="App_Data\0\10\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

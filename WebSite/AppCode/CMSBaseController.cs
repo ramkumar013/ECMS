@@ -1,6 +1,8 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
+using ECMS.Core.Framework;
 using ECMS.Web.Locale;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +60,46 @@ namespace WebSite.App_Code
             builder.Replace("{21}", "<a href=\"/\">");
             builder.Replace("{22}", "</a>");
             return builder.ToString();
+        }
+        public ContentViewType ViewType
+        {
+            get
+            {
+                try
+                {
+                    if (this.HttpContext != null && this.HttpContext.Items["vm"] != null)
+                    {
+                        ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), this.HttpContext.Items["vm"].ToString(), true);
+                        return viewType;
+                    }
+                    else
+                    {
+                        return ContentViewType.PUBLISH;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                    if (CurrentUrl != null)
+                    {
+                        info.Properties.Add("URL", CurrentUrl.FriendlyUrl);
+                    }
+                    else
+                    {
+                        if (ControllerContext!=null && ControllerContext.HttpContext!=null && ControllerContext.HttpContext.Request.Url!=null)
+                        {
+                            info.Properties.Add("URL", ControllerContext.HttpContext.Request.Url);    
+                        }
+                    }
+                    DependencyManager.Logger.Log(info);
+                    return ContentViewType.PUBLISH;
+                }
+            }
+        }
+        public DeviceType DeviceType {
+            get {
+                return DeviceType.WEB;
+            }
         }
     }
 }

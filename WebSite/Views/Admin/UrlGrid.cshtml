@@ -6,10 +6,14 @@
 <link href="~/Content/jqGrid-4.5.4/src/css/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/jqGrid-4.5.4/src/css/ui.multiselect.css" rel="stylesheet" />
 <link href="~/Content/jqGrid-4.5.4/plugins/searchFilter.css" rel="stylesheet" />
-
 <script src="~/Scripts/jquery-2.0.3.js"></script>
-<script src="~/Content/jqGrid-4.5.4/js/jquery.jqGrid.src.js"></script>
 <script src="~/Content/jqGrid-4.5.4/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript">
+    $.jgrid.no_legacy_api = true;
+</script>
+
+<script src="~/Content/jqGrid-4.5.4/js/jquery.jqGrid.src.js"></script>
+
 <script src="~/Content/jqGrid-4.5.4/plugins/jquery.contextmenu.js"></script>
 <script src="~/Content/jqGrid-4.5.4/plugins/jquery.searchFilter.js"></script>
 <script src="~/Content/jqGrid-4.5.4/plugins/jquery.tablednd.js"></script>
@@ -27,52 +31,46 @@
             mtype: 'POST',
             datatype: "json",
             //colNames: ['Id', 'FriendlyUrl', 'View', 'ViewParameter', 'Active', 'Indexing', 'StatusCode'],
-            colNames: ['FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified','StatusCode','SiteId','Id','Action'],
+            colNames: ['Edit','FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified','StatusCode','Action'],
             colModel: [
-                { name: 'FriendlyUrl',          index: 'FriendlyUrl',   width: 155,     editable: true },
-                { name: 'View',                 index: 'View',          width: 190,     editable: true },                
-                { name: 'Indexing',             index: 'Indexing', width: 180, editable: true },
+                { name: 'Edit', index: 'Edit', width: 50, sortable: false,formatter:displayButtons },
+                { name: 'FriendlyUrl', index: 'FriendlyUrl', width: 155, editable: true },
+                { name: 'View',index: 'View', width: 190, editable: true },                
+                { name: 'Indexing', index: 'Indexing', width: 80, editable: true },
                 { name: 'Active', index: 'Active', width: 80, editable: true },
-                { name: 'LastModified', index: 'LastModified', width: 80, editable: true },
+                { name: 'LastModified', index: 'LastModified', width: 150, editable: true },
                 { name: 'StatusCode', index: 'StatusCode', width: 80, editable: true },
-                { name: 'SiteId', index: 'StatusCode', width: 80, editable: true, hidden: true },
-                { name: 'Id', index: 'StatusCode', width: 80, editable: true, hidden:true },
-                { name: 'Action', index: 'Action', width: 120, editable: true },
+                { name: 'Action', index: 'Action', width: 120, editable: true }
             ],
             rowNum: 10,
             rowTotal: 50,
-            rowList: [10, 20, 30],
+            rowList: [10, 20, 30,40,50],
             pager: '#pagerUrlList',
-            sortname: 'Id',
+            sortname: 'FriendlyUrl',
             viewrecords: true,
-            sortorder: "desc",
+            sortorder: "asc",
             //editurl: 'server.php', // this is dummy existing url
-            caption: "Urls Grid",
+            caption: "Url Management",
             gridComplete: function () {
-                var ids = jQuery('#grdUrlList').jqGrid('getDataIDs');
-                for (var i = 0; i < ids.length; i++) {
-                    var cl = ids[i];
-                    be = "<input style='height:22px;width:50px;' type='button' value='Edit' onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + cl + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" />";
-                    jQuery('#grdUrlList').jqGrid('setRowData', ids[i], { act: be });
-                }
+                //var ids = jQuery('#grdUrlList').jqGrid('getDataIDs');
+                //for (var i = 0; i < ids.length; i++) {
+                //    //be = "<div class=\"ui-pg-div\" onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + cl + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+                //    be = "<input style='height:22px;width:50px;' type='button' value='Edit' onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + ids[i] + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" />";
+                //    var result = $('#grdUrlList').jqGrid('setRowData', ids[i], { act: be });
+                //    console.log(result);
+                //}
                 console.log('grid complete');
             },
             loadComplete: function (data) {
                 console.log(data);
-            },
-            loadError: function (xhr, status, error)
-            {
-                console.log(xhr);
-                console.log(status);
-                console.log(error);
-            },
-            afterInsertRow: function (rowid, rowdata, rowelem) {
-                console.log(rowid);
-                console.log(rowdata);
-                console.log(rowelem);
             }
         });
-
-        jQuery("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: true, add: true, del: false }, {}, { width: 550, height: 360, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+        function displayButtons(cellvalue, options, rowObject) {
+            var edit = "<div class=\"ui-pg-div\" onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + options.rowId + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+                // save = "<input style='...' type='button' value='Save' onclick=\"jQuery('#theGrid').saveRow('" + options.rowId + "');\"  />",
+                // restore = "<input style='...' type='button' value='Restore' onclick=\"jQuery('#theGrid').restoreRow('" + options.rowId + "');\" />";
+            return edit;
+        }
+        jQuery("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 1360, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
     });
 </script>

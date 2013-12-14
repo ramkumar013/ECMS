@@ -13,14 +13,14 @@ namespace ECMS.Core.Utilities.Tests
         [TestMethod()]
         public void GetSiteIdTest()
         {
-            int actual = ECMSUtility.GetSiteId("/");
+            int actual = Utility.GetSiteId("/");
             int expected = 1;
             Assert.AreEqual(expected, actual);
         }
         [TestMethod()]
         public void GetSiteIdNegativeTest()
         {
-            int actual = ECMSUtility.GetSiteId("www.google.com");
+            int actual = Utility.GetSiteId("www.google.com");
             int expected = -1;
             Assert.AreEqual(expected, actual);
         }

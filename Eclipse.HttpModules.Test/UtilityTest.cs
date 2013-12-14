@@ -77,8 +77,8 @@ namespace Eclipse.HttpModules.Test
             httpRequest.Setup(x => x.Url).Returns(new Uri("http://www.explotravel.com/"));
             httpContext.Setup(x => x.Request).Returns(httpRequest.Object);
             bool expected = true; 
-            bool actual;
-            actual = Utility.IsValidUrlForRewrite(httpContext.Object);
+            bool actual=false;
+            //actual = Utility.IsValidUrlForRewrite(httpContext.Object);
             Assert.AreEqual(expected, actual);
         }
 
@@ -93,8 +93,8 @@ namespace Eclipse.HttpModules.Test
             httpRequest.Setup(x => x.Url).Returns(new Uri("http://www.explotravel.com/myservice.asmx"));
             httpContext.Setup(x => x.Request).Returns(httpRequest.Object);
             bool expected = false;
-            bool actual;
-            actual = Utility.IsValidUrlForRewrite(httpContext.Object);
+            bool actual = true;
+            //actual = Utility.IsValidUrlForRewrite(httpContext.Object);
             Assert.AreEqual(expected, actual);
         }
     }

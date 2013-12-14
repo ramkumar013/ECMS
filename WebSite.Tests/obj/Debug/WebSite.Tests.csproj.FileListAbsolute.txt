@@ -69,3 +69,5 @@ J:\MyProjects\ecms\WebSite.Tests\bin\Debug\CsvHelper.pdb
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\CsvHelper.xml
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\App_Data\0\urls.json
 J:\MyProjects\ecms\WebSite.Tests\bin\Debug\RazorEngine.pdb
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\Lib.Web.Mvc.dll
+J:\MyProjects\ecms\WebSite.Tests\bin\Debug\Lib.Web.Mvc.xml

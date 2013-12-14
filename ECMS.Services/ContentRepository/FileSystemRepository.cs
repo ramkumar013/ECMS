@@ -26,7 +26,7 @@ namespace ECMS.Services.ContentRepository
             string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\app_data");
             foreach (string dir in dirinfo)
             {
-                string[] contentTypes = new string[] { "10", "20" };
+                string[] contentTypes = new string[] { "10", "20" }; // TODO:
                 foreach (var type in contentTypes)
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(dir);

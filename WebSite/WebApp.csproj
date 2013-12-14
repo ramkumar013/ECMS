@@ -182,7 +182,7 @@
     <Compile Include="AppCode\CMSBaseController.cs" />
     <Compile Include="AppCode\CustomErrorHandlerAttribute.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
-    <Compile Include="AppCode\ECMSViewHelper.cs" />
+    <Compile Include="AppCode\ViewHelper.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

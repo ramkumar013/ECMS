@@ -1,4 +1,4 @@
-﻿@using WebApp.AppCode;
+﻿@using ECMS.Web;
 @{
     ViewBag.Title = "Test2";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +10,7 @@
 
 @for (int i = 0; i < 100; i++)
 {
-    @ECMSViewHelper.Eval("@DateTime.Now.ToString(\"hh-mm-ss fffff\")");
+    @ViewHelper.Eval("@DateTime.Now.ToString(\"hh-mm-ss fffff\")");
     <br />
 }
     <span> Ends at : @DateTime.Now.ToString("hh-mm-ss fffff");</span>

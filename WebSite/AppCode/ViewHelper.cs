@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-namespace WebApp.AppCode
+namespace ECMS.Web
 {
-    public class ECMSViewHelper
+    public class ViewHelper
     {
         public static string Eval(string expression)
         {
@@ -42,5 +42,6 @@ namespace WebApp.AppCode
             // TODO : Check if url is active or not.
             return string.Format("<a href={0}>{1}</a>", url_, text);
         }
+       
     }
 }

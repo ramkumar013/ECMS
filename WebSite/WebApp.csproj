@@ -203,7 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ECMSResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Images\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -356,6 +356,7 @@
     <Content Include="Views\0\Layout-Default.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Filters\" />
     <Folder Include="Views\Public\" />
   </ItemGroup>
   <ItemGroup>

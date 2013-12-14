@@ -67,9 +67,9 @@ namespace WebSite.App_Code
             {
                 try
                 {
-                    if (this.HttpContext != null && this.HttpContext.Items["vm"] != null)
+                    if (this.HttpContext != null && this.HttpContext.Request!=null && HttpContext.Request.QueryString["vm"] != null)
                     {
-                        ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), this.HttpContext.Items["vm"].ToString(), true);
+                        ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), this.HttpContext.Request.QueryString["vm"].ToString(), true);
                         return viewType;
                     }
                     else

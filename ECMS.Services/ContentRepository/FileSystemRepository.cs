@@ -18,7 +18,7 @@ namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        private static Dictionary<string, Dictionary<string, JObject>> ContentHeadList = null;
+        private static Dictionary<string, Dictionary<string, JObject>> ContentHeadList = new Dictionary<string, Dictionary<string, JObject>>();
         private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;
         private const string ECMS_FILE_EXTENSION = ".etxt";
         static FileSystemRepository()
@@ -42,7 +42,6 @@ namespace ECMS.Services.ContentRepository
             {
                 using (var csv = new CsvReader(streamReader))
                 {
-                    ContentHeadList = new Dictionary<string, Dictionary<string, JObject>>();
                     var temp = new Dictionary<string, JObject>();
                     while (csv.Read())
                     {

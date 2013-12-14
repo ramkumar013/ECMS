@@ -143,6 +143,13 @@ namespace ECMS.Services
         public void Delete(ValidUrl url_)
         {
             throw new NotImplementedException();
-        }    
+        }
+
+
+        public List<ValidUrl> GetAll(int siteId_, bool useCache_)
+        {
+            Dictionary<string, ValidUrl> dict = DependencyManager.CachingService.Get<Dictionary<string, ValidUrl>>(siteId_.ToString());
+            return dict.Values.ToList<ValidUrl>();
+        }
     }
 }

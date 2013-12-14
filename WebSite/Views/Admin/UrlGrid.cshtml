@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "UrlGrid";
+}
+<script src="~/Scripts/jquery-2.0.3.js"></script>
+<script src="~/Content/jqGrid-4.5.4/js/jquery.jqGrid.src.js"></script>
+<link href="~/Content/jqGrid-4.5.4/src/css/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/jqGrid-4.5.4/src/css/ui.multiselect.css" rel="stylesheet" />
+<link href="~/Content/jqGrid-4.5.4/plugins/ui.multiselect.css" rel="stylesheet" />
+<link href="~/Content/jqGrid-4.5.4/plugins/searchFilter.css" rel="stylesheet" />
+<script src="~/Content/jqGrid-4.5.4/js/i18n/grid.locale-en.js"></script>
+<script src="~/Content/jqGrid-4.5.4/plugins/jquery.contextmenu.js"></script>
+<script src="~/Content/jqGrid-4.5.4/plugins/jquery.searchFilter.js"></script>
+<script src="~/Content/jqGrid-4.5.4/plugins/jquery.tablednd.js"></script>
+<h2>UrlGrid</h2>
+<table id="grdUrlList">
+</table>
+<div id="pagerUrlList">
+</div>
+<script>
+    //$.jgrid.no_legacy_api = true;
+    //$.jgrid.useJSON = true;
+    $(document).ready(function () {
+        $("#grdUrlList").jqGrid({
+            url: "/admin/urls",
+            mtype: 'POST',
+            datatype: "json",
+            //colNames: ['Id', 'FriendlyUrl', 'View', 'ViewParameter', 'Active', 'Indexing', 'StatusCode'],
+            colNames: ['id', 'FriendlyUrl'],
+            colModel: [
+                { name: 'id',                   index: 'id', width: 155, editable: true },
+                { name: 'FriendlyUrl',          index: 'FriendlyUrl', width: 155, editable: true },
+                //{ name: 'View',                 index: 'View',          width: 90,  editable: true },
+                //{ name: 'ViewParameter',        index: 'ViewParameter', width: 100, editable: true },
+                //{ name: 'Active',               index: 'Active',        width: 80,  editable: true },
+                //{ name: 'Indexing',             index: 'Indexing',      width: 80,  editable: true },
+                //{ name: 'StatusCode',           index: 'StatusCode',    width: 80,  editable: true },
+            ],
+            rowNum: 10,
+            rowTotal: 50,
+            rowList: [10, 20, 30],
+            pager: '#pagerUrlList',
+            sortname: 'Id',
+            viewrecords: true,
+            sortorder: "desc",
+            //editurl: 'server.php', // this is dummy existing url
+            caption: "Urls Grid",
+            gridComplete: function () {
+                var ids = jQuery('#grdUrlList').jqGrid('getDataIDs');
+                for (var i = 0; i < ids.length; i++) {
+                    var cl = ids[i];
+                    be = "<input style='height:22px;width:50px;' type='button' value='Edit' onclick=\"jQuery('#grdUrlList').jqGrid('editGridRow'," + cl + ",{width:520,height:350,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" />";
+                    jQuery('#grdUrlList').jqGrid('setRowData', ids[i], { act: be });
+                }
+                console.log('grid complete');
+            },
+            loadComplete: function (data) {
+                console.log(data);
+            },
+            loadError: function (xhr, status, error)
+            {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            },
+            afterInsertRow: function (rowid, rowdata, rowelem) {
+                console.log(rowid);
+                console.log(rowdata);
+                console.log(rowelem);
+            }
+        });
+
+        jQuery("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: true, add: true, del: false }, {}, { width: 550, height: 360, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+    });
+</script>

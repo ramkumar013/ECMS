@@ -13,6 +13,7 @@ namespace ECMS.Core.Interfaces
         ValidUrl GetById(int urlId_);
         ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool useCache_);
         ValidUrl GetById(int siteId_, string friendlyurl_, bool useCache_);
+        List<ValidUrl> GetAll(int siteId_, bool useCache_);
         void Save(ValidUrl url_);
         void Update(ValidUrl url_);
         void Delete(ValidUrl url_);

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace WebApp
+namespace ECMS.Web
 {
     public class BundleConfig
     {

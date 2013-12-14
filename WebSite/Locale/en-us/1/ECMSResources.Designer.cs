@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ECMS.Locale {
+namespace ECMS.Web.Locale {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ECMS.Locale {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebApp.Locale.en_us._1.ECMSResources", typeof(ECMSResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ECMS.Web.Locale.en_us._1.ECMSResources", typeof(ECMSResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace ECMS.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {11}The page you are looking for doesn&apos;t exists on this site. Please {21}click here{22} to go to home.{12}
+        ///   Looks up a localized string similar to {11}The page you are looking for doesn&apos;t exists on this site. {21}click here{22} to go to home.{12}
         ///.
         /// </summary>
         internal static string HTTPError_404 {

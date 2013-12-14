@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using WebApp.AppCode;
-namespace WebApp
+namespace ECMS.Web
 {
     public class FilterConfig
     {

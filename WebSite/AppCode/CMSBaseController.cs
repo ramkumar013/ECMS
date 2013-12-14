@@ -1,6 +1,6 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
-using ECMS.Locale;
+using ECMS.Web.Locale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,8 +55,8 @@ namespace WebSite.App_Code
             StringBuilder builder = new StringBuilder(ECMSResources.ResourceManager.GetObject(ECMSSettings.HTTPERROR_LOCALE_PREFIX + GetErrorStatusCode().ToString()).ToString());
             builder.Replace("{11}", "<h2>");
             builder.Replace("{12}", "</h2>");
-            builder.Replace("{21}", "<a href=\"//>");
-            builder.Replace("{22}", "</a");
+            builder.Replace("{21}", "<a href=\"/\">");
+            builder.Replace("{22}", "</a>");
             return builder.ToString();
         }
     }

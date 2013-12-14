@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using WebSite.Models;
 
-namespace WebApp
+namespace ECMS.Web
 {
     public static class AuthConfig
     {

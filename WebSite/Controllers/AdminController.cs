@@ -13,8 +13,6 @@ namespace WebSite.Controllers
 {
     public class AdminController : Controller
     {
-        //
-        // GET: /Admin/
 
         public ActionResult Index()
         {
@@ -60,9 +58,32 @@ namespace WebSite.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public string UpdateUrl(ValidUrl url_)
+        public ActionResult UpdateUrl(ValidUrl url_)
         {
-            throw new NotImplementedException();
+            string result = string.Empty;
+            try
+            {
+                url_.LastModified = DateTime.Now;
+                if (url_.Id == Guid.Empty)
+                {
+                    DependencyManager.URLRepository.Save(url_);
+                }
+                else
+                {
+                    DependencyManager.URLRepository.Update(url_);
+                }
+
+                result = "Url Updated Successfully.";
+            }
+            catch (Exception ex)
+            {
+                Response.Clear();
+                Response.ClearHeaders();
+                Response.ClearContent();
+                Response.StatusCode = 500;
+                Response.StatusDescription = "Failed : " + ex.Message;
+            }
+            return Json(result);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ECMS.Core
@@ -12,10 +13,14 @@ namespace ECMS.Core
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            int siteid = Utility.GetSiteId(filterContext.Controller.ControllerContext.HttpContext.Request.Url.Host);
-            if (siteid>-1)
+            HttpContextBase context = filterContext.Controller.ControllerContext.HttpContext;
+            if (context.Items["siteid"] == null)
             {
-                filterContext.Controller.ControllerContext.HttpContext.Items.Add("siteid", siteid);
+                int siteid = Utility.GetSiteId(context.Request.Url.Host);
+                if (siteid > -1)
+                {
+                    context.Items.Add("siteid", siteid);
+                }
             }
         }
     }

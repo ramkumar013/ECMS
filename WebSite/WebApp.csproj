@@ -271,10 +271,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NLog.config" />
-    <Content Include="App_Data\1\content.ect" />
+    <Content Include="App_Data\0\2ECA40A9-E580-4589-B89B-17458B61590D.ect" />
+    <Content Include="App_Data\1\2ECA40A9-E580-4589-B89B-17458B61590D.ect" />
+    <Content Include="App_Data\1\2AF06EED-3850-4E78-B8AE-C3B325849F00.ect" />
     <None Include="App_Data\1\default-template.ect" />
     <Content Include="Configs\1\site.config" />
-    <Content Include="App_Data\0\content.ect" />
+    <Content Include="App_Data\0\2AF06EED-3850-4E78-B8AE-C3B325849F00.ect" />
     <None Include="App_Data\0\default-template.ect" />
     <Content Include="App_Data\0\urls.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

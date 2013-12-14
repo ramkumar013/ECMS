@@ -19,8 +19,8 @@ namespace ECMS.Services.ContentRepository
     public class FileSystemRepository : ContentRepositoryBase
     {
         private static Dictionary<int, Dictionary<string, JObject>> ContentHeadList = null;
-        private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;  
-      
+        private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;
+        private const string ECMS_FILE_EXTENSION = ".etxt";
         static FileSystemRepository()
         {
             string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\app_data");
@@ -28,13 +28,13 @@ namespace ECMS.Services.ContentRepository
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(dir);
                 LoadMetaTags(dirInfo);
-                LoadPageContents(dirInfo);
+                //LoadPageContents(dirInfo);
             }
         }
 
         private static void LoadMetaTags(DirectoryInfo dirInfo)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\default-template.ect"))
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\default-template.etxt"))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
@@ -51,7 +51,7 @@ namespace ECMS.Services.ContentRepository
 
         private static void LoadPageContents(DirectoryInfo dirInfo)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.ect"))
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.etxt" ))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
@@ -65,16 +65,28 @@ namespace ECMS.Services.ContentRepository
                 }
             }
         }
-       
+
+        private JObject LoadPageContents(ValidUrl url_)
+        {
+            using (StreamReader streamReader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + url_.Id + ECMS_FILE_EXTENSION))
+            {
+                using (var csv = new CsvReader(streamReader))
+                {
+                    csv.Read();
+                    return JObject.FromObject(csv.GetRecord<object>());
+                }
+            }
+        }
+
 
         public override ContentItem GetById(ValidUrl url_)
         {
             ContentItem item = new ContentItem();
             item.Url = url_;
-            JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
+            JObject jsonBody = LoadPageContents(url_);
             item.Body = jsonBody;
-            item.Head = GetHeadContentByViewName(url_);
-            
+            item.Head = GetHeadContentByViewName(url_, jsonBody);
+
             string temp2 = null;
             foreach (JToken token in jsonBody.Children())
             {
@@ -86,7 +98,7 @@ namespace ECMS.Services.ContentRepository
                         string hashCode = temp2.GetHashCode().ToString();
                         if (DependencyManager.CachingService.Get<ITemplate>(hashCode) == null)
                         {
-                            var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(hashCode, (token as JProperty).Value.ToString()));                            
+                            var task = Task.Factory.StartNew(() => CreateTemplateAndSetInCache(hashCode, (token as JProperty).Value.ToString()));
                             DependencyManager.CachingService.Set<Task>("Task." + hashCode, task);
                         }
                     }
@@ -94,7 +106,7 @@ namespace ECMS.Services.ContentRepository
             }
             return item;
         }
-        
+
         public override ContentItem GetByUrl(ValidUrl url_)
         {
             throw new NotImplementedException();
@@ -116,7 +128,16 @@ namespace ECMS.Services.ContentRepository
             JObject jsonHead = ContentHeadList[url_.SiteId][url_.View.Trim(new char[] { '/' })];
             jsonHead.MergeInto(jsonBody);
             ContentItemHead itemhead = new ContentItemHead();
-            itemhead.LoadFromJObject(jsonHead);            
+            itemhead.LoadFromJObject(jsonHead);
+            return itemhead;
+        }
+
+        public ContentItemHead GetHeadContentByViewName(ValidUrl url_, JObject jsonBody)
+        {
+            JObject jsonHead = ContentHeadList[url_.SiteId][url_.View.Trim(new char[] { '/' })];
+            jsonHead.MergeInto(jsonBody);
+            ContentItemHead itemhead = new ContentItemHead();
+            itemhead.LoadFromJObject(jsonHead);
             return itemhead;
         }
 

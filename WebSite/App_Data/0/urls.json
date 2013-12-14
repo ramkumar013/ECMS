@@ -18,6 +18,15 @@
 		"Action":"/Template/Compose?cityname=orlando",
 	},
 	"url": {
+		"FriendlyUrl": "/admin/",
+		"View": "/Layout-Default",
+		"Active": "True",
+		"Indexing": "True",
+		"StatusCode": 200,
+		"Id":"2ECA40A9-E580-4589-B09B-17458B61590D",
+		"Action":"/admin",
+	},
+	"url": {
 		"FriendlyUrl": "/flights/cheap-flights-to-new-york-city",
 		"View": "/flights/destination-city",
 		"Active": "True",

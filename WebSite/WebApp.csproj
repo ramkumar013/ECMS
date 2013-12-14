@@ -489,6 +489,7 @@
     <Content Include="Views\0\Layout-Default.cshtml" />
     <Content Include="Views\Guid.cshtml" />
     <Content Include="Views\Admin\UrlGrid.cshtml" />
+    <Content Include="Views\Admin\UrlGridV2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Filters\" />

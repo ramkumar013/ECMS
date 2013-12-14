@@ -1,12 +1,14 @@
-﻿@{
+﻿   @{
     ViewBag.Title = "UrlGrid";
+
 }
-<script src="~/Scripts/jquery-2.0.3.js"></script>
-<script src="~/Content/jqGrid-4.5.4/js/jquery.jqGrid.src.js"></script>
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/jqGrid-4.5.4/src/css/ui.jqgrid.css" rel="stylesheet" />
 <link href="~/Content/jqGrid-4.5.4/src/css/ui.multiselect.css" rel="stylesheet" />
-<link href="~/Content/jqGrid-4.5.4/plugins/ui.multiselect.css" rel="stylesheet" />
 <link href="~/Content/jqGrid-4.5.4/plugins/searchFilter.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-2.0.3.js"></script>
+<script src="~/Content/jqGrid-4.5.4/js/jquery.jqGrid.src.js"></script>
 <script src="~/Content/jqGrid-4.5.4/js/i18n/grid.locale-en.js"></script>
 <script src="~/Content/jqGrid-4.5.4/plugins/jquery.contextmenu.js"></script>
 <script src="~/Content/jqGrid-4.5.4/plugins/jquery.searchFilter.js"></script>
@@ -25,15 +27,17 @@
             mtype: 'POST',
             datatype: "json",
             //colNames: ['Id', 'FriendlyUrl', 'View', 'ViewParameter', 'Active', 'Indexing', 'StatusCode'],
-            colNames: ['id', 'FriendlyUrl'],
+            colNames: ['FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified','StatusCode','SiteId','Id','Action'],
             colModel: [
-                { name: 'id',                   index: 'id', width: 155, editable: true },
-                { name: 'FriendlyUrl',          index: 'FriendlyUrl', width: 155, editable: true },
-                //{ name: 'View',                 index: 'View',          width: 90,  editable: true },
-                //{ name: 'ViewParameter',        index: 'ViewParameter', width: 100, editable: true },
-                //{ name: 'Active',               index: 'Active',        width: 80,  editable: true },
-                //{ name: 'Indexing',             index: 'Indexing',      width: 80,  editable: true },
-                //{ name: 'StatusCode',           index: 'StatusCode',    width: 80,  editable: true },
+                { name: 'FriendlyUrl',          index: 'FriendlyUrl',   width: 155,     editable: true },
+                { name: 'View',                 index: 'View',          width: 190,     editable: true },                
+                { name: 'Indexing',             index: 'Indexing', width: 180, editable: true },
+                { name: 'Active', index: 'Active', width: 80, editable: true },
+                { name: 'LastModified', index: 'LastModified', width: 80, editable: true },
+                { name: 'StatusCode', index: 'StatusCode', width: 80, editable: true },
+                { name: 'SiteId', index: 'StatusCode', width: 80, editable: true, hidden: true },
+                { name: 'Id', index: 'StatusCode', width: 80, editable: true, hidden:true },
+                { name: 'Action', index: 'Action', width: 120, editable: true },
             ],
             rowNum: 10,
             rowTotal: 50,

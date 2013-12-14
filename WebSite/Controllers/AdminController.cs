@@ -60,6 +60,12 @@ namespace WebSite.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+        public string UpdateUrl(ValidUrl url_)
+        {
+            throw new NotImplementedException();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult UrlsV2()
         {
             JqGridResponse response = new JqGridResponse()

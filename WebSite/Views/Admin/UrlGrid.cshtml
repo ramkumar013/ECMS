@@ -31,16 +31,15 @@
             mtype: 'POST',
             datatype: "json",
             //colNames: ['Id', 'FriendlyUrl', 'View', 'ViewParameter', 'Active', 'Indexing', 'StatusCode'],
-            colNames: ['Edit','FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified','StatusCode','Action'],
+            colNames: ['Edit','FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified','StatusCode'],
             colModel: [
                 { name: 'Edit', index: 'Edit', width: 50, sortable: false,formatter:displayButtons },
-                { name: 'FriendlyUrl', index: 'FriendlyUrl', width: 155, editable: true },
-                { name: 'View',index: 'View', width: 190, editable: true },                
+                { name: 'FriendlyUrl', index: 'FriendlyUrl', width: 220, editable: true },
+                { name: 'View',index: 'View', width: 220, editable: true },                
                 { name: 'Indexing', index: 'Indexing', width: 80, editable: true },
                 { name: 'Active', index: 'Active', width: 80, editable: true },
-                { name: 'LastModified', index: 'LastModified', width: 150, editable: true },
+                { name: 'LastModified', index: 'LastModified', width: 150, editable: false },
                 { name: 'StatusCode', index: 'StatusCode', width: 80, editable: true },
-                { name: 'Action', index: 'Action', width: 120, editable: true }
             ],
             rowNum: 10,
             rowTotal: 50,
@@ -49,14 +48,12 @@
             sortname: 'FriendlyUrl',
             viewrecords: true,
             sortorder: "asc",
-            //editurl: 'server.php', // this is dummy existing url
+            editurl: '/admin/UpdateUrl',
             caption: "Url Management"
         });
         function displayButtons(cellvalue, options, rowObject) {
-            var edit = "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:520,height:280,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
-            console.log(edit);
-            return edit;
+            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:520,height:280,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
         }
-        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 1360, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 1260, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
     });
 </script>

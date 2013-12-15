@@ -1,4 +1,4 @@
 ECMS
 ====
 
-Explo Content Management System.
+Extreme Content Management System.

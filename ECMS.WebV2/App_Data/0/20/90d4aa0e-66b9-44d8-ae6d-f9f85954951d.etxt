@@ -1,0 +1,2 @@
+UrlId,SearchWidgetHeading,MainHeading,ImageHeading,Para1Heading,Para1Content,Para2Content
+2AF06EED-3850-4E78-B8AE-C3B325849F00,Book Cheap flight tickets to @HttpContext.Current.Request.QueryString["CityName"].ToLower(),About ExploTravel,Save upto 65%,Book cheap tickets at explo travel book tickets at explo travel with discounts upto 65%. Exclusive deals available !!!,Why Book with Explo Travel,"Low fare gauranteed,convient to buy,Friendly Customer Care"

@@ -92,17 +92,23 @@ namespace ECMS.HttpModules
             bool result = true;
             foreach (UrlValidationElement item in configSection.ConfigCollection)
             {
+                string[] strs = null;
                 switch (item.Action)
                 {
                     case "contains":
-                        string[] strs = item.InvalidValue.Split(new char[] { ',' });
+                        strs = item.InvalidValue.Split(new char[] { ',' });
                         result = !strs.Any(x => url.Contains(x.ToLower()));
                         break;
-                    case "action":
-                        result = url == item.InvalidValue;
+                    case "equal":
+                        strs = item.InvalidValue.Split(new char[] { ',' });
+                        result = !strs.Any(x => url==x.ToLower());
                         break;
                     default:
                         break;
+                }
+                if (!result)
+                {
+                    break;
                 }
             }
             return result;

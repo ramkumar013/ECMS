@@ -1,20 +1,21 @@
-﻿using System;
+﻿using DotNetOpenAuth.AspNet;
+using Microsoft.Web.WebPages.OAuth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
-using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using ECMS.WebV2.Filters;
 using ECMS.WebV2.Models;
+using System.Configuration;
 
 namespace ECMS.WebV2.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -132,7 +133,8 @@ namespace ECMS.WebV2.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.HasLocalPassword = true;
+            //ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
@@ -144,7 +146,7 @@ namespace ECMS.WebV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            bool hasLocalAccount = true;// OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.HasLocalPassword = hasLocalAccount;
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (hasLocalAccount)
@@ -189,9 +191,9 @@ namespace ECMS.WebV2.Controllers
                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
+                        ModelState.AddModelError("", e);
                     }
                 }
             }
@@ -262,16 +264,14 @@ namespace ECMS.WebV2.Controllers
 
             if (ModelState.IsValid)
             {
-                // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                var userId = WebSecurity.GetUserId(model.UserName);
+                if (userId == -1)
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                    // Check if user already exists
-                    if (user == null)
-                    {
-                        // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
-                        db.SaveChanges();
+                    string str = ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString;
+                    DefaultUserProfileService service = new DefaultUserProfileService(str);
+                    ECMSMember profile = new ECMSMember();
+                    profile.UserName = model.UserName;
+                    service.CreateProfile(profile);
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
@@ -282,7 +282,7 @@ namespace ECMS.WebV2.Controllers
                     {
                         ModelState.AddModelError("UserName", "User name already exists. Please enter a different user name.");
                     }
-                }
+
             }
 
             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
@@ -324,7 +324,7 @@ namespace ECMS.WebV2.Controllers
                 });
             }
 
-            ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.ShowRemoveButton = externalLogins.Count > 1 ;//|| OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 

@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExtendedMongoMembership">
+      <HintPath>..\..\EMongoMembership\ExtendedMongoMembership\bin\Debug\ExtendedMongoMembership.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -189,7 +192,9 @@
   <ItemGroup>
     <Compile Include="AppCode\CMSBaseController.cs" />
     <Compile Include="AppCode\CustomErrorHandlerAttribute.cs" />
+    <Compile Include="AppCode\DefaultUserProfileService.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
+    <Compile Include="AppCode\Member.cs" />
     <Compile Include="AppCode\ViewHelper.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -474,7 +479,9 @@
     <Content Include="static\1\img\twitter.jpg" />
     <Content Include="static\1\privacy.html" />
     <Content Include="static\1\styles\style.css" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

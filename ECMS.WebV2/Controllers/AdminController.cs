@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace ECMS.WebV2
 {
+    [Authorize]
     public class AdminController : CMSBaseController
     {
 

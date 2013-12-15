@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NLog.Interface</id>
+    <version>1.0.0</version>
+    <authors>Ufuk Hacıoğulları</authors>
+    <owners>Ufuk Hacıoğulları</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/uhaciogullari/NLog.Interface</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Defines an abstraction for Logger public interface.</description>
+    <summary>Contains an interface extracted from NLog.Logger class. It can be used to replace with mocks in unit tests. Implementation class is called LoggerAdapter.</summary>
+    <dependencies>
+      <dependency id="NLog" version="[2.0.0.2000]" />
+    </dependencies>
+  </metadata>
+</package>

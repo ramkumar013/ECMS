@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "UrlGrid";
+}
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jqGrid-4.5.4/src/css/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/jqGrid-4.5.4/src/css/ui.multiselect.css" rel="stylesheet" />
+<link href="~/Content/jqGrid-4.5.4/plugins/searchFilter.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-2.0.3.js"></script>
+<script src="~/Content/jqGrid-4.5.4/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript">
+    $.jgrid.no_legacy_api = true;
+</script>
+<script src="~/Content/jqGrid-4.5.4/js/jquery.jqGrid.src.js"></script>
+<script src="~/Content/jqGrid-4.5.4/plugins/jquery.contextmenu.js"></script>
+<script src="~/Content/jqGrid-4.5.4/plugins/jquery.searchFilter.js"></script>
+<script src="~/Content/jqGrid-4.5.4/plugins/jquery.tablednd.js"></script>
+<h2>UrlGrid</h2>
+<table id="grdUrlList">
+</table>
+<div id="pagerUrlList">
+</div>
+<script>
+    $(document).ready(function () {
+        $("#grdUrlList").jqGrid({
+            url: "/admin/urls",
+            mtype: 'POST',
+            datatype: "json",
+            colNames: ['Edit', 'FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified', 'StatusCode'],
+            colModel: [
+                { name: 'Edit', index: 'Edit', width: 50, sortable: false, formatter: displayButtons },
+                { name: 'FriendlyUrl', index: 'FriendlyUrl', width: 220, editable: true, editrules: { required: true } },
+                { name: 'View', index: 'View', width: 220, editable: true, editrules: { required: true } },
+                { name: 'Indexing', index: 'Indexing', width: 80, edittype: "checkbox", editable: true, editoptions: { value: "True:False" }, editrules: { required: true } },
+                { name: 'Active', index: 'Active', width: 80, editable: true,edittype: "checkbox",editrules: { required: true } },
+                { name: 'LastModified', index: 'LastModified', width: 150, editable: false },
+                { name: 'StatusCode', index: 'StatusCode', width: 80, editable: true,edittype: "select",editoptions: {value:"200:200;301:301;302:302"}, editrules: { required: true } },
+            ],
+            rowNum: 10,
+            rowTotal: 50,
+            rowList: [10, 20, 30, 40, 50],
+            pager: '#pagerUrlList',
+            sortname: 'FriendlyUrl',
+            viewrecords: true,
+            sortorder: "asc",
+            editurl: '/admin/UpdateUrl',
+            caption: "Url Management"
+        });
+        function displayButtons(cellvalue, options, rowObject) {
+            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:550,height:230,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+        }
+        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 230, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+    });
+</script>

@@ -13,7 +13,7 @@ namespace ECMS.Core
     {
         #region Constants
         public const string DEFAULT_LOGGER = "default";
-        public const string HTTPERROR_LOCALE_PREFIX = "HTTPError."; 
+        public const string HTTPERROR_LOCALE_PREFIX = "HTTPError"; 
         #endregion
 
         #region Static Properties

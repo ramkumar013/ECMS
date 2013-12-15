@@ -1,0 +1,36 @@
+﻿@using ECMS.Core
+@using ECMS.WebV2
+@model ECMS.Core.Entities.ContentItem
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="@ECMSSettings.Current.CDNPath/styles/style.css" rel="stylesheet" type="text/css" />
+    <title>@Model.Head.Title</title>
+</head>
+<body>
+    @Html.Partial("~/Views/1/Header-Default.cshtml");
+        <div id="about">
+            <div id="about-section-left">
+                <h1>@Model.Body.MainHeading</h1>
+                <h1>@ViewHelper.Eval(Model.Body.SearchWidgetHeading)</h1>                
+                <h2 align="justify">
+                    @Model.Body.Para1Content.ToString()
+                    <br />
+                    <br />
+                    @Model.Body.Para2Content.ToString()</h2>
+            </div>
+            <div id="social">
+                <img src="@ECMSSettings.Current.CDNPath/img/social.jpg" />
+            </div>
+            <div id="about-section-right">
+                <img src="@ECMSSettings.Current.CDNPath/img/partners.jpg" width="323" height="373" /><img src="@ECMSSettings.Current.CDNPath/img/banner.jpg" width="323" height="271" />
+            </div>
+        </div>
+     @Html.Partial("~/Views/1/Footer-Default.cshtml");
+</body>
+</html>

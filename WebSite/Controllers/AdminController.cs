@@ -1,7 +1,7 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
 using ECMS.Web;
-using Lib.Web.Mvc.JQuery.JqGrid;
+//using Lib.Web.Mvc.JQuery.JqGrid;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -88,21 +88,21 @@ namespace ECMS.Web
             return Json(result);
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult UrlsV2()
-        {
-            JqGridResponse response = new JqGridResponse()
-            {
-                TotalPagesCount = 1,
-                PageIndex = 1,
-                TotalRecordsCount = 1,
-                //Footer data
-                UserData = string.Empty
-            };
-            response.Records.AddRange(from product in DependencyManager.URLRepository.GetAll(0, true)
-                                      select new JqGridRecord<ValidUrl>(Convert.ToString(product.Id), product));
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public JsonResult UrlsV2()
+        //{
+        //    JqGridResponse response = new JqGridResponse()
+        //    {
+        //        TotalPagesCount = 1,
+        //        PageIndex = 1,
+        //        TotalRecordsCount = 1,
+        //        //Footer data
+        //        UserData = string.Empty
+        //    };
+        //    response.Records.AddRange(from product in DependencyManager.URLRepository.GetAll(0, true)
+        //                              select new JqGridRecord<ValidUrl>(Convert.ToString(product.Id), product));
 
-            return new JqGridJsonResult() { Data = response };
-        }
+        //    return new JqGridJsonResult() { Data = response };
+        //}
     }
 }

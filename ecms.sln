@@ -7,18 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.Services", "ECMS.Servi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{73B71608-CBB9-4B17-971B-879579B93943}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.ServicesTests", "ECMS.ServicesTests\ECMS.ServicesTests.csproj", "{9F40BB3D-B451-4472-B257-E2917EC2CBBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.Services.Tests", "ECMS.ServicesTests\ECMS.Services.Tests.csproj", "{9F40BB3D-B451-4472-B257-E2917EC2CBBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.HttpModules", "ECMS.HttpModules\ECMS.HttpModules.csproj", "{04424668-44A0-4C98-8D26-32A87DEA42FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.HttpModulesTest", "Eclipse.HttpModules.Test\ECMS.HttpModulesTest.csproj", "{C9074162-B72B-438D-A86B-9101683E91F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.HttpModules.Test", "Eclipse.HttpModules.Test\ECMS.HttpModules.Test.csproj", "{C9074162-B72B-438D-A86B-9101683E91F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93A87373-28FE-43CD-B9B6-D32C51BBACF8}"
 	ProjectSection(SolutionItems) = preProject
 		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.CoreTests", "ECMS.CoreTests\ECMS.CoreTests.csproj", "{50B9FAA8-874F-421A-9686-D446D3F827B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMS.Core.Tests", "ECMS.CoreTests\ECMS.Core.Tests.csproj", "{50B9FAA8-874F-421A-9686-D446D3F827B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{079A32D8-F964-4ACA-B9FF-CE0878537FA5}"
 	ProjectSection(SolutionItems) = preProject

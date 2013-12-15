@@ -45,6 +45,9 @@ x64/
 *.vspscc
 *.vssscc
 .builds
+*.txt
+*.cache
+*.dll.config
 
 # Visual C++ cache files
 ipch/
@@ -123,3 +126,4 @@ bin
 /WebSite/obj
 /ECMS.Services/obj
 /ecms.v11.suo
+/WebSite.Tests/bin

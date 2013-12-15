@@ -24,6 +24,7 @@ namespace ECMS.Core
         public string CDNPath { get; set; }
         public string AppBasePath { get; set; }
         public string HostAliases { get; set; }
+        public int SiteId { get; set; }
         #endregion
 
         #region Static Constructor
@@ -57,6 +58,7 @@ namespace ECMS.Core
                     setting.CDNPath = Convert.ToString(ds.Tables["configuration"].Rows[0]["CDNPath"]) + dirInfo_.Name;
                     setting.AppBasePath = AppDomain.CurrentDomain.BaseDirectory;
                     setting.HostAliases = Convert.ToString(ds.Tables["configuration"].Rows[0]["HttpAliases"]);
+                    setting.SiteId = Convert.ToInt32(dirInfo_.Name);
                 } 
             }
             catch (Exception ex)

@@ -1,5 +1,6 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
+using ECMS.Web;
 using Lib.Web.Mvc.JQuery.JqGrid;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,9 +10,9 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WebSite.Controllers
+namespace ECMS.Web
 {
-    public class AdminController : Controller
+    public class AdminController : CMSBaseController
     {
 
         public ActionResult Index()
@@ -21,7 +22,7 @@ namespace WebSite.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public string Urls()
         {
-            List<ValidUrl> urls = DependencyManager.URLRepository.GetAll(0, true);
+            List<ValidUrl> urls = DependencyManager.URLRepository.GetAll(ECMSSettings.Current.SiteId, true);
             StringBuilder sb = new StringBuilder();
             sb.Append("{\"page\":");
             sb.Append(1);
@@ -66,6 +67,7 @@ namespace WebSite.Controllers
                 url_.LastModified = DateTime.Now;
                 if (url_.Id == Guid.Empty)
                 {
+                    url_.Id = Guid.NewGuid();
                     DependencyManager.URLRepository.Save(url_);
                 }
                 else

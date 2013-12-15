@@ -33,6 +33,15 @@
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.2.2\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
+    <Reference Include="FluentMongo">
+      <HintPath>..\packages\FluentMongo.1.3.1.1\lib\FluentMongo.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -60,10 +69,12 @@
   <ItemGroup>
     <Compile Include="Caching\InProcCachingService.cs" />
     <Compile Include="ContentRepository\FileSystemRepository.cs" />
+    <Compile Include="ContentRepository\MongoDBRepository.cs" />
     <Compile Include="Logging\ViewExecutionActionFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteRepository.cs" />
     <Compile Include="ValidUrl\ValidUrlFileRepository.cs" />
+    <Compile Include="ValidUrl\ValidUrlMongoDBRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

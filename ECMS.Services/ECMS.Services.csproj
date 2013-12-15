@@ -52,7 +52,7 @@
       <HintPath>..\packages\NLog.Interface.1.0.0\lib\net40\NLog.Interface.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine">
-      <HintPath>C:\Users\admin\Downloads\RazorEngine-master\RazorEngine-master\src\Core\RazorEngine.Core\bin\Debug\RazorEngine.dll</HintPath>
+      <HintPath>..\..\RazorEngine-master\src\Core\RazorEngine.Core\bin\Debug\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

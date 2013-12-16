@@ -28,7 +28,7 @@ namespace WebSite.Controllers
         [ViewExecutionActionFilter]
         public ActionResult Compose()
         {
-            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl, this.ViewType);
+            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl, this.ViewType);            
             return View(this.GetView(), model);
         }
 

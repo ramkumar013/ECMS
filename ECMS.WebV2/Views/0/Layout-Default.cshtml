@@ -10,6 +10,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="@ECMSSettings.Current.CDNPath/styles/style.css" rel="stylesheet" type="text/css" />
     <title>@Model.Head.Title</title>
+    @{
+     if (Model.Url.Index == false) {
+           <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+     }   
+    }
+      
 </head>
 <body>
     @Html.Partial("~/Views/0/Header-Default.cshtml");

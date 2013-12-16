@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using  ECMS.Core.Interfaces;
 using ECMS.Core.Entities;
 using System.Web;
-using System.Reflection;
-using System.Web.Configuration;
-using System.IO;
-using Newtonsoft.Json.Linq;
 namespace ECMS.Core.Utilities
 {
     public class Utility
@@ -49,3 +42,4 @@ namespace ECMS.Core.Utilities
         }
     }
 }
+       

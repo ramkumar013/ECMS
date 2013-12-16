@@ -22,7 +22,7 @@ namespace ECMS.WebV2
         {
             AreaRegistration.RegisterAllAreas();
 
-            DependencyManager.URLRepository = new ValidUrlFileRepository();
+            DependencyManager.URLRepository = new ValidUrlMongoDBRepository();
             DependencyManager.ContentRepository = new FileSystemRepository();
             DependencyManager.CachingService = new InProcCachingService();
             DependencyManager.Logger = new NLog.Interface.LoggerAdapter(NLog.LogManager.GetLogger("default"));

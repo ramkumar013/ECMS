@@ -13,9 +13,12 @@ namespace ECMS.Core.Entities
         public bool Index { get; set; }
         public bool Active { get; set; }
         public DateTime LastModified { get; set; }
+        public Guid LastModifiedBy { get; set; }
         public int StatusCode { get; set; }
         public int SiteId { get; set; }
         public Guid Id { get; set; }
         public string Action { get; set; }
+        public string ChangeFrequency { get; set; }
+        public float SitemapPriority { get; set; }
     }
 }

@@ -103,5 +103,12 @@ namespace ECMS.WebV2
                 return DeviceType.WEB;
             }
         }
+
+        public ExtendedMongoMembership.Entities.MembershipAccountBase CMSUser
+        {
+            get {
+                return DependencyManager.CachingService.Get<ECMSMember>("LoggedInUser");
+            }
+        }
     }
 }

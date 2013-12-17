@@ -16,7 +16,7 @@ namespace ECMS.Core
     {
         #region Constants
         public const string DEFAULT_LOGGER = "default";
-        public const string HTTPERROR_LOCALE_PREFIX = "HTTPError"; 
+        public const string HTTPERROR_LOCALE_PREFIX = "HTTPError";
         #endregion
 
         #region Static Properties
@@ -67,26 +67,28 @@ namespace ECMS.Core
                     setting.XmlSitemapRefreshFrequency = Convert.ToInt32(ds.Tables["configuration"].Rows[0]["XmlSitemapRefreshFrequency"]);
                     setting.SiteId = Convert.ToInt32(dirInfo_.Name);
                     setting.InitiateXMLSiteMapGenerator();
-                } 
+                }
             }
             catch (Exception ex)
             {
                 DependencyManager.Logger.Debug(string.Format("Error while reading config file at : {0}", dirInfo_.FullName) + "\r\n" + ex.ToString());
             }
             return setting;
-        }  
+        }
         #endregion
 
         /// <summary>
         /// Site id must be injected either from app_begin_request or action filter to make ECMSSettings of current portal available using this static property.
         /// </summary>
-        public static ECMSSettings Current { 
-            get{
-                if (HttpContext.Current != null && HttpContext.Current.Items["siteid"]!=null)
+        public static ECMSSettings Current
+        {
+            get
+            {
+                if (HttpContext.Current != null && HttpContext.Current.Items["siteid"] != null)
                 {
                     return CMSSettingsList[Convert.ToInt32(HttpContext.Current.Items["siteid"])];
                 }
-                else 
+                else
                 {
                     return null;
                 }
@@ -98,7 +100,7 @@ namespace ECMS.Core
             return CMSSettingsList[siteId_];
         }
 
-         #region XMLSitemap Related Methods
+        #region XMLSitemap Related Methods
         /// <summary>
         /// Thsi method will write xmlsitemap as per standards define here : http://sitemaps.org/protocol.php
         /// </summary>
@@ -107,51 +109,58 @@ namespace ECMS.Core
         public void GenerateSitemapXml(object stateInfo_)
         {
             ECMSSettings settings = stateInfo_ as ECMSSettings;
-            XNamespace xsi = XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance");
-            XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
-            XNamespace schemaLocation = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd");
-
-            XElement root = new XElement(xmlns + "urlset",
-              new XAttribute(XNamespace.Xmlns + "xsi", xsi),
-              new XAttribute(xsi + "schemaLocation", schemaLocation));
-
-            var siteMapIndexRoot = new XElement(xmlns + "sitemapindex",
-                new XAttribute(XNamespace.Xmlns + "xsi", xsi),
-                new XAttribute(xsi + "schemaLocation", schemaLocation));
-
-            var validUrls = DependencyManager.URLRepository.GetAll(settings.SiteId, false);
-            int urlCounter = 1;
-            foreach (var validUrl in validUrls)
+            try
             {
-                root.Add(
-                    new XElement(xmlns + "url",
-                        new XElement(xmlns + "loc", new XCData(settings.PortalHostName + validUrl.FriendlyUrl.Trim().ToLower().Replace(' ', '-'))),
-                    //new XElement(xmlns + "changefreq", validUrl.ChangeFrequency),
-                    //new XElement(xmlns + "priority", validUrl.SitemapPriority),
-                        new XElement(xmlns + "lastmod", validUrl.LastModified.ToString("yyyy-MM-dd"))
-                        ));
+                XNamespace xsi = XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance");
+                XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
+                XNamespace schemaLocation = XNamespace.Get("http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd");
 
-                urlCounter++;
-                if (urlCounter % 45000 == 0)
+                XElement root = new XElement(xmlns + "urlset",
+                  new XAttribute(XNamespace.Xmlns + "xsi", xsi),
+                  new XAttribute(xsi + "schemaLocation", schemaLocation));
+
+                var siteMapIndexRoot = new XElement(xmlns + "sitemapindex",
+                    new XAttribute(XNamespace.Xmlns + "xsi", xsi),
+                    new XAttribute(xsi + "schemaLocation", schemaLocation));
+
+                var validUrls = DependencyManager.URLRepository.GetAll(settings.SiteId, false);
+                int urlCounter = 1;
+                foreach (var validUrl in validUrls)
                 {
-                    WriteSitemapFile(AppBasePath + "\\" + settings.SiteId + "\\sitemap" + (urlCounter / 45000) + ".xml.gz", root.ToString(), true);
-                    CreateSitemapIndexDoc(siteMapIndexRoot, "/xmlsitemap/" + (urlCounter / 45000));
+                    root.Add(
+                        new XElement(xmlns + "url",
+                            new XElement(xmlns + "loc", new XCData(settings.PortalHostName + validUrl.FriendlyUrl.Trim().ToLower().Replace(' ', '-'))),
+                        new XElement(xmlns + "changefreq", validUrl.ChangeFrequency),
+                        new XElement(xmlns + "priority", validUrl.SitemapPriority),
+                            new XElement(xmlns + "lastmod", validUrl.LastModified.ToString("yyyy-MM-dd"))
+                            ));
 
-                    root = new XElement(xmlns + "urlset",
-                        new XAttribute(XNamespace.Xmlns + "xsi", xsi),
-                        new XAttribute(xsi + "schemaLocation", schemaLocation));
+                    urlCounter++;
+                    if (urlCounter % 45000 == 0)
+                    {
+                        WriteSitemapFile(AppBasePath + "\\" + settings.SiteId + "\\sitemap" + (urlCounter / 45000) + ".xml.gz", root.ToString(), true);
+                        CreateSitemapIndexDoc(siteMapIndexRoot, "/xmlsitemap/" + (urlCounter / 45000));
+
+                        root = new XElement(xmlns + "urlset",
+                            new XAttribute(XNamespace.Xmlns + "xsi", xsi),
+                            new XAttribute(xsi + "schemaLocation", schemaLocation));
+                    }
+                }
+
+                if (urlCounter > 0)
+                {
+                    CreateSitemapIndexDoc(siteMapIndexRoot, "http://" + settings.PortalHostName + "/xmlsitemap/" + (urlCounter / 45000));
+                    WriteSitemapFile(AppBasePath + "\\static\\" + settings.SiteId + "\\sitemap-" + (urlCounter / 45000) + ".xml.gz", root.ToString(), true);
+                    WriteSitemapFile(AppBasePath + "\\static\\" + settings.SiteId + "\\sitemapindex.xml", siteMapIndexRoot.ToString(), false);
                 }
             }
-
-            if (urlCounter > 0)
+            catch (Exception ex)
             {
-                CreateSitemapIndexDoc(siteMapIndexRoot, "http://" + settings.PortalHostName + "/xmlsitemap/" + (urlCounter / 45000));
-                WriteSitemapFile(AppBasePath + "\\static\\" + settings.SiteId + "\\sitemap-" + (urlCounter / 45000) + ".xml.gz", root.ToString(), true);
-                WriteSitemapFile(AppBasePath + "\\static\\" + settings.SiteId + "\\sitemapindex.xml", siteMapIndexRoot.ToString(), false);
+                DependencyManager.Logger.Error(ex.ToString());
             }
         }
 
-        private void WriteSitemapFile(string filepath_, string content_,bool compress_)
+        private void WriteSitemapFile(string filepath_, string content_, bool compress_)
         {
             byte[] contentBytes = Encoding.ASCII.GetBytes(content_);
             using (FileStream fileStream = File.Create(filepath_))
@@ -161,7 +170,7 @@ namespace ECMS.Core
                     using (GZipStream stream = new GZipStream(fileStream, CompressionMode.Compress))
                     {
                         stream.Write(contentBytes, 0, contentBytes.Length);
-                    }    
+                    }
                 }
                 else
                 {

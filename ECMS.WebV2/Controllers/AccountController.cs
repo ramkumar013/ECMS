@@ -11,12 +11,13 @@ using WebMatrix.WebData;
 using ECMS.WebV2.Filters;
 using ECMS.WebV2.Models;
 using System.Configuration;
+using ECMS.Core;
 
 namespace ECMS.WebV2.Controllers
 {
     [Authorize]
     //[InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : CMSBaseController
     {
         //
         // GET: /Account/Login
@@ -38,6 +39,9 @@ namespace ECMS.WebV2.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
+                ECMSMember member = service.GetProfileByUserName(model.UserName);
+                DependencyManager.CachingService.Set<ECMSMember>("LoggedInUser", member);
                 return RedirectToLocal(returnUrl);
             }
 

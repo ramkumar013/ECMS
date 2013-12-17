@@ -25,15 +25,18 @@
             url: "/admin/urls",
             mtype: 'POST',
             datatype: "json",
-            colNames: ['Edit', 'FriendlyUrl', 'View', 'Indexing', 'Active', 'LastModified', 'StatusCode'],
+            colNames: ['Edit', 'FriendlyUrl', 'View', 'Indexing', 'Active', 'StatusCode', 'ChangeFrequency', 'SitemapPriority', 'LastModified', 'LastModifiedBy'],
             colModel: [
                 { name: 'Edit', index: 'Edit', width: 50, sortable: false, formatter: displayButtons },
                 { name: 'FriendlyUrl', index: 'FriendlyUrl', width: 220, editable: true, editrules: { required: true } },
                 { name: 'View', index: 'View', width: 220, editable: true, editrules: { required: true } },
                 { name: 'Indexing', index: 'Indexing', width: 80, edittype: "checkbox", editable: true, editoptions: { value: "True:False" }, editrules: { required: true } },
-                { name: 'Active', index: 'Active', width: 80, editable: true,edittype: "checkbox",editrules: { required: true } },
+                { name: 'Active', index: 'Active', width: 80, editable: true, edittype: "checkbox", editrules: { required: true } },
+                { name: 'StatusCode', index: 'StatusCode', width: 80, editable: true, edittype: "select", editoptions: { value: "200:200;301:301;302:302" }, editrules: { required: true } },
+                { name: 'ChangeFrequency', index: 'ChangeFrequency', width: 150, editable: true,edittype: "select",editoptions: { value: "Daily:Daily;Weekly:Weekly;Monthly:Monthly" }, editrules: { required: true } },
+                { name: 'SitemapPriority', index: 'SitemapPriority', width: 150, editable: true, editrules: { required: true } },
                 { name: 'LastModified', index: 'LastModified', width: 150, editable: false },
-                { name: 'StatusCode', index: 'StatusCode', width: 80, editable: true,edittype: "select",editoptions: {value:"200:200;301:301;302:302"}, editrules: { required: true } },
+                { name: 'LastModifiedBy', index: 'LastModifiedBy', width: 150, editable: false },
             ],
             rowNum: 10,
             rowTotal: 50,
@@ -46,8 +49,8 @@
             caption: "Url Management"
         });
         function displayButtons(cellvalue, options, rowObject) {
-            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:550,height:230,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:450,height:250,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
         }
-        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 550, height: 230, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 450, height: 250, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
     });
 </script>

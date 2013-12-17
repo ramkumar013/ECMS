@@ -43,11 +43,17 @@ namespace ECMS.WebV2
                 sb.Append("\",\"");
                 sb.Append((Convert.ToBoolean(url.Active) ? "Active" : "InActive"));
                 sb.Append("\",\"");
+                sb.Append(url.StatusCode); 
+                sb.Append("\",\"");
+                sb.Append(url.ChangeFrequency);
+                sb.Append("\",\"");
+                sb.Append(url.SitemapPriority);
+                sb.Append("\",\"");
                 sb.Append(url.LastModified);
                 sb.Append("\",\"");
-                sb.Append(url.StatusCode);
+                sb.Append(url.LastModifiedBy);
                 sb.Append("\",\"");
-                sb.Append(url.Action);              
+                sb.Append(url.Action);
                 sb.Append("\"],\"id\":\"");
                 sb.Append(url.Id);
                 sb.Append("\"},");
@@ -65,6 +71,7 @@ namespace ECMS.WebV2
             try
             {
                 url_.LastModified = DateTime.Now;
+                url_.LastModifiedBy = this.CMSUser.UserId;
                 if (url_.Id == Guid.Empty)
                 {
                     url_.Id = Guid.NewGuid();

@@ -100,6 +100,22 @@ namespace ECMS.Services
                                         jreader.Read();
                                         temp.Action = jreader.Value.ToString();
                                         break;
+                                    case "LastModified":
+                                        jreader.Read();
+                                        temp.LastModified = Convert.ToDateTime(jreader.Value.ToString());
+                                        break;
+                                    case "LastModifiedBy":
+                                        jreader.Read();
+                                        temp.LastModifiedBy = Guid.Parse(jreader.Value.ToString());
+                                        break;
+                                    case "ChangeFrequency":
+                                        jreader.Read();
+                                        temp.ChangeFrequency = jreader.Value.ToString();
+                                        break;
+                                    case "SitemapPriority":
+                                        jreader.Read();
+                                        temp.SitemapPriority =float.Parse(jreader.Value.ToString());
+                                        break;
                                 }
                             }
                             else if (jreader.TokenType == JsonToken.EndObject)

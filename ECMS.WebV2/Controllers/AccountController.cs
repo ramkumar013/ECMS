@@ -42,7 +42,7 @@ namespace ECMS.WebV2.Controllers
             {
                 DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
                 ECMSMember member = service.GetProfileByUserName(model.UserName);
-                DependencyManager.CachingService.Set<MembershipAccount>("LoggedInUser", member);
+                DependencyManager.CachingService.Set<ECMSMember>("LoggedInUser", member);
                 return RedirectToLocal(returnUrl);
             }
 

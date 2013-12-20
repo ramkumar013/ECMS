@@ -105,18 +105,18 @@ namespace ECMS.WebV2
             }
         }
 
-        public ExtendedMongoMembership.MembershipAccount CMSUser
+        public ECMSMember CMSUser
         {
             get
             {
-                ExtendedMongoMembership.MembershipAccount member = DependencyManager.CachingService.Get<ExtendedMongoMembership.MembershipAccount>("LoggedInUser");
+                ECMSMember member = DependencyManager.CachingService.Get<ECMSMember>("LoggedInUser");
                 if (member == null && HttpContext.User != null && HttpContext.User.Identity.IsAuthenticated)
                 {
                     DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
                     member = service.GetProfileByUserName(HttpContext.User.Identity.Name);
                     if (member != null)
                     {
-                        DependencyManager.CachingService.Set<ExtendedMongoMembership.MembershipAccount>("LoggedInUser", member);
+                        DependencyManager.CachingService.Set<ECMSMember>("LoggedInUser", member);
                     }
                 }
                 return member;

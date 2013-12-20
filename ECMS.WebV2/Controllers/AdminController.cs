@@ -72,6 +72,7 @@ namespace ECMS.WebV2
             {
                 url_.LastModified = DateTime.Now;
                 url_.LastModifiedBy = this.CMSUser.UserName;
+                url_.Action = ECMSSettings.Current.DefaultURLRewriteAction;
                 if (url_.Id == Guid.Empty)
                 {
                     url_.Id = Guid.NewGuid();

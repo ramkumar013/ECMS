@@ -106,7 +106,7 @@ namespace ECMS.Services
                                         break;
                                     case "LastModifiedBy":
                                         jreader.Read();
-                                        temp.LastModifiedBy = Guid.Parse(jreader.Value.ToString());
+                                        temp.LastModifiedBy = jreader.Value.ToString();
                                         break;
                                     case "ChangeFrequency":
                                         jreader.Read();

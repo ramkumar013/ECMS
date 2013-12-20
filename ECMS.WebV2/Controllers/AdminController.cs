@@ -71,7 +71,7 @@ namespace ECMS.WebV2
             try
             {
                 url_.LastModified = DateTime.Now;
-                url_.LastModifiedBy = this.CMSUser.UserId;
+                url_.LastModifiedBy = this.CMSUser.UserName;
                 if (url_.Id == Guid.Empty)
                 {
                     url_.Id = Guid.NewGuid();

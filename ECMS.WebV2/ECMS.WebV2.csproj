@@ -557,6 +557,7 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Ecms-Error-Handler.cshtml" />
     <Content Include="Views\Guid.cshtml" />
+    <Content Include="Views\Account\LogOff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Static\0\" />

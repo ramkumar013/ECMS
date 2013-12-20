@@ -39,9 +39,9 @@ namespace ECMS.WebV2
                 sb.Append("\",\"");
                 sb.Append(url.View);
                 sb.Append("\",\"");
-                sb.Append((Convert.ToBoolean(url.Index) ? "Yes" : "No"));
+                sb.Append(url.Index);
                 sb.Append("\",\"");
-                sb.Append((Convert.ToBoolean(url.Active) ? "Active" : "InActive"));
+                sb.Append(url.Active);
                 sb.Append("\",\"");
                 sb.Append(url.StatusCode); 
                 sb.Append("\",\"");

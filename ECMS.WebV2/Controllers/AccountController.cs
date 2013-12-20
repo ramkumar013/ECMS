@@ -12,6 +12,7 @@ using ECMS.WebV2.Filters;
 using ECMS.WebV2.Models;
 using System.Configuration;
 using ECMS.Core;
+using ExtendedMongoMembership;
 
 namespace ECMS.WebV2.Controllers
 {
@@ -41,7 +42,7 @@ namespace ECMS.WebV2.Controllers
             {
                 DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
                 ECMSMember member = service.GetProfileByUserName(model.UserName);
-                DependencyManager.CachingService.Set<ECMSMember>("LoggedInUser", member);
+                DependencyManager.CachingService.Set<MembershipAccount>("LoggedInUser", member);
                 return RedirectToLocal(returnUrl);
             }
 

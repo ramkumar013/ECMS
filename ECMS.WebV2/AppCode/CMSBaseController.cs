@@ -5,6 +5,7 @@ using ECMS.WebV2.Locale;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -104,10 +105,21 @@ namespace ECMS.WebV2
             }
         }
 
-        public ExtendedMongoMembership.Entities.MembershipAccountBase CMSUser
+        public ExtendedMongoMembership.MembershipAccount CMSUser
         {
-            get {
-                return DependencyManager.CachingService.Get<ECMSMember>("LoggedInUser");
+            get
+            {
+                ExtendedMongoMembership.MembershipAccount member = DependencyManager.CachingService.Get<ExtendedMongoMembership.MembershipAccount>("LoggedInUser");
+                if (member == null && HttpContext.User != null && HttpContext.User.Identity.IsAuthenticated)
+                {
+                    DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
+                    member = service.GetProfileByUserName(HttpContext.User.Identity.Name);
+                    if (member != null)
+                    {
+                        DependencyManager.CachingService.Set<ExtendedMongoMembership.MembershipAccount>("LoggedInUser", member);
+                    }
+                }
+                return member;
             }
         }
     }

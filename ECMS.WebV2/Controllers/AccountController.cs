@@ -60,7 +60,7 @@ namespace ECMS.WebV2.Controllers
         {
             WebSecurity.Logout();
 
-            return RedirectToAction("LogOff");
+            return View("~/Views/Account/LogOff.cshtml");
         }
 
         //

@@ -17,19 +17,35 @@ namespace ECMS.WebV2
 
         public ActionResult Index()
         {
+            ViewBag.TotalRows = DependencyManager.URLRepository.GetTotalUrlCount(ECMSSettings.Current.SiteId);
             return View("~/Views/Admin/Urls-Grid.cshtml");
         }
         [AcceptVerbs(HttpVerbs.Post)]
         public string GetAll()
         {
-            List<ValidUrl> urls = DependencyManager.URLRepository.GetAll(ECMSSettings.Current.SiteId, true);
+            
+            int pageNo = 1;
+            int.TryParse(Request.Form["page"], out pageNo);
+
+            int noOfRecords = 5;
+            int.TryParse(Request.Form["rows"], out noOfRecords);
+
+            string searchOp = Request.Form["searchOper"];
+            string searchField = Request.Form["searchField"];
+            string searchString = Request.Form["searchString"];
+            string sortField = Request.Form["sidx"];
+            string sortdirection = Request.Form["asc"];
+            bool isSearchRq = Convert.ToBoolean(Request.Form["_search"]);
+
+            Tuple<long, List<ValidUrl>> result = DependencyManager.URLRepository.FindAndGetAll(ECMSSettings.Current.SiteId, searchField, searchOp, sortField, sortdirection, pageNo, noOfRecords, isSearchRq);
+            var urls = result.Item2;
             StringBuilder sb = new StringBuilder();
             sb.Append("{\"page\":");
-            sb.Append(1);
+            sb.Append(pageNo);
             sb.Append(",\"total\":");
-            sb.Append(urls.Count);
+            sb.Append((result.Item1 / noOfRecords) + 1);
             sb.Append(",\"records\":");
-            sb.Append(urls.Count);
+            sb.Append(result.Item1);
             sb.Append(",\"rows\":[");
             foreach (var url in urls)
             {

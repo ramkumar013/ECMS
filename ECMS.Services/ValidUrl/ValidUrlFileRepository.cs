@@ -167,5 +167,16 @@ namespace ECMS.Services
             Dictionary<string, ValidUrl> dict = DependencyManager.CachingService.Get<Dictionary<string, ValidUrl>>(siteId_.ToString());
             return dict.Values.ToList<ValidUrl>();
         }
+
+        public Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public long GetTotalUrlCount(int siteId_)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

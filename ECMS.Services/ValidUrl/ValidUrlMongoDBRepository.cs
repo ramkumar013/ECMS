@@ -16,28 +16,11 @@ namespace ECMS.Services
 {
     public class ValidUrlMongoDBRepository : IValidURLRepository
     {
-        //private static string _mongoHostIP = ConfigurationManager.ConnectionStrings["MongoDBHost"].ConnectionString;
-        //private static int _mongoHostPort = Convert.ToInt32(ConfigurationManager.ConnectionStrings["MongoDBPort"].ConnectionString);
-        //private static string _dbName = ConfigurationManager.AppSettings["MongoDBName"];
-        //private static MongoServer _mongoServer = null;
         private static MongoDatabase _db = null;
         static ValidUrlMongoDBRepository()
         {
-            //MongoServerSettings serverSettings = new MongoServerSettings();
-            //serverSettings.ConnectionMode = ConnectionMode.Automatic;
-            //serverSettings.ConnectTimeout = new TimeSpan(0, 0, 10);
-            //serverSettings.MaxConnectionIdleTime = new TimeSpan(0, 30, 0);
-            //serverSettings.MaxConnectionLifeTime = new TimeSpan(0, 30, 0);
-            //serverSettings.MaxConnectionPoolSize = 10;
-            //serverSettings.MinConnectionPoolSize = 1;
-            //serverSettings.SocketTimeout = new TimeSpan(0, 0, 10);
-            //serverSettings.WriteConcern = WriteConcern.Acknowledged;
-            //serverSettings.WaitQueueSize = 10;
-            //serverSettings.WaitQueueTimeout = new TimeSpan(0, 0, 10);
-            //serverSettings.Server = new MongoServerAddress(_mongoHostIP, _mongoHostPort);
-            //_mongoServer = new MongoServer(serverSettings);
+            
             _db = MongoHelper.GetMongoDB();
-
             BsonClassMap.RegisterClassMap<ValidUrl>(cm =>
             {
                 cm.AutoMap();
@@ -45,18 +28,6 @@ namespace ECMS.Services
                 cm.IdMemberMap.SetIdGenerator(MongoDB.Bson.Serialization.IdGenerators.NullIdChecker.Instance);
             });
 
-            //_db = _mongoServer.GetDatabase(_dbName);
-
-            
-
-
-            //TODO: Add appropriate indexes on each collection
-            //foreach (var item in ECMSSettings.CMSSettingsList)
-            //{
-            //    _db.GetCollection<ValidUrl>(GetCollName(item.Key)).EnsureIndex();
-            //} 
-
-            
         }
         public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_)
         {
@@ -101,6 +72,33 @@ namespace ECMS.Services
         private static string GetCollName(int siteId_)
         {
             return string.Format("ValidUrl{0}", siteId_.ToString());
+        }
+
+
+        public Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_)
+        {
+            Tuple<long, List<ValidUrl>> result = null;
+            if (isSearchRq_)
+            {
+                throw new NotImplementedException();    
+            }
+            else
+            {
+                var query = (from c in _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable()
+                             orderby c.LastModified
+                             select c)
+                            .Skip((pageNo_ - 1) * records_)
+                            .Take(records_);
+                var list = query.ToList();
+                result = new Tuple<long, List<ValidUrl>>(GetTotalUrlCount(siteId_), list);
+            }
+            return result;
+        }
+
+
+        public long GetTotalUrlCount(int siteId_)
+        {
+            return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).Count();
         }
     }
 }

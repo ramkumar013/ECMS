@@ -7,7 +7,8 @@
 
 <h2>ECMSView-Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -15,15 +16,13 @@
         <legend>ECMSView</legend>
 
         @Html.HiddenFor(model => model.Id)
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.ViewHtml)
+            @Html.LabelFor(model => model.SiteId)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ViewHtml)
-            @Html.ValidationMessageFor(model => model.ViewHtml)
+            @Html.DropDownListFor(model => model.SiteId, ViewData["Sites"] as SelectList)
+            @Html.ValidationMessageFor(model => model.SiteId)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.ViewName)
         </div>
@@ -31,31 +30,20 @@
             @Html.EditorFor(model => model.ViewName)
             @Html.ValidationMessageFor(model => model.ViewName)
         </div>
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.LastModifiedOn)
+            @Html.LabelFor(model => model.ViewType)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LastModifiedOn)
-            @Html.ValidationMessageFor(model => model.LastModifiedOn)
+            @Html.DropDownListFor(model => model.ViewType, ViewData["ViewTypes"] as SelectList)
+            @Html.ValidationMessageFor(model => model.ViewType)
         </div>
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.LastModifiedBy)
+            @Html.LabelFor(model => model.ViewHtml)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LastModifiedBy)
-            @Html.ValidationMessageFor(model => model.LastModifiedBy)
+            @Html.EditorFor(model => model.ViewHtml)
+            @Html.ValidationMessageFor(model => model.ViewHtml)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SiteId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SiteId)
-            @Html.ValidationMessageFor(model => model.SiteId)
-        </div>
-
         <p>
             <input type="submit" value="Save" />
         </p>

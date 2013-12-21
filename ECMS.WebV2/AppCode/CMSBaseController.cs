@@ -122,5 +122,10 @@ namespace ECMS.WebV2
                 return member;
             }
         }
+
+        public string GetControllerView(string viewName_)
+        {
+            return Convert.ToString("~/views/admin/" + this.RouteData.Values["controller"]) + "-" + viewName_ + ".cshtml";
+        }
     }
 }

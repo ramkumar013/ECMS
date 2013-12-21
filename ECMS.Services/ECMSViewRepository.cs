@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ECMS.Core.Interfaces;
 using ECMS.Core.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson.Serialization;
 using System.IO;
-using System.Linq;
-using System.Linq.Dynamic;
 using MongoDB.Driver.Linq;
 namespace ECMS.Services
 {
@@ -34,6 +30,7 @@ namespace ECMS.Services
 
         public ECMSView Get(ECMSView view_)
         {
+            view_ = _db.GetCollection<ECMSView>(typeof(ECMSView).ToString()).AsQueryable().Where(x => x.Id == view_.Id).FirstOrDefault<ECMSView>();
             view_.ViewHtml = File.ReadAllText(GetViewPath(view_));
             return view_;
         }
@@ -50,14 +47,19 @@ namespace ECMS.Services
 
         private static string GetViewPath(ECMSView view_)
         {
-            string path = ECMS.Core.ECMSSettings.GetCurrentBySiteId(view_.SiteId).AppBasePath + "\\View\\" + view_.SiteId + "\\" + Convert.ToInt32(view_.ViewType) + "\\" + view_.ViewName;
-            return path;
+            string dirPath = ECMS.Core.ECMSSettings.GetCurrentBySiteId(view_.SiteId).AppBasePath + "Views\\" + view_.SiteId + "\\" + Convert.ToInt32(view_.ViewType);
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            return dirPath + "\\" + view_.ViewName + ".cshtml"; ;
         }
 
 
-        public List<ECMSView> GetAll(ECMSView view_)
+        public List<ECMSView> GetAll(int siteId_)
         {
-            return _db.GetCollection<ECMSView>(typeof(ECMSView).ToString()).AsQueryable<ECMSView>().Where(x => x.SiteId == view_.SiteId).ToList<ECMSView>();
+            return _db.GetCollection<ECMSView>(typeof(ECMSView).ToString()).AsQueryable<ECMSView>().Where(x => x.SiteId == siteId_).ToList<ECMSView>();
         }
     }
 }

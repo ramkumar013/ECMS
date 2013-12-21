@@ -1,0 +1,69 @@
+﻿@model ECMS.Core.Entities.ECMSView
+
+@{
+    ViewBag.Title = "ECMSView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ECMSView</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ECMSView</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ViewHtml)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ViewHtml)
+            @Html.ValidationMessageFor(model => model.ViewHtml)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ViewName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ViewName)
+            @Html.ValidationMessageFor(model => model.ViewName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastModifiedOn)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastModifiedOn)
+            @Html.ValidationMessageFor(model => model.LastModifiedOn)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastModifiedBy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastModifiedBy)
+            @Html.ValidationMessageFor(model => model.LastModifiedBy)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SiteId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SiteId)
+            @Html.ValidationMessageFor(model => model.SiteId)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

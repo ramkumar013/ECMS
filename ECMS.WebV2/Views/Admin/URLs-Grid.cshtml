@@ -22,7 +22,7 @@
 <script>
     $(document).ready(function () {
         $("#grdUrlList").jqGrid({
-            url: "/admin/urls",
+            url: "/admin/urls/getall",
             mtype: 'POST',
             datatype: "json",
             colNames: ['Edit', 'FriendlyUrl', 'View', 'Indexable', 'Active', 'StatusCode', 'ChangeFrequency', 'SitemapPriority', 'LastModified', 'LastModifiedBy'],
@@ -45,7 +45,7 @@
             sortname: 'FriendlyUrl',
             viewrecords: true,
             sortorder: "asc",
-            editurl: '/admin/UpdateUrl',
+            editurl: '/admin/urls/updateurl',
             caption: "Url Management"
         });
         function displayButtons(cellvalue, options, rowObject) {

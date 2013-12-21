@@ -12,15 +12,15 @@ using System.Web.Mvc;
 namespace ECMS.WebV2
 {
     [Authorize]
-    public class AdminController : CMSBaseController
+    public class UrlsController : CMSBaseController
     {
 
         public ActionResult Index()
         {
-            return View("~/Views/Admin/UrlGrid.cshtml");
+            return View("~/Views/Admin/Urls-Grid.cshtml");
         }
         [AcceptVerbs(HttpVerbs.Post)]
-        public string Urls()
+        public string GetAll()
         {
             List<ValidUrl> urls = DependencyManager.URLRepository.GetAll(ECMSSettings.Current.SiteId, true);
             StringBuilder sb = new StringBuilder();

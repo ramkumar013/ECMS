@@ -55,9 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyManager.cs" />
+    <Compile Include="Dynamic.cs" />
     <Compile Include="ECMSContextActionFilter.cs" />
+    <Compile Include="Entities\ECMSView.cs" />
     <Compile Include="Framework\ContentRepositoryBase.cs" />
     <Compile Include="Framework\Enums.cs" />
+    <Compile Include="Interfaces\ICMSViewRepository.cs" />
     <Compile Include="Utility\ECMSExtensions.cs" />
     <Compile Include="Utility\ECMSSettings.cs" />
     <Compile Include="Entities\ContentItem.cs" />

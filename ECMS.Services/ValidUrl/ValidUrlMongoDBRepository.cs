@@ -16,26 +16,27 @@ namespace ECMS.Services
 {
     public class ValidUrlMongoDBRepository : IValidURLRepository
     {
-        private static string _mongoHostIP = ConfigurationManager.ConnectionStrings["MongoDBHost"].ConnectionString;
-        private static int _mongoHostPort = Convert.ToInt32(ConfigurationManager.ConnectionStrings["MongoDBPort"].ConnectionString);
-        private static string _dbName = ConfigurationManager.AppSettings["MongoDBName"];
-        private static MongoServer _mongoServer = null;
+        //private static string _mongoHostIP = ConfigurationManager.ConnectionStrings["MongoDBHost"].ConnectionString;
+        //private static int _mongoHostPort = Convert.ToInt32(ConfigurationManager.ConnectionStrings["MongoDBPort"].ConnectionString);
+        //private static string _dbName = ConfigurationManager.AppSettings["MongoDBName"];
+        //private static MongoServer _mongoServer = null;
         private static MongoDatabase _db = null;
         static ValidUrlMongoDBRepository()
         {
-            MongoServerSettings serverSettings = new MongoServerSettings();
-            serverSettings.ConnectionMode = ConnectionMode.Automatic;
-            serverSettings.ConnectTimeout = new TimeSpan(0, 0, 10);
-            serverSettings.MaxConnectionIdleTime = new TimeSpan(0, 30, 0);
-            serverSettings.MaxConnectionLifeTime = new TimeSpan(0, 30, 0);
-            serverSettings.MaxConnectionPoolSize = 10;
-            serverSettings.MinConnectionPoolSize = 1;
-            serverSettings.SocketTimeout = new TimeSpan(0, 0, 10);
-            serverSettings.WriteConcern = WriteConcern.Acknowledged;
-            serverSettings.WaitQueueSize = 10;
-            serverSettings.WaitQueueTimeout = new TimeSpan(0, 0, 10);
-            serverSettings.Server = new MongoServerAddress(_mongoHostIP, _mongoHostPort);
-            _mongoServer = new MongoServer(serverSettings);
+            //MongoServerSettings serverSettings = new MongoServerSettings();
+            //serverSettings.ConnectionMode = ConnectionMode.Automatic;
+            //serverSettings.ConnectTimeout = new TimeSpan(0, 0, 10);
+            //serverSettings.MaxConnectionIdleTime = new TimeSpan(0, 30, 0);
+            //serverSettings.MaxConnectionLifeTime = new TimeSpan(0, 30, 0);
+            //serverSettings.MaxConnectionPoolSize = 10;
+            //serverSettings.MinConnectionPoolSize = 1;
+            //serverSettings.SocketTimeout = new TimeSpan(0, 0, 10);
+            //serverSettings.WriteConcern = WriteConcern.Acknowledged;
+            //serverSettings.WaitQueueSize = 10;
+            //serverSettings.WaitQueueTimeout = new TimeSpan(0, 0, 10);
+            //serverSettings.Server = new MongoServerAddress(_mongoHostIP, _mongoHostPort);
+            //_mongoServer = new MongoServer(serverSettings);
+            _db = MongoHelper.GetMongoDB();
 
             BsonClassMap.RegisterClassMap<ValidUrl>(cm =>
             {
@@ -44,7 +45,9 @@ namespace ECMS.Services
                 cm.IdMemberMap.SetIdGenerator(MongoDB.Bson.Serialization.IdGenerators.NullIdChecker.Instance);
             });
 
-            _db = _mongoServer.GetDatabase(_dbName);
+            //_db = _mongoServer.GetDatabase(_dbName);
+
+            
 
 
             //TODO: Add appropriate indexes on each collection

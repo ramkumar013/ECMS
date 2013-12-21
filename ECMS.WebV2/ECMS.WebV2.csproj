@@ -202,7 +202,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\URLsController.cs" />
+    <Compile Include="Controllers\ECMSViewController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -553,11 +554,15 @@
     <Content Include="Views\1\Header-Default.cshtml" />
     <Content Include="Views\1\Index.cshtml" />
     <Content Include="Views\1\Layout-Default.cshtml" />
-    <Content Include="Views\Admin\UrlGrid.cshtml" />
+    <Content Include="Views\Admin\URLs-Grid.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Ecms-Error-Handler.cshtml" />
     <Content Include="Views\Guid.cshtml" />
     <Content Include="Views\Account\LogOff.cshtml" />
+    <Content Include="Views\Admin\ECMSView-Create.cshtml" />
+    <Content Include="Views\Admin\ECMSView-List.cshtml" />
+    <Content Include="Views\Admin\ECMSView-Edit.cshtml" />
+    <Content Include="Views\Admin\ECMSView-Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Static\0\" />
@@ -601,7 +606,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>49472</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:58272/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

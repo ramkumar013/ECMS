@@ -1,0 +1,26 @@
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc><![CDATA[local.explotravel.com/]]></loc>
+    <changefreq />
+    <priority>0</priority>
+    <lastmod>2013-12-15</lastmod>
+  </url>
+  <url>
+    <loc><![CDATA[local.explotravel.com/about]]></loc>
+    <changefreq />
+    <priority>0</priority>
+    <lastmod>2013-12-15</lastmod>
+  </url>
+  <url>
+    <loc><![CDATA[local.explotravel.com/admin]]></loc>
+    <changefreq />
+    <priority>0</priority>
+    <lastmod>2013-12-15</lastmod>
+  </url>
+  <url>
+    <loc><![CDATA[local.explotravel.com/test58754]]></loc>
+    <changefreq>Daily</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2013-12-20</lastmod>
+  </url>
+</urlset>

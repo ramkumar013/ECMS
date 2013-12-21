@@ -37,6 +37,11 @@ namespace ECMS.Services
 
         public void Update(ECMSView view_)
         {
+            ECMSView view = _db.GetCollection<ECMSView>(typeof(ECMSView).ToString()).AsQueryable().Where(x => x.Id == view_.Id).FirstOrDefault<ECMSView>();
+            view.Id = Guid.Empty;
+            view.LastModifiedBy = view_.LastModifiedBy;
+            view.LastModifiedOn = view_.LastModifiedOn;
+            _db.GetCollection<ECMSView>(ArchievedCollectionName(typeof(ECMSView).ToString())).Save<ECMSView>(view);
             Save(view_);
         }
 
@@ -60,6 +65,21 @@ namespace ECMS.Services
         public List<ECMSView> GetAll(int siteId_)
         {
             return _db.GetCollection<ECMSView>(typeof(ECMSView).ToString()).AsQueryable<ECMSView>().Where(x => x.SiteId == siteId_).ToList<ECMSView>();
+        }
+
+        public List<ECMSView> GetAllArchieved(int siteId_, string viewName_)
+        {
+            return _db.GetCollection<ECMSView>(ArchievedCollectionName(typeof(ECMSView).ToString())).AsQueryable<ECMSView>().Where(x => x.SiteId == siteId_ && x.ViewName == viewName_).ToList<ECMSView>();
+        }
+
+        public ECMSView GetArchieved(int siteId_, Guid id_)
+        {
+            return _db.GetCollection<ECMSView>(ArchievedCollectionName(typeof(ECMSView).ToString())).AsQueryable<ECMSView>().Where(x => x.SiteId == siteId_ && x.Id == id_).FirstOrDefault();
+        }
+
+        private string ArchievedCollectionName(string collName_)
+        {
+            return string.Format("ARC.{0}", collName_);
         }
     }
 }

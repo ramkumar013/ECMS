@@ -12,6 +12,8 @@ namespace ECMS.Core.Interfaces
         void Save(ECMSView view_);
         ECMSView Get(ECMSView view_);
         List<ECMSView> GetAll(int siteId_);
+        List<ECMSView> GetAllArchieved(int siteId_,string viewName_);
+        ECMSView GetArchieved(int siteId_, Guid id_);
         void Update(ECMSView view_);
         void Delete(ECMSView view_);
     }

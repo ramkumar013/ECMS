@@ -23,6 +23,23 @@ namespace ECMS.WebV2.Controllers
             return View(GetControllerView("index"), viewList);
         }
 
+        public ActionResult Archieved()
+        {
+            string viewName = this.Request.QueryString["viewName"].ToString();
+            List<ECMSView> viewList = _viewRepository.GetAllArchieved(ECMSSettings.Current.SiteId, viewName);
+            return View(GetControllerView("arc-index"), viewList);
+        }
+        public ActionResult ArcDetails(Guid id)
+        {
+            ECMSView view = new ECMSView();
+            view.Id = id;
+            view.SiteId = ECMSSettings.Current.SiteId;
+            ViewData["sites"] = GetSiteList();
+            ViewData["ViewTypes"] = GetViewTypeList();
+            view = _viewRepository.GetArchieved(ECMSSettings.Current.SiteId, id);
+            return View(GetControllerView("details"), view);
+        }
+
         //
         // GET: /ECMSView/Details/5
 

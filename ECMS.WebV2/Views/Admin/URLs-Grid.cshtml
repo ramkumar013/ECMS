@@ -49,8 +49,8 @@
             caption: "Url Management"
         });
         function displayButtons(cellvalue, options, rowObject) {
-            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:450,height:250,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:450,height:270,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
         }
-        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 450, height: 250, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
+        $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 450, height: 270, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});
     });
 </script>

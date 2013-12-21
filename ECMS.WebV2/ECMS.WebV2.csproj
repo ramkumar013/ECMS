@@ -566,6 +566,7 @@
     <Content Include="Views\Admin\ECMSView-Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\javascript\" />
     <Folder Include="Static\0\" />
   </ItemGroup>
   <ItemGroup>

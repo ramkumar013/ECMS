@@ -12,12 +12,17 @@
 </p>
 <table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ViewHtml)
-        </th>
+        <th></th>
         <th>
             @Html.DisplayNameFor(model => model.ViewName)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ViewType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ViewHtml)
+        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.LastModifiedOn)
         </th>
@@ -27,32 +32,36 @@
         <th>
             @Html.DisplayNameFor(model => model.SiteId)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ViewHtml)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ViewName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastModifiedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastModifiedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SiteId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ViewType)
+            </td>
+            <td>
+                @item.ViewHtml.Substring(0, (item.ViewHtml.Length > 25 ? 25 : item.ViewHtml.Length))...
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiteId)
+            </td>
+
+        </tr>
+    }
 
 </table>

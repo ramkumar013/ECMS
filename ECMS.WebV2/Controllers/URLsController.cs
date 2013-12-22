@@ -37,7 +37,7 @@ namespace ECMS.WebV2
             string sortdirection = Request.Form["asc"];
             bool isSearchRq = Convert.ToBoolean(Request.Form["_search"]);
 
-            Tuple<long, List<ValidUrl>> result = DependencyManager.URLRepository.FindAndGetAll(ECMSSettings.Current.SiteId, searchField, searchOp, sortField, sortdirection, pageNo, noOfRecords, isSearchRq);
+            Tuple<long, List<ValidUrl>> result = DependencyManager.URLRepository.FindAndGetAll(ECMSSettings.Current.SiteId, searchField,searchString, searchOp, sortField, sortdirection, pageNo, noOfRecords, isSearchRq);
             var urls = result.Item2;
             StringBuilder sb = new StringBuilder();
             sb.Append("{\"page\":");
@@ -88,6 +88,7 @@ namespace ECMS.WebV2
             {
                 url_.LastModified = DateTime.Now;
                 url_.LastModifiedBy = this.CMSUser.UserName;
+                url_.SitemapPriority = float.Parse(url_.SitemapPriority.ToString("N1"));
                 url_.Action = ECMSSettings.Current.DefaultURLRewriteAction;
                 if (url_.Id == Guid.Empty)
                 {

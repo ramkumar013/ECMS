@@ -15,7 +15,7 @@ namespace ECMS.Core.Interfaces
         ValidUrl GetById(int siteId_, string friendlyurl_, bool useCache_);
         List<ValidUrl> GetAll(int siteId_, bool useCache_);
         long GetTotalUrlCount(int siteId_);
-        Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_);
+        Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchString_, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_);
         void Save(ValidUrl url_);
         void Update(ValidUrl url_);
         void Delete(ValidUrl url_);

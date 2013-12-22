@@ -168,7 +168,7 @@ namespace ECMS.Services
             return dict.Values.ToList<ValidUrl>();
         }
 
-        public Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_)
+        public Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchString_, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_)
         {
             throw new NotImplementedException();
         }

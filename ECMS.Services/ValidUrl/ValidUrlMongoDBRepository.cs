@@ -12,6 +12,7 @@ using MongoDB.Driver.Builders;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using ECMS.Core;
+using MongoDB.Bson;
 namespace ECMS.Services
 {
     public class ValidUrlMongoDBRepository : IValidURLRepository
@@ -75,12 +76,43 @@ namespace ECMS.Services
         }
 
 
-        public Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_)
+        public Tuple<long, List<ValidUrl>> FindAndGetAll(int siteId_, string searchField, string searchString_,string searchOperator, string sortField, string sortDirection_, int pageNo_, int records_, bool isSearchRq_)
         {
             Tuple<long, List<ValidUrl>> result = null;
             if (isSearchRq_)
             {
-                throw new NotImplementedException();    
+                QueryBuilder<ValidUrl> builder = new QueryBuilder<ValidUrl>();
+                IMongoQuery query = Query.EQ("SiteId",siteId_);
+                
+                switch (searchOperator)
+                {
+                    case "cn":
+                        throw new NotImplementedException();    
+                        break;
+                    case "bw":
+                        query = builder.And(query, Query.Matches(searchField, new BsonRegularExpression("^" + searchString_, "i")));
+                        break;
+                    case "ew":
+                        query = builder.And(query, Query.Matches(searchField, new BsonRegularExpression(searchString_ + "$", "i")));
+                        break;                    
+                    case "lt":
+                        query = builder.And(query, Query.LT(searchField, searchString_));
+                        break;
+                    case "gt":
+                        query = builder.And(query, Query.GT(searchField, searchString_));
+                        break;
+                    case "ne":
+                        query = builder.And(query, Query.NE(searchField, searchString_));
+                        break;
+                    case "eq":                        
+                    default:
+                        query = builder.And(query, Query.EQ(searchField, searchString_));
+                        break;
+                }
+
+                var filterDocuments = _db.GetCollection<ValidUrl>(GetCollName(siteId_)).Find(query).AsQueryable();
+                //.Skip((pageNo_-1*records_)).Take(records_).ToList<ValidUrl>();
+                result = new Tuple<long, List<ValidUrl>>(filterDocuments.Count(), filterDocuments.Skip((pageNo_ - 1 * records_)).Take(records_).ToList<ValidUrl>());
             }
             else
             {

@@ -24,7 +24,7 @@ namespace ECMS.WebV2
 
         public string GetView()
         {
-            return "~/Views/" + this.CurrentUrl.SiteId + this.CurrentUrl.View + ".cshtml";
+            return "~/Views/" + this.CurrentUrl.SiteId + "/" + this.CurrentUrl.View + ".cshtml";
         }
 
         public string GetErrorHandlerView()

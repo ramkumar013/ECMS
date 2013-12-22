@@ -110,14 +110,14 @@ namespace ECMS.Services
                         break;
                 }
 
-                var filterDocuments = _db.GetCollection<ValidUrl>(GetCollName(siteId_)).Find(query).AsQueryable();
+                var filterDocuments = _db.GetCollection<ValidUrl>(GetCollName(siteId_)).Find(query).AsQueryable().OrderByDescending(y => y.LastModified);
                 //.Skip((pageNo_-1*records_)).Take(records_).ToList<ValidUrl>();
                 result = new Tuple<long, List<ValidUrl>>(filterDocuments.Count(), filterDocuments.Skip((pageNo_ - 1 * records_)).Take(records_).ToList<ValidUrl>());
             }
             else
             {
                 var query = (from c in _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable()
-                             orderby c.LastModified
+                             orderby c.LastModified descending
                              select c)
                             .Skip((pageNo_ - 1) * records_)
                             .Take(records_);

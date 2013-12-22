@@ -18,18 +18,19 @@ namespace ECMS.Services.ContentRepository
 {
     public class FileSystemRepository : ContentRepositoryBase
     {
-        private static Dictionary<string, Dictionary<string, JObject>> ContentHeadList = new Dictionary<string, Dictionary<string, JObject>>();
+        private static Dictionary<string, JObject> ContentHeadList = new Dictionary<string, JObject>();
         private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;
         private const string ECMS_FILE_EXTENSION = ".etxt";
         static FileSystemRepository()
         {
+            //TODO:headcontent and body content directories should be created at app init.
             string[] dirinfo = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\app_data");
             foreach (string dir in dirinfo)
             {
-                string[] contentTypes = new string[] { "10", "20" }; // TODO:
+                string[] contentTypes = new string[] { "10", "20" }; // TODO:Remove HardCoding
                 foreach (var type in contentTypes)
                 {
-                    DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                    DirectoryInfo dirInfo = new DirectoryInfo(dir + "\\" + type + "\\headcontent");
                     LoadMetaTags(dirInfo, type);
                 }
                 //LoadPageContents(dirInfo);
@@ -38,16 +39,19 @@ namespace ECMS.Services.ContentRepository
 
         private static void LoadMetaTags(DirectoryInfo dirInfo, string contentTypeDir_)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\" + contentTypeDir_ + "\\default-template.etxt"))
+            foreach (var file in dirInfo.GetFiles("*.etxt"))
             {
-                using (var csv = new CsvReader(streamReader))
+                using (StreamReader streamReader = new StreamReader(file.FullName))
                 {
-                    var temp = new Dictionary<string, JObject>();
-                    while (csv.Read())
+                    using (var csv = new CsvReader(streamReader))
                     {
-                        temp[csv.GetField("ViewName")] = JObject.FromObject(csv.GetRecord<object>());
+                        var temp = new Dictionary<string, JObject>();
+                        while (csv.Read())
+                        {
+                            //temp[csv.GetField("ViewName")] = JObject.FromObject(csv.GetRecord<object>());
+                            ContentHeadList.Add(dirInfo.Parent.Parent.Name + "-" + contentTypeDir_ + "-" + csv.GetField("ViewName"), JObject.FromObject(csv.GetRecord<object>()));
+                        }
                     }
-                    ContentHeadList[GetCacheKeyForContent(dirInfo.Name, contentTypeDir_)] = temp;
                 }
             }
         }
@@ -71,7 +75,16 @@ namespace ECMS.Services.ContentRepository
 
         private JObject LoadPageContents(ValidUrl url_, ContentViewType viewType_)
         {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + "\\" + url_.Id + ECMS_FILE_EXTENSION;
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + "\\bodycontent\\" + url_.Id + ECMS_FILE_EXTENSION;
+            if (!File.Exists(filePath))
+            {
+                filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + "\\bodycontent\\" + url_.View + "-default-content" + ECMS_FILE_EXTENSION;
+            }
+            return ReadPageContentFromDisk(filePath);
+        }
+
+        private JObject ReadPageContentFromDisk(string filePath)
+        {
             using (StreamReader streamReader = new StreamReader(filePath))
             {
                 using (var csv = new CsvReader(streamReader))
@@ -79,7 +92,7 @@ namespace ECMS.Services.ContentRepository
                     csv.Read();
                     return JObject.FromObject(csv.GetRecord<object>());
                 }
-            }
+            }   
         }
 
 
@@ -129,7 +142,7 @@ namespace ECMS.Services.ContentRepository
         public override ContentItemHead GetHeadContentByViewName(ValidUrl url_, ContentViewType viewType_)
         {
             JObject jsonBody = ContentBodyList[url_.SiteId][url_.Id];
-            JObject jsonHead = ContentHeadList[GetCacheKeyForContent(url_.SiteId.ToString(), Convert.ToInt32(viewType_).ToString())][url_.View.Trim(new char[] { '/' })];
+            JObject jsonHead = ContentHeadList[url_.SiteId.ToString() + "-" + Convert.ToInt32(viewType_).ToString() + "-" + url_.View.Trim(new char[] { '/' })];
             jsonHead.MergeInto(jsonBody);
             ContentItemHead itemhead = new ContentItemHead();
             itemhead.LoadFromJObject(jsonHead);
@@ -138,7 +151,7 @@ namespace ECMS.Services.ContentRepository
 
         public ContentItemHead GetHeadContentByViewName(ValidUrl url_, JObject jsonBody, ContentViewType viewType_)
         {
-            JObject jsonHead = ContentHeadList[GetCacheKeyForContent(url_.SiteId.ToString(), Convert.ToInt32(viewType_).ToString())][url_.View.Trim(new char[] { '/' })];
+            JObject jsonHead = ContentHeadList[url_.SiteId.ToString() + "-" + Convert.ToInt32(viewType_).ToString() + "-" + url_.View.Trim(new char[] { '/' })];
             jsonHead.MergeInto(jsonBody);
             ContentItemHead itemhead = new ContentItemHead();
             itemhead.LoadFromJObject(jsonHead);

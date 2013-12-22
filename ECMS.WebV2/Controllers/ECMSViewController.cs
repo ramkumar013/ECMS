@@ -26,7 +26,7 @@ namespace ECMS.WebV2.Controllers
         public ActionResult Archieved()
         {
             string viewName = this.Request.QueryString["viewName"].ToString();
-            List<ECMSView> viewList = _viewRepository.GetAllArchieved(ECMSSettings.Current.SiteId, viewName);
+            List<ECMSView> viewList = _viewRepository.GetAllArchieved(ECMSSettings.Current.SiteId, viewName).OrderByDescending(x => x.LastModifiedOn).ToList<ECMSView>();
             return View(GetControllerView("arc-index"), viewList);
         }
         public ActionResult ArcDetails(Guid id)
@@ -119,17 +119,17 @@ namespace ECMS.WebV2.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(Guid id, ECMSView view_)
         {
-            try
-            {
+            //try
+            //{
                 view_.LastModifiedOn = DateTime.Now;
                 view_.LastModifiedBy = this.CMSUser.UserName;
                 _viewRepository.Update(view_);
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View(GetControllerView("index"));
-            }
+            //}
+            //catch
+            //{
+               // return View(GetControllerView("index"));
+            //}
         }
 
         //

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ECMS.Core.Entities.ECMSView>
+﻿@using ECMS.Core.Framework;
+@model IEnumerable<ECMS.Core.Entities.ECMSView>
 
 @{
     ViewBag.Title = "ECMSView-List";
@@ -39,8 +40,10 @@
         <tr>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) | 
-                @Html.ActionLink("Archieved", "Archieved", new { viewName = item.ViewName })
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                @if (item.ViewType==ContentViewType.PUBLISH) {
+                   @Html.ActionLink("Archieved", "Archieved", new { viewName = item.ViewName });
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ViewName)

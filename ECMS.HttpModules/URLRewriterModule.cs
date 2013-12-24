@@ -9,6 +9,7 @@ using ECMS.Core.Entities;
 using NLog;
 using ECMS.Core.Utilities;
 using System.Configuration;
+using ECMS.Core.Framework;
 
 namespace ECMS.HttpModules
 {
@@ -30,6 +31,7 @@ namespace ECMS.HttpModules
             string url = string.Empty;
             int siteId=-1; 
             HttpContext context = HttpContext.Current;
+            bool isPublish = true;
             try
             {
                 siteId = Utility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
@@ -38,7 +40,8 @@ namespace ECMS.HttpModules
                     return;
                 }
                 url = context.Request.Url.AbsolutePath;
-                ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url);
+                isPublish =Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)) == ContentViewType.PUBLISH;
+                ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url, isPublish);
                 if (validUrl != null)
                 {
                     validUrl.SiteId = siteId;

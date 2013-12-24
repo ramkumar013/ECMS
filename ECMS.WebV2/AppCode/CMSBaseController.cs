@@ -1,6 +1,7 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
 using ECMS.Core.Framework;
+using ECMS.Core.Utilities;
 using ECMS.WebV2.Locale;
 using NLog;
 using System;
@@ -68,46 +69,7 @@ namespace ECMS.WebV2
         {
             get
             {
-                try
-                {
-                    if (this.HttpContext != null)
-                    {
-                        if (this.HttpContext.Request != null && HttpContext.Request.Cookies["ECMS-Preview-Mode"] != null)
-                        {
-                            return ContentViewType.PREVIEW;
-                        }
-                        else if (this.HttpContext.Request != null && HttpContext.Request.QueryString["vm"] != null)
-                        {
-                            ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), this.HttpContext.Request.QueryString["vm"].ToString(), true);
-                            return viewType;
-                        }
-                        else
-                        {
-                            return ContentViewType.PUBLISH;
-                        }
-                    }
-                    else
-                    {
-                        return ContentViewType.PUBLISH;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
-                    if (CurrentUrl != null)
-                    {
-                        info.Properties.Add("URL", CurrentUrl.FriendlyUrl);
-                    }
-                    else
-                    {
-                        if (ControllerContext != null && ControllerContext.HttpContext != null && ControllerContext.HttpContext.Request.Url != null)
-                        {
-                            info.Properties.Add("URL", ControllerContext.HttpContext.Request.Url);
-                        }
-                    }
-                    DependencyManager.Logger.Log(info);
-                    return ContentViewType.PUBLISH;
-                }
+                return Utility.CurrentViewType(this.ControllerContext.HttpContext);
             }
         }
         public DeviceType DeviceType {

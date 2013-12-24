@@ -9,11 +9,11 @@
 
 <script type="text/javascript">
     function enterPreviewMode() {
-        $.cookie("ECMS-Preview-Mode", "true");        
+        $.cookie("ECMS-Preview-Mode", "true", {expires:'1',path:'/',domain:"/"});
         $("#lblMsg").html("You entered in preview mode now!!!");
     }
     function exitPreviewMode() {
-        $.removeCookie("ECMS-Preview-Mode");        
+        $.removeCookie("ECMS-Preview-Mode");
         $("#lblMsg").html("You exit from preview mode!!!");
     }
 

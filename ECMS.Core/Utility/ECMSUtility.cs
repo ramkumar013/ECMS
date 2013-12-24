@@ -2,6 +2,9 @@
 using System.Linq;
 using ECMS.Core.Entities;
 using System.Web;
+using ECMS.Core.Framework;
+using System;
+using NLog;
 namespace ECMS.Core.Utilities
 {
     public class Utility
@@ -39,6 +42,30 @@ namespace ECMS.Core.Utilities
             }
 
             return HttpContext.Current.Request.UserHostAddress;
+        }
+
+        public static ContentViewType CurrentViewType(HttpContextBase context_)
+        {
+            if (context_ != null && context_.Request != null)
+            {
+                if (context_.Request.Cookies["ECMS-Preview-Mode"] != null)
+                {
+                    return ContentViewType.PREVIEW;
+                }
+                else if (context_.Request.QueryString["vm"] != null)
+                {
+                    ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), context_.Request.QueryString["vm"].ToString(), true);
+                    return viewType;
+                }
+                else
+                {
+                    return ContentViewType.PUBLISH;
+                }
+            }
+            else
+            {
+                return ContentViewType.PUBLISH;
+            }
         }
     }
 }

@@ -136,12 +136,12 @@ namespace ECMS.Services
             return dict;
         }
 
-        public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool useCache_)
+        public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool isPublish_)
         {
             throw new NotImplementedException();
         }
 
-        public ValidUrl GetById(int siteId_, Guid urlId_, bool useCache_)
+        public ValidUrl GetById(int siteId_, Guid urlId_, bool isPublish_)
         {
             throw new NotImplementedException();
         }
@@ -162,7 +162,7 @@ namespace ECMS.Services
         }
 
 
-        public List<ValidUrl> GetAll(int siteId_, bool useCache_)
+        public List<ValidUrl> GetAll(int siteId_, bool isPublish_)
         {
             Dictionary<string, ValidUrl> dict = DependencyManager.CachingService.Get<Dictionary<string, ValidUrl>>(siteId_.ToString());
             return dict.Values.ToList<ValidUrl>();

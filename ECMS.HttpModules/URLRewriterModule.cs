@@ -35,6 +35,7 @@ namespace ECMS.HttpModules
             try
             {
                 siteId = Utility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
+                context.Items.Add("siteid", siteId);
                 if (siteId < 0 || !IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {
                     return;
@@ -45,7 +46,7 @@ namespace ECMS.HttpModules
                 if (validUrl != null)
                 {
                     validUrl.SiteId = siteId;
-                    context.Items.Add("siteid", validUrl.SiteId);
+                    
                     context.Items.Add("validUrl", validUrl);
                     switch (validUrl.StatusCode)
                     {

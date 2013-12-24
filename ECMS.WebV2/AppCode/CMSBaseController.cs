@@ -30,14 +30,23 @@ namespace ECMS.WebV2
 
         public string GetErrorHandlerView()
         {
-            if (this.CurrentUrl!=null)
+            if (this.CurrentUrl != null)
             {
-                return "~/Views/" + this.CurrentUrl.SiteId + "/Ecms-Error-Handler.cshtml";    
+                return "~/Views/" + this.CurrentUrl.SiteId + "/Ecms-Error-Handler.cshtml";
+            }
+            else if (GetSiteIdFromContext() > -1)
+            {
+                return "~/Views/" + GetSiteIdFromContext() + "/Ecms-Error-Handler.cshtml";
             }
             else
             {
-                return "~/Views/Ecms-Error-Handler.cshtml";    
+                return "~/Views/Ecms-Error-Handler.cshtml";
             }
+        }
+
+        public int GetSiteIdFromContext()
+        {
+            return Convert.ToInt32(this.HttpContext.Items["SiteId"]);
         }
 
         public int GetErrorStatusCode()

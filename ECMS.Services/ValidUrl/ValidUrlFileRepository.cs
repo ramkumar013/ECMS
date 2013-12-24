@@ -141,7 +141,7 @@ namespace ECMS.Services
             throw new NotImplementedException();
         }
 
-        public ValidUrl GetById(int siteId_, string friendlyurl_, bool useCache_)
+        public ValidUrl GetById(int siteId_, Guid urlId_, bool useCache_)
         {
             throw new NotImplementedException();
         }

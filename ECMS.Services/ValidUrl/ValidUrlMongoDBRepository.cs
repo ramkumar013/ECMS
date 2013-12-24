@@ -32,7 +32,7 @@ namespace ECMS.Services
         }
         public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_)
         {
-            return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable().Where(x => x.FriendlyUrl == friendlyurl_.ToLower()).FirstOrDefault();
+            return GetByFriendlyUrl(siteId_, friendlyurl_, false);
         }
 
         public ValidUrl GetById(int urlId_)
@@ -40,17 +40,23 @@ namespace ECMS.Services
             throw new NotImplementedException();
         }
 
-        public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool useCache_)
+        public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool isPreview_)
+        {
+            if (isPreview_)
+            {
+                return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable().Where(x => x.SiteId == siteId_ && x.FriendlyUrl == friendlyurl_.ToLower()).FirstOrDefault();
+            }
+            else
+            {
+                return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable().Where(x => x.SiteId == siteId_ && x.FriendlyUrl == friendlyurl_.ToLower() && x.Active == true).FirstOrDefault();
+            }
+        }
+
+        public ValidUrl GetById(int siteId_, Guid urlId_, bool isPreview_)
         {
             throw new NotImplementedException();
         }
-
-        public ValidUrl GetById(int siteId_, string friendlyurl_, bool useCache_)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<ValidUrl> GetAll(int siteId_, bool useCache_)
+        public List<ValidUrl> GetAll(int siteId_, bool isPreview_)
         {
             return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable().ToList<ValidUrl>();
         }

@@ -30,7 +30,7 @@ namespace ECMS.Core
         public int SiteId { get; set; }
         public string PortalHostName { get; set; }
         public int XmlSitemapRefreshFrequency { get; set; }
-        public string DefaultURLRewriteAction = "Template/Compose";
+        public string DefaultURLRewriteAction = "/Template/Compose";
         #endregion
 
         #region Static Constructor

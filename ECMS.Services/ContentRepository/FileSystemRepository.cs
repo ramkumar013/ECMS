@@ -58,7 +58,7 @@ namespace ECMS.Services.ContentRepository
 
         private static void LoadPageContents(DirectoryInfo dirInfo)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.etxt" ))
+            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.etxt"))
             {
                 using (var csv = new CsvReader(streamReader))
                 {
@@ -92,7 +92,7 @@ namespace ECMS.Services.ContentRepository
                     csv.Read();
                     return JObject.FromObject(csv.GetRecord<object>());
                 }
-            }   
+            }
         }
 
 

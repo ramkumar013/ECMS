@@ -157,5 +157,11 @@ namespace ECMS.WebV2.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public ActionResult EnterPreviewMode()
+        {
+            return View(GetControllerView("EnterPreviewMode"));
+        }
     }
 }

@@ -70,10 +70,21 @@ namespace ECMS.WebV2
             {
                 try
                 {
-                    if (this.HttpContext != null && this.HttpContext.Request!=null && HttpContext.Request.QueryString["vm"] != null)
+                    if (this.HttpContext != null)
                     {
-                        ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), this.HttpContext.Request.QueryString["vm"].ToString(), true);
-                        return viewType;
+                        if (this.HttpContext.Request != null && HttpContext.Request.Cookies["ECMS-Preview-Mode"] != null)
+                        {
+                            return ContentViewType.PREVIEW;
+                        }
+                        else if (this.HttpContext.Request != null && HttpContext.Request.QueryString["vm"] != null)
+                        {
+                            ContentViewType viewType = (ContentViewType)Enum.Parse(typeof(ContentViewType), this.HttpContext.Request.QueryString["vm"].ToString(), true);
+                            return viewType;
+                        }
+                        else
+                        {
+                            return ContentViewType.PUBLISH;
+                        }
                     }
                     else
                     {
@@ -89,9 +100,9 @@ namespace ECMS.WebV2
                     }
                     else
                     {
-                        if (ControllerContext!=null && ControllerContext.HttpContext!=null && ControllerContext.HttpContext.Request.Url!=null)
+                        if (ControllerContext != null && ControllerContext.HttpContext != null && ControllerContext.HttpContext.Request.Url != null)
                         {
-                            info.Properties.Add("URL", ControllerContext.HttpContext.Request.Url);    
+                            info.Properties.Add("URL", ControllerContext.HttpContext.Request.Url);
                         }
                     }
                     DependencyManager.Logger.Log(info);

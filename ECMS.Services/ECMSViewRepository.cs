@@ -28,14 +28,14 @@ namespace ECMS.Services
         }
         public void Save(ECMSView view_)
         {   
-            File.WriteAllText(GetViewPath(view_), view_.ViewHtml);
+            File.WriteAllText(GetViewPath(view_), view_.Html);
             _db.GetCollection<ECMSView>(COLLNAME).Save<ECMSView>(view_);
         }
 
         public ECMSView Get(ECMSView view_)
         {
             view_ = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.Id == view_.Id).FirstOrDefault<ECMSView>();
-            view_.ViewHtml = File.ReadAllText(GetViewPath(view_));
+            view_.Html = File.ReadAllText(GetViewPath(view_));
             return view_;
         }
 
@@ -63,7 +63,7 @@ namespace ECMS.Services
                 {
                     previewView.LastModifiedBy = view_.LastModifiedBy;
                     previewView.LastModifiedOn = view_.LastModifiedOn;
-                    previewView.ViewHtml = view_.ViewHtml;
+                    previewView.Html = view_.Html;
                     Save(previewView);
                 }
                 else

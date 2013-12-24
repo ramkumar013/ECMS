@@ -9,20 +9,21 @@
         if (((System.Web.Mvc.HandleErrorInfo)ViewData.Model).Exception is HttpException)
         {
             var httpEx = ((System.Web.Mvc.HandleErrorInfo)ViewData.Model).Exception as HttpException;
+    <h2>@httpEx.GetHttpCode()</h2>
             switch (@httpEx.GetHttpCode())
             {
                 case 404:
-                    <span>Sorry, the page you are looking for doesn't exist on this site !!!</span>        
+    <span>Sorry, the webpage you are looking for doesn't exist on this site !!!</span>        
                     break;
                 case 501:
                 default:
-                    <span>Internal Server Error</span>                
+    <span>Internal Server Error</span>                
                     break;
             }
         }
         else
         {
-            <span>Internal Server Error</span>
+    <span>Internal Server Error</span>
         }
     }
-    }
+}

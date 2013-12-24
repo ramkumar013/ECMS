@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.ViewType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ViewHtml)
+            @Html.DisplayNameFor(model => model.Html)
         </th>
 
         <th>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.ViewType)
             </td>
             <td>
-                @item.ViewHtml.Substring(0, (item.ViewHtml.Length > 25 ? 25 : item.ViewHtml.Length))...
+                @item.Html.Substring(0, (item.Html.Length > 25 ? 25 : item.Html.Length))...
             </td>
 
             <td>

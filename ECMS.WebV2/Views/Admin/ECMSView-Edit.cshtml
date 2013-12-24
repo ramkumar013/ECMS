@@ -38,11 +38,11 @@
             @Html.ValidationMessageFor(model => model.ViewType)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.ViewHtml)
+            @Html.LabelFor(model => model.Html)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.ViewHtml, new { @class = "adminRichText" })
-            @Html.ValidationMessageFor(model => model.ViewHtml)
+            @Html.TextAreaFor(model => model.Html, new { @class = "adminRichText" })
+            @Html.ValidationMessageFor(model => model.Html)
         </div>
         <p>
             <input type="submit" value="Save" />

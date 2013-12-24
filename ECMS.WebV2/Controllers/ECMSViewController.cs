@@ -163,5 +163,17 @@ namespace ECMS.WebV2.Controllers
         {
             return View(GetControllerView("EnterPreviewMode"));
         }
+
+        [HttpGet]
+        public ActionResult AddDefaultData(Guid id, int vm)
+        {
+            return View(GetControllerView("AddDefaultData"));
+        }
+
+        //[HttpPost]
+        //public ActionResult AddDefaultData(Guid viewId_)
+        //{
+        //    return View(GetControllerView("AddDefaultData"));
+        //}
     }
 }

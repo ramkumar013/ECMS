@@ -17,13 +17,13 @@ namespace ECMS.WebV2
             routes.MapRoute(
                name: "Default",
                url: "admin/{controller}/{action}/{id}",
-               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, vm = UrlParameter.Optional }
            );
 
             routes.MapRoute(
                name: "DefaultWithViewName",
                url: "admin/ECMSView/{action}/{viewName}",
-               defaults: new { controller = "Home", action = "Index", viewName = UrlParameter.Optional }
+               defaults: new { controller = "Home", action = "Index", viewName = UrlParameter.Optional, vm = UrlParameter.Optional }
            );   
 
 

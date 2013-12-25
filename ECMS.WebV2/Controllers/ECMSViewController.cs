@@ -226,7 +226,6 @@ namespace ECMS.WebV2.Controllers
         [HttpGet]
         public ActionResult UrlDataEdit(Guid id, ContentViewType vm)
         {
-
             ValidUrl url = DependencyManager.URLRepository.GetById(this.GetSiteIdFromContext(), id, false);
             ViewBag.ViewName = url.FriendlyUrl;
             ViewBag.ViewType = vm;
@@ -244,6 +243,16 @@ namespace ECMS.WebV2.Controllers
             {
                 return View(GetControllerView("DefaultDataEdit"));
             }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult UrlDataEdit(Guid id, ContentItem item_, ContentViewType vm)
+        {
+            ValidUrl url = DependencyManager.URLRepository.GetById(this.GetSiteIdFromContext(), id, false);
+            item_.Url = url;
+            DependencyManager.ContentRepository.Save(item_, vm);
+            return RedirectToAction("Index", "Urls");
         }
     }
 }

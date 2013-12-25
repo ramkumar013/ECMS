@@ -24,11 +24,12 @@ namespace ECMS.WebV2.Controllers
             if (viewList != null)
             {
                 var groupByList = (from view in viewList
+                                   orderby view.LastModifiedOn descending
                                    group view by view.ViewName into grps
                                    select new
                                    {
                                        Key = grps.Key,
-                                       Values = grps.OrderByDescending(x => x.ViewType).ToList()
+                                       Values = grps.OrderByDescending(x => x.ViewType).OrderByDescending(x=>x.LastModifiedOn)
                                    }).ToDictionary(x => Convert.ToString(x.Key), y => y.Values);
                 ViewBag.Data = groupByList;
             }

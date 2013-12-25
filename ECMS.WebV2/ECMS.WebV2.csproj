@@ -402,12 +402,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="App_Data\0\10\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
-    <Content Include="App_Data\0\10\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
-    <Content Include="App_Data\0\10\default-template.etxt" />
-    <Content Include="App_Data\0\20\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
-    <Content Include="App_Data\0\20\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
-    <Content Include="App_Data\0\20\default-template.etxt" />
     <Content Include="App_Data\0\urls.json" />
     <Content Include="App_Data\1\10\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
     <Content Include="App_Data\1\10\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
@@ -419,6 +413,16 @@
     <Content Include="Configs\0\site.config" />
     <Content Include="Configs\1\site.config" />
     <Content Include="NLog.config" />
+    <Content Include="App_Data\0\10\bodycontent\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
+    <Content Include="App_Data\0\10\bodycontent\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
+    <Content Include="App_Data\0\10\bodycontent\90d4aa0e-66b9-44d8-ae6d-f9f85954951d.etxt" />
+    <Content Include="App_Data\0\10\bodycontent\test1-default-content.etxt" />
+    <Content Include="App_Data\0\10\headcontent\test1-default-content.etxt" />
+    <Content Include="App_Data\0\20\bodycontent\2AF06EED-3850-4E78-B8AE-C3B325849F00.etxt" />
+    <Content Include="App_Data\0\20\bodycontent\2ECA40A9-E580-4589-B89B-17458B61590D.etxt" />
+    <Content Include="App_Data\0\20\bodycontent\90d4aa0e-66b9-44d8-ae6d-f9f85954951d.etxt" />
+    <Content Include="App_Data\0\20\bodycontent\test1-default-content.etxt" />
+    <Content Include="App_Data\0\20\headcontent\test1-default-content.etxt" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -565,7 +569,15 @@
     <Content Include="Views\Admin\ECMSView-Delete.cshtml" />
     <Content Include="Views\Admin\ECMSView-Details.cshtml" />
     <Content Include="Views\Admin\ECMSView-ARC-Index.cshtml" />
-    <Content Include="Views\Admin\ECMSView-AddDefaultData.cshtml" />
+    <Content Include="Views\Admin\ECMSView-DefaultDataAdd.cshtml" />
+    <Content Include="Views\Admin\ECMSView-DefaultDataEdit.cshtml" />
+    <Content Include="Views\0\0\Test1.cshtml" />
+    <Content Include="Views\0\10\Test1.cshtml" />
+    <Content Include="Views\0\10\Test2.cshtml" />
+    <Content Include="Views\0\10\Test3.cshtml" />
+    <Content Include="Views\0\20\Test1.cshtml" />
+    <Content Include="Views\0\20\Test2.cshtml" />
+    <Content Include="Views\Admin\ECMSView-DefaultDataIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\javascript\" />

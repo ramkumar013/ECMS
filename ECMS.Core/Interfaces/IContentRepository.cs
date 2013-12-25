@@ -13,7 +13,9 @@ namespace ECMS.Core.Interfaces
         ContentItem GetById(ValidUrl url_,ContentViewType viewType_);
         ContentItem GetByUrl(ValidUrl url_, ContentViewType viewType_);
         void Save(ContentItem content_, ContentViewType viewType_);
+        void Save(ContentItem content_, ECMSView view_);
         void Delete(ContentItem content_, ContentViewType viewType_);
         ContentItemHead GetHeadContentByViewName(ValidUrl url_, ContentViewType viewType_);
+        ContentItem GetContentForEditing(ECMSView view_);
     }
 }

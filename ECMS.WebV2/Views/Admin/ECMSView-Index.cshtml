@@ -41,10 +41,12 @@
             <td>
                 @Html.ActionLink("Edit", "edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "details", new { id = item.Id }) |
-                @Html.ActionLink("AddDefaultData", "adddefaultdata", new { id = item.Id, vm=(short)item.ViewType })
-                @if (item.ViewType==ContentViewType.PUBLISH) {
+                @*@Html.ActionLink("AddDefaultData", "defaultdataadd", new { id = item.Id }) |*@
+                @Html.ActionLink("AddOrEditDefaultData", "defaultdataedit", new { id = item.Id })
+                @if (item.ViewType == ContentViewType.PUBLISH)
+                {
                   <span>|</span> @Html.ActionLink("Archieved", "Archieved", new { viewName = item.ViewName });
-                    }
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ViewName)

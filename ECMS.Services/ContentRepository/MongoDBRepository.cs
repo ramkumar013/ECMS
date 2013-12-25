@@ -1,4 +1,5 @@
-﻿using ECMS.Core.Framework;
+﻿using ECMS.Core.Entities;
+using ECMS.Core.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +10,37 @@ namespace ECMS.Services.ContentRepository
 {
     public class MongoDBRepository : ContentRepositoryBase
     {
-        public override Core.Entities.ContentItem GetById(Core.Entities.ValidUrl url_, ContentViewType viewType_)
+        public override ContentItem GetById(ValidUrl url_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override Core.Entities.ContentItem GetByUrl(Core.Entities.ValidUrl url_, ContentViewType viewType_)
+        public override ContentItem GetByUrl(ValidUrl url_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override void Save(Core.Entities.ContentItem content_, ContentViewType viewType_)
+        public override void Save(ContentItem content_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override void Delete(Core.Entities.ContentItem content_, ContentViewType viewType_)
+        public override void Delete(ContentItem content_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
         }
 
-        public override Core.Entities.ContentItemHead GetHeadContentByViewName(Core.Entities.ValidUrl url_, ContentViewType viewType_)
+        public override ContentItemHead GetHeadContentByViewName(ValidUrl url_, ContentViewType viewType_)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save(ContentItem content_, Core.Entities.ECMSView view_)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ContentItem GetContentForEditing(ECMSView view_)
         {
             throw new NotImplementedException();
         }

@@ -90,7 +90,7 @@ namespace ECMS.WebV2.Controllers
                 _viewRepository.Save(view_);
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
                 DependencyManager.Logger.Log(info);
@@ -121,14 +121,14 @@ namespace ECMS.WebV2.Controllers
         {
             //try
             //{
-                view_.LastModifiedOn = DateTime.Now;
-                view_.LastModifiedBy = this.CMSUser.UserName;
-                _viewRepository.Update(view_);
-                return RedirectToAction("Index");
+            view_.LastModifiedOn = DateTime.Now;
+            view_.LastModifiedBy = this.CMSUser.UserName;
+            _viewRepository.Update(view_);
+            return RedirectToAction("Index");
             //}
             //catch
             //{
-               // return View(GetControllerView("index"));
+            // return View(GetControllerView("index"));
             //}
         }
 
@@ -164,16 +164,44 @@ namespace ECMS.WebV2.Controllers
             return View(GetControllerView("EnterPreviewMode"));
         }
 
-        [HttpGet]
-        public ActionResult AddDefaultData(Guid id, int vm)
-        {
-            return View(GetControllerView("AddDefaultData"));
-        }
+        //[HttpGet]
+        //public ActionResult DefaultDataAdd(Guid id)
+        //{
+        //    ViewBag.ECMSView = _viewRepository.Get(new ECMSView { Id = id });
+        //    return View(GetControllerView("DefaultDataAdd"));
+        //}
 
         //[HttpPost]
-        //public ActionResult AddDefaultData(Guid viewId_)
-        //{
-        //    return View(GetControllerView("AddDefaultData"));
-        //}
+        //[ValidateInput(false)]
+        public ActionResult DefaultDataAdd(Guid id, ContentItem item_)
+        {
+            ECMSView view = _viewRepository.Get(new ECMSView { Id = id });
+            DependencyManager.ContentRepository.Save(item_, view);
+            return View(GetControllerView("DefaultDataAdd"));
+        }
+
+        [HttpGet]
+        public ActionResult DefaultDataEdit(Guid id)
+        {
+            ECMSView ecmsView = _viewRepository.Get(new ECMSView { Id = id });
+            ViewBag.ECMSView = ecmsView;
+            ContentItem item = DependencyManager.ContentRepository.GetContentForEditing(ecmsView);
+            if (item != null)
+            {
+                return View(GetControllerView("DefaultDataEdit"), item);
+            }
+            else
+            {
+                return View(GetControllerView("DefaultDataEdit"));
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult DefaultDataEdit(Guid id, ContentItem item_)
+        {
+            DefaultDataAdd(id, item_);
+            return Index();
+        }
     }
 }

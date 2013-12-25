@@ -27,9 +27,6 @@ namespace ECMS.Core.Extensions
                         case "Description":
                             contentItemHead_.Description = (token as JProperty).Value.ToString();
                             break;
-                        case "CopyRight":
-                            contentItemHead_.CopyRight = (token as JProperty).Value.ToString();
-                            break;
                         case "PageMetaTags":
                             contentItemHead_.PageMetaTags = (token as JProperty).Value.ToString();
                             break;

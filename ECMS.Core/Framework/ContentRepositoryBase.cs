@@ -19,5 +19,9 @@ namespace ECMS.Core.Framework
         public abstract void Delete(ContentItem content_, ContentViewType viewType_);
 
         public abstract ContentItemHead GetHeadContentByViewName(ValidUrl url_, ContentViewType viewType_);
+
+        public abstract void Save(ContentItem content_, ECMSView view_);
+
+        public abstract ContentItem GetContentForEditing(ECMSView view_);
     }
 }

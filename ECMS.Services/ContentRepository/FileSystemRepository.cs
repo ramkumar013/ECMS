@@ -49,38 +49,54 @@ namespace ECMS.Services.ContentRepository
                         while (csv.Read())
                         {
                             //temp[csv.GetField("ViewName")] = JObject.FromObject(csv.GetRecord<object>());
-                            ContentHeadList.Add(dirInfo.Parent.Parent.Name + "-" + contentTypeDir_ + "-" + csv.GetField("ViewName"), JObject.FromObject(csv.GetRecord<object>()));
+                            ContentHeadList.Add(dirInfo.Parent.Parent.Name + "-" + contentTypeDir_ + "-" + file.Name.Replace("-default-content.etxt", string.Empty), JObject.FromObject(csv.GetRecord<object>()));
                         }
                     }
                 }
             }
         }
 
-        private static void LoadPageContents(DirectoryInfo dirInfo)
+        //private static void LoadPageContents(DirectoryInfo dirInfo)
+        //{
+        //    using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.etxt"))
+        //    {
+        //        using (var csv = new CsvReader(streamReader))
+        //        {
+        //            ContentBodyList = new Dictionary<int, Dictionary<Guid, JObject>>();
+        //            var temp = new Dictionary<Guid, JObject>();
+        //            while (csv.Read())
+        //            {
+        //                temp[Guid.Parse(csv.GetField("UrlId"))] = JObject.FromObject(csv.GetRecord<object>());
+        //            }
+        //            ContentBodyList[Convert.ToInt32(dirInfo.Name)] = temp;
+        //        }
+        //    }
+        //}
+
+        private JObject LoadPageContents(ValidUrl url_, ContentViewType viewType_, bool forBodyContent_)
         {
-            using (StreamReader streamReader = new StreamReader(dirInfo.FullName + "\\content.etxt"))
-            {
-                using (var csv = new CsvReader(streamReader))
-                {
-                    ContentBodyList = new Dictionary<int, Dictionary<Guid, JObject>>();
-                    var temp = new Dictionary<Guid, JObject>();
-                    while (csv.Read())
-                    {
-                        temp[Guid.Parse(csv.GetField("UrlId"))] = JObject.FromObject(csv.GetRecord<object>());
-                    }
-                    ContentBodyList[Convert.ToInt32(dirInfo.Name)] = temp;
-                }
-            }
+            string filePath = ConstructPath(url_, viewType_, forBodyContent_);
+            return ReadPageContentFromDisk(filePath);
         }
 
-        private JObject LoadPageContents(ValidUrl url_, ContentViewType viewType_)
+        private string ConstructPath(ValidUrl url_, ContentViewType viewType_, bool forBodyContent_)
         {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + "\\bodycontent\\" + url_.Id + ECMS_FILE_EXTENSION;
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") +url_.Id + ECMS_FILE_EXTENSION;
             if (!File.Exists(filePath))
             {
-                filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + "\\bodycontent\\" + url_.View + "-default-content" + ECMS_FILE_EXTENSION;
+                filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") + url_.View + "-default-content" + ECMS_FILE_EXTENSION;
             }
-            return ReadPageContentFromDisk(filePath);
+            return filePath;
+        }
+
+        private string ConstructPath(ECMSView view_, bool forBodyContent_)
+        {
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + view_.SiteId + "\\" + Convert.ToInt32(view_.ViewType).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") + view_.ViewName + "-default-content" + ECMS_FILE_EXTENSION;
+            //if (!File.Exists(filePath))
+            //{
+            //    filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + view_.SiteId + "\\" + Convert.ToInt32(view_.ViewType).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") + view_.ViewName + "-default-content" + ECMS_FILE_EXTENSION;
+            //}
+            return filePath;
         }
 
         private JObject ReadPageContentFromDisk(string filePath)
@@ -100,7 +116,7 @@ namespace ECMS.Services.ContentRepository
         {
             ContentItem item = new ContentItem();
             item.Url = url_;
-            JObject jsonBody = LoadPageContents(url_, viewType_);
+            JObject jsonBody = LoadPageContents(url_, viewType_,true);
             item.Body = jsonBody;
             item.Head = GetHeadContentByViewName(url_, jsonBody, viewType_);
 
@@ -131,6 +147,7 @@ namespace ECMS.Services.ContentRepository
 
         public override void Save(ContentItem content_, ContentViewType viewType_)
         {
+            
             throw new NotImplementedException();
         }
 
@@ -168,6 +185,42 @@ namespace ECMS.Services.ContentRepository
         private static string GetCacheKeyForContent(string val1_, string val2_)
         {
             return string.Format("{0}-{1}", val1_, val2_);
+        }
+
+        public override void Save(ContentItem content_, ECMSView view_)
+        {
+            string bodyContentFilePath = ConstructPath(view_, true);
+            string headContentFilePath = ConstructPath(view_, false);
+
+            File.WriteAllText(bodyContentFilePath, Convert.ToString(content_.Body[0]));
+
+            using (StringWriter stringWriter = new StringWriter())
+            {
+                using (CsvWriter csvWriter = new CsvWriter(stringWriter))
+                {
+                    csvWriter.WriteHeader<ContentItemHead>();
+                    csvWriter.WriteRecord<ContentItemHead>(content_.Head);
+                    File.WriteAllText(headContentFilePath, stringWriter.ToString());
+                }
+            }
+        }
+        public override ContentItem GetContentForEditing(ECMSView view_)
+        {
+            string bodyContentFilePath = ConstructPath(view_, true);
+            string headContentFilePath = ConstructPath(view_, false);
+            ContentItem contentItem = new ContentItem();
+            using (StreamReader streamReader = new StreamReader(headContentFilePath))
+            {
+                using (var csv = new CsvReader(streamReader))
+                {
+                    while (csv.Read())
+                    {
+                        contentItem.Head = csv.GetRecord<ContentItemHead>();
+                    }
+                }
+            }
+            contentItem.Body = (dynamic)File.ReadAllText(bodyContentFilePath);
+            return contentItem;
         }
     }
 }

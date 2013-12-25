@@ -1,0 +1,58 @@
+﻿@model ECMS.Core.Entities.ContentItem
+
+@{
+    ViewBag.Title = "ECMSView-AddDefaultData";
+}
+
+<h2>Add Default Data to View "@ViewBag.ECMSView.ViewName" for @ViewBag.ECMSView.ViewType</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ContentItem</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Head.Title)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Head.Title)
+            @Html.ValidationMessageFor(model => model.Head.Title)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Head.KeyWords)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Head.KeyWords)
+            @Html.ValidationMessageFor(model => model.Head.KeyWords)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Head.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Head.Description)
+            @Html.ValidationMessageFor(model => model.Head.Description)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Head.PageMetaTags)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Head.PageMetaTags)
+            @Html.ValidationMessageFor(model => model.Head.PageMetaTags)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Body)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Body, new { @width="950px", @height="200px"})
+            @Html.ValidationMessageFor(model => model.Body)
+        </div>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

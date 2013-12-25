@@ -44,5 +44,10 @@ namespace ECMS.Services.ContentRepository
         {
             throw new NotImplementedException();
         }
+
+        public override ContentItem GetContentForEditing(ValidUrl url_, ContentViewType viewType_)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace ECMS.Services
             return GetByFriendlyUrl(siteId_, friendlyurl_, true);
         }
 
-        public ValidUrl GetById(int urlId_)
+        public ValidUrl GetById(Guid urlId_)
         {
             throw new NotImplementedException();
         }
@@ -54,7 +54,8 @@ namespace ECMS.Services
 
         public ValidUrl GetById(int siteId_, Guid urlId_, bool isPublish_)
         {
-            throw new NotImplementedException();
+            // when we are picking by id then donot use active in the where clause as it may slow the performance.
+            return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).AsQueryable().Where(x => x.SiteId == siteId_ && x.Id == urlId_).FirstOrDefault();
         }
         public List<ValidUrl> GetAll(int siteId_, bool isPublish_)
         {

@@ -10,7 +10,7 @@ namespace ECMS.Core.Interfaces
     public interface IValidURLRepository
     {
         ValidUrl GetByFriendlyUrl(int siteId_,string friendlyurl_);
-        ValidUrl GetById(int urlId_);
+        ValidUrl GetById(Guid urlId_);
         ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool isPublish_);
         ValidUrl GetById(int siteId_, Guid urlId_, bool isPublish_);
         List<ValidUrl> GetAll(int siteId_, bool isPublish_);

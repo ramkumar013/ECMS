@@ -22,7 +22,7 @@ namespace ECMS.Services
             return GetFromCache(siteId_, friendlyurl_);
         }
 
-        public ValidUrl GetById(int urlId_)
+        public ValidUrl GetById(Guid urlId_)
         {
             throw new NotImplementedException();
         }

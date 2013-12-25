@@ -2,77 +2,77 @@
 @model IEnumerable<ECMS.Core.Entities.ECMSView>
 
 @{
-    ViewBag.Title = "ECMSView-List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "ECMSView-List";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>ECMSView-List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+	@Html.ActionLink("Create New", "Create")
 </p>
 <table>
-    <tr>
-        <th></th>
-        <th>
-            @Html.DisplayNameFor(model => model.ViewName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ViewType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Html)
-        </th>
+	<tr>
+		<th></th>
+		<th>
+			@Html.DisplayNameFor(model => model.ViewName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.ViewType)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Html)
+		</th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.LastModifiedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SiteId)
-        </th>
-    </tr>
+		<th>
+			@Html.DisplayNameFor(model => model.LastModifiedOn)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.LastModifiedBy)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.SiteId)
+		</th>
+	</tr>
 
-    @foreach (var key in ViewBag.Data.Keys)
-    {
-        foreach (ECMS.Core.Entities.ECMSView item in ViewBag.Data[key])
+	@foreach (var key in ViewBag.Data.Keys)
+	{
+		foreach (ECMS.Core.Entities.ECMSView item in ViewBag.Data[key])
 	{
 <tr>
-            <td>
-                @Html.ActionLink("Edit", "edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "details", new { id = item.Id }) |
-                @*@Html.ActionLink("AddDefaultData", "defaultdataadd", new { id = item.Id }) |*@
-            @Html.ActionLink("AddOrEditDefaultData", "defaultdataedit", new { id = item.Id })
-            @if (item.ViewType == ContentViewType.PUBLISH)
-                {
+			<td>
+				@Html.ActionLink("Edit", "edit", new { id = item.Id }) |
+				@Html.ActionLink("Details", "details", new { id = item.Id }) |
+				@*@Html.ActionLink("AddDefaultData", "defaultdataadd", new { id = item.Id }) |*@
+			@Html.ActionLink("ManageViewData", "defaultdataedit", new { id = item.Id })
+			@if (item.ViewType == ContentViewType.PUBLISH)
+				{
 <span>|</span> @Html.ActionLink("Archieved", "Archieved", new { viewName = item.ViewName });
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ViewName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ViewType)
-            </td>
-            <td>
-                @item.Html.Substring(0, (item.Html.Length > 25 ? 25 : item.Html.Length))...
-            </td>
+				}
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ViewName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ViewType)
+			</td>
+			<td>
+				@item.Html.Substring(0, (item.Html.Length > 25 ? 25 : item.Html.Length))...
+			</td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModifiedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SiteId)
-        </td>
+			<td>
+				@Html.DisplayFor(modelItem => item.LastModifiedOn)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.LastModifiedBy)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.SiteId)
+		</td>
 
-        </tr>
+		</tr>
 	}
-       
-    }
+	   
+	}
 
 </table>

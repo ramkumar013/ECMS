@@ -1,5 +1,6 @@
 ﻿using ECMS.Core;
 using ECMS.Core.Entities;
+using ECMS.Core.Framework;
 //using Lib.Web.Mvc.JQuery.JqGrid;
 using Newtonsoft.Json.Linq;
 using System;
@@ -51,6 +52,11 @@ namespace ECMS.WebV2
             {
                 sb.Append("{\"cell\":[");
                 sb.Append("\"\",\"");
+                sb.Append("<a href='/admin/ecmsview/urldataedit/");
+                sb.Append(url.Id);
+                sb.Append("?vm=" + (int)ContentViewType.PUBLISH + "'>PublishData</a>|<a href='/admin/ecmsview/urldataedit/");
+                sb.Append(url.Id);
+                sb.Append("?vm=" + (int)ContentViewType.PREVIEW + "'>PreviewData</a>\",\"");
                 sb.Append(url.FriendlyUrl);
                 sb.Append("\",\"");
                 sb.Append(url.View);

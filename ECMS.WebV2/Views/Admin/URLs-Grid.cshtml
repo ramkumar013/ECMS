@@ -25,9 +25,10 @@
             url: "/admin/urls/getall",
             mtype: 'POST',
             datatype: "json",
-            colNames: ['Edit', 'FriendlyUrl', 'View', 'Indexable', 'Active', 'StatusCode', 'ChangeFrequency', 'SitemapPriority', 'LastModified', 'LastModifiedBy'],
+            colNames: ['Edit','ManageUrlData', 'FriendlyUrl', 'View', 'Indexable', 'Active', 'StatusCode', 'ChangeFrequency', 'SitemapPriority', 'LastModified', 'LastModifiedBy'],
             colModel: [
-                { name: 'Edit', index: 'Edit', width: 50, sortable: false, formatter: displayButtons },
+                { name: 'Edit', index: 'Edit', width: 40, sortable: false, formatter: displayButtons },
+                { name: 'ManageUrlData', index: 'ManageUrlData', width: 160, sortable: false },
                 { name: 'FriendlyUrl', index: 'FriendlyUrl', width: 220, editable: true, editrules: { required: true } },
                 { name: 'View', index: 'View', width: 220, editable: true, editrules: { required: true } },
                 { name: 'Index', index: 'Index', width: 80, edittype: "checkbox", editable: true, editoptions: { value: "True:False" }, editrules: { required: true } },
@@ -48,6 +49,10 @@
             caption: "Url Management"
         });
         function displayButtons(cellvalue, options, rowObject) {
+            return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:450,height:270,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
+        }
+        function displayUrlDataMgmtLink(cellvalue, options, rowObject)
+        {
             return "<div class=\"ui-pg-div\" onclick=\"$('#grdUrlList').jqGrid('editGridRow','" + options.rowId.trim() + "',{width:450,height:270,reloadAfterSubmit:true,closeAfterEdit:true,editCaption:'Edit URL'});\" ><span class=\"ui-icon ui-icon-pencil\"></span></div>";
         }
         $("#grdUrlList").jqGrid('navGrid', "#pagerUrlList", { edit: false, add: true, del: false }, {}, { width: 450, height: 270, reloadAfterSubmit: true, closeAfterAdd: true, addCaption: 'Add URL' }, {}, {});

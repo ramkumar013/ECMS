@@ -5,6 +5,7 @@ using ECMS.Services;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -201,7 +202,8 @@ namespace ECMS.WebV2.Controllers
         public ActionResult DefaultDataEdit(Guid id)
         {
             ECMSView ecmsView = _viewRepository.Get(new ECMSView { Id = id });
-            ViewBag.ECMSView = ecmsView;
+            ViewBag.ViewName = ecmsView.ViewName;
+            ViewBag.ViewType = ecmsView.ViewType;
             ContentItem item = DependencyManager.ContentRepository.GetContentForEditing(ecmsView);
             if (item != null)
             {
@@ -219,6 +221,29 @@ namespace ECMS.WebV2.Controllers
         {
             DefaultDataAdd(id, item_);
             return Index();
+        }
+
+        [HttpGet]
+        public ActionResult UrlDataEdit(Guid id, ContentViewType vm)
+        {
+
+            ValidUrl url = DependencyManager.URLRepository.GetById(this.GetSiteIdFromContext(), id, false);
+            ViewBag.ViewName = url.FriendlyUrl;
+            ViewBag.ViewType = vm;
+            ContentItem item = null;
+            try
+            {
+                item = DependencyManager.ContentRepository.GetContentForEditing(url, vm);
+            }
+            catch (FileNotFoundException) { }
+            if (item != null)
+            {
+                return View(GetControllerView("DefaultDataEdit"), item);
+            }
+            else
+            {
+                return View(GetControllerView("DefaultDataEdit"));
+            }
         }
     }
 }

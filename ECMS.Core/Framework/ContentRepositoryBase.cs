@@ -23,5 +23,7 @@ namespace ECMS.Core.Framework
         public abstract void Save(ContentItem content_, ECMSView view_);
 
         public abstract ContentItem GetContentForEditing(ECMSView view_);
+
+        public abstract ContentItem GetContentForEditing(ValidUrl url_, ContentViewType viewType_);
     }
 }

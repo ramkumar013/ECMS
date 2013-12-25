@@ -82,10 +82,10 @@ namespace ECMS.Services.ContentRepository
         private string ConstructPath(ValidUrl url_, ContentViewType viewType_, bool forBodyContent_)
         {
             string filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") +url_.Id + ECMS_FILE_EXTENSION;
-            if (!File.Exists(filePath))
-            {
-                filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") + url_.View + "-default-content" + ECMS_FILE_EXTENSION;
-            }
+            //if (!File.Exists(filePath))
+            //{
+            //    filePath = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + url_.SiteId + "\\" + Convert.ToInt32(viewType_).ToString() + (forBodyContent_ ? "\\bodycontent\\" : "\\headcontent\\") + url_.View + "-default-content" + ECMS_FILE_EXTENSION;
+            //}
             return filePath;
         }
 
@@ -147,8 +147,20 @@ namespace ECMS.Services.ContentRepository
 
         public override void Save(ContentItem content_, ContentViewType viewType_)
         {
-            
-            throw new NotImplementedException();
+            string bodyContentFilePath = ConstructPath(content_.Url, viewType_, true);
+            string headContentFilePath = ConstructPath(content_.Url, viewType_, false);
+
+            File.WriteAllText(bodyContentFilePath, Convert.ToString(content_.Body[0]));
+
+            using (StringWriter stringWriter = new StringWriter())
+            {
+                using (CsvWriter csvWriter = new CsvWriter(stringWriter))
+                {
+                    csvWriter.WriteHeader<ContentItemHead>();
+                    csvWriter.WriteRecord<ContentItemHead>(content_.Head);
+                    File.WriteAllText(headContentFilePath, stringWriter.ToString());
+                }
+            }
         }
 
         public override void Delete(ContentItem content_, ContentViewType viewType_)
@@ -208,6 +220,25 @@ namespace ECMS.Services.ContentRepository
         {
             string bodyContentFilePath = ConstructPath(view_, true);
             string headContentFilePath = ConstructPath(view_, false);
+            ContentItem contentItem = new ContentItem();
+            using (StreamReader streamReader = new StreamReader(headContentFilePath))
+            {
+                using (var csv = new CsvReader(streamReader))
+                {
+                    while (csv.Read())
+                    {
+                        contentItem.Head = csv.GetRecord<ContentItemHead>();
+                    }
+                }
+            }
+            contentItem.Body = (dynamic)File.ReadAllText(bodyContentFilePath);
+            return contentItem;
+        }
+
+        public override ContentItem GetContentForEditing(ValidUrl url_,ContentViewType viewType_)
+        {
+            string bodyContentFilePath = ConstructPath(url_, viewType_, true);
+            string headContentFilePath = ConstructPath(url_, viewType_, false);
             ContentItem contentItem = new ContentItem();
             using (StreamReader streamReader = new StreamReader(headContentFilePath))
             {

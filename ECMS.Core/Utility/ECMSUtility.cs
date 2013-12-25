@@ -28,7 +28,7 @@ namespace ECMS.Core.Utilities
 
         public static string GetClientIP()
         {
-            if (HttpContext.Current != null)
+            if (HttpContext.Current == null)
             {
                 return "255.255.255.255";
             }

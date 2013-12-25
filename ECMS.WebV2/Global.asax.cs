@@ -1,4 +1,5 @@
 ﻿using ECMS.Core;
+using ECMS.Core.Utilities;
 using ECMS.Services;
 using ECMS.Services.ContentRepository;
 using NLog;
@@ -56,6 +57,7 @@ namespace ECMS.WebV2
                         currentAction = currentRouteData.Values["action"].ToString();
                     }
                     LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, currentController + "--" + currentAction);
+                    info.Properties.Add("ClientIP", Utility.GetClientIP());
                     DependencyManager.Logger.Log(info);
                 }
 
@@ -66,6 +68,7 @@ namespace ECMS.WebV2
                 if (ex != null)
                 {
                     LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                    info.Properties.Add("ClientIP", Utility.GetClientIP());
                     DependencyManager.Logger.Log(info);
                 }
                 if (ex is HttpException)
@@ -97,6 +100,7 @@ namespace ECMS.WebV2
             catch (Exception ex)
             {
                 LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                info.Properties.Add("ClientIP", Utility.GetClientIP());
                 DependencyManager.Logger.Log(info);
             }
         }

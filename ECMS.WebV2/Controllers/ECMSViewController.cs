@@ -23,25 +23,36 @@ namespace ECMS.WebV2.Controllers
 
             if (viewList != null)
             {
-                var groupByList = (from view in viewList
-                                   orderby view.LastModifiedOn descending
-                                   group view by view.ViewName into grps
-                                   select new
-                                   {
-                                       Key = grps.Key,
-                                       Values = grps.OrderByDescending(x => x.ViewType).OrderByDescending(x=>x.LastModifiedOn)
-                                   }).ToDictionary(x => Convert.ToString(x.Key), y => y.Values);
+                var groupByList = DoGroupingAndSorting(viewList);
                 ViewBag.Data = groupByList;
             }
 
             return View(GetControllerView("index"));
         }
 
+        private Dictionary<string, IOrderedEnumerable<ECMSView>> DoGroupingAndSorting(List<ECMSView> viewList_)
+        {
+            var result = (from view in viewList_
+             orderby view.LastModifiedOn descending
+             group view by view.ViewName into grps
+             select new
+             {
+                 Key = grps.Key,
+                 Values = grps.OrderByDescending(x => x.ViewType).OrderByDescending(x => x.LastModifiedOn)
+             }).ToDictionary(x => Convert.ToString(x.Key), y => y.Values);
+            return result;
+        }
+
         public ActionResult Archieved()
         {
             string viewName = this.Request.QueryString["viewName"].ToString();
             List<ECMSView> viewList = _viewRepository.GetAllArchieved(ECMSSettings.Current.SiteId, viewName).OrderByDescending(x => x.LastModifiedOn).ToList<ECMSView>();
-            return View(GetControllerView("arc-index"), viewList);
+            if (viewList != null)
+            {
+                var groupByList = DoGroupingAndSorting(viewList);
+                ViewBag.Data = groupByList;
+            }
+            return View(GetControllerView("arc-index"));
         }
         public ActionResult ArcDetails(Guid id)
         {
@@ -56,7 +67,6 @@ namespace ECMS.WebV2.Controllers
 
         //
         // GET: /ECMSView/Details/5
-
         public ActionResult Details(Guid id)
         {
             ECMSView view = new ECMSView();
@@ -70,7 +80,6 @@ namespace ECMS.WebV2.Controllers
 
         //
         // GET: /ECMSView/Create
-
         public ActionResult Create()
         {
             ViewData["sites"] = GetSiteList();
@@ -91,7 +100,6 @@ namespace ECMS.WebV2.Controllers
 
         //
         // POST: /ECMSView/Create
-
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(ECMSView view_)
@@ -114,7 +122,6 @@ namespace ECMS.WebV2.Controllers
 
         //
         // GET: /ECMSView/Edit/5
-
         public ActionResult Edit(Guid id)
         {
             ECMSView view = new ECMSView();
@@ -128,7 +135,6 @@ namespace ECMS.WebV2.Controllers
 
         //
         // POST: /ECMSView/Edit/5
-
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Edit(Guid id, ECMSView view_)
@@ -148,7 +154,6 @@ namespace ECMS.WebV2.Controllers
 
         //
         // GET: /ECMSView/Delete/5
-
         public ActionResult Delete(Guid id)
         {
             return View(GetControllerView("edit"));
@@ -156,14 +161,12 @@ namespace ECMS.WebV2.Controllers
 
         //
         // POST: /ECMSView/Delete/5
-
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
             catch

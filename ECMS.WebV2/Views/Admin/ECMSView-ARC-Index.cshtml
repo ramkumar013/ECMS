@@ -1,66 +1,68 @@
 ﻿@model IEnumerable<ECMS.Core.Entities.ECMSView>
 
 @{
-    ViewBag.Title = "ECMSView-Archieved-List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "ECMSView-Archieved-List";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>ECMSView-Archieved-List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+	@Html.ActionLink("Create New", "Create")
 </p>
 <table>
-    <tr>
-        <th></th>
-        <th>
-            @Html.DisplayNameFor(model => model.ViewName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ViewType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Html)
-        </th>
+	<tr>
+		<th></th>
+		<th>
+			@Html.DisplayNameFor(model => model.ViewName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.ViewType)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Html)
+		</th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.LastModifiedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SiteId)
-        </th>
-    </tr>
+		<th>
+			@Html.DisplayNameFor(model => model.LastModifiedOn)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.LastModifiedBy)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.SiteId)
+		</th>
+	</tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-            @Html.ActionLink("Details", "ArcDetails", new { id = item.Id })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ViewName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ViewType)
-            </td>
-            <td>
-                @item.ViewHtml.Substring(0, (item.ViewHtml.Length > 25 ? 25 : item.ViewHtml.Length))...
-            </td>
+	 @foreach (var key in ViewBag.Data.Keys)
+	{
+		foreach (ECMS.Core.Entities.ECMSView item in ViewBag.Data[key])
+	{
+		<tr>
+			<td>
+			@Html.ActionLink("Details", "ArcDetails", new { id = item.Id })
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ViewName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ViewType)
+			</td>
+			<td>
+				@item.Html.Substring(0, (item.Html.Length > 25 ? 25 : item.Html.Length))...
+			</td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModifiedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SiteId)
-            </td>
+			<td>
+				@Html.DisplayFor(modelItem => item.LastModifiedOn)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.LastModifiedBy)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.SiteId)
+			</td>
 
-        </tr>
-    }
-
+		</tr>
+	}
+	}
 </table>

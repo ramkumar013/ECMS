@@ -20,7 +20,20 @@ namespace ECMS.WebV2.Controllers
         public ActionResult Index()
         {
             List<ECMSView> viewList = _viewRepository.GetAll(ECMSSettings.Current.SiteId);
-            return View(GetControllerView("index"), viewList);
+
+            if (viewList != null)
+            {
+                var groupByList = (from view in viewList
+                                   group view by view.ViewName into grps
+                                   select new
+                                   {
+                                       Key = grps.Key,
+                                       Values = grps.OrderByDescending(x => x.ViewType).ToList()
+                                   }).ToDictionary(x => Convert.ToString(x.Key), y => y.Values);
+                ViewBag.Data = groupByList;
+            }
+
+            return View(GetControllerView("index"));
         }
 
         public ActionResult Archieved()

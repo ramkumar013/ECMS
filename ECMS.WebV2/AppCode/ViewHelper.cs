@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 namespace ECMS.WebV2
 {
@@ -42,5 +44,10 @@ namespace ECMS.WebV2
             // TODO : Check if url is active or not.
             return string.Format("<a href={0}>{1}</a>", url_, text);
         }
+
+        //public static string Include(string view_)
+        //{ 
+        //    new HtmlHelper()
+        //}
     }
 }

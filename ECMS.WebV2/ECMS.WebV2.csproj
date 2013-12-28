@@ -195,6 +195,7 @@
     <Compile Include="AppCode\DefaultUserProfileService.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
     <Compile Include="AppCode\Member.cs" />
+    <Compile Include="AppCode\SubmitActionSelector.cs" />
     <Compile Include="AppCode\ViewHelper.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

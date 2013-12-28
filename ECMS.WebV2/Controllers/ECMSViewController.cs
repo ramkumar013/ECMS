@@ -2,6 +2,7 @@
 using ECMS.Core.Entities;
 using ECMS.Core.Framework;
 using ECMS.Services;
+using ECMS.WebV2.AppCode;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -81,11 +82,58 @@ namespace ECMS.WebV2.Controllers
 
         //
         // GET: /ECMSView/Create
-        public ActionResult Create()
+        public ActionResult Save()
         {
             ViewData["sites"] = GetSiteList();
             ViewData["ViewTypes"] = GetViewTypeList();
             return View(GetControllerView("create"));
+        }
+
+        [HttpPost]        
+        [ValidateInput(false)]
+        [AcceptParameter(ButtonName = "Save")]
+        public ActionResult Save(ECMSView view_)
+        {
+            try
+            {
+                view_.ViewType = ContentViewType.PREVIEW;
+                SaveView(view_);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
+                return View(GetControllerView("index"));
+            }
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        [ActionName("Save")]
+        [AcceptParameter(ButtonName = "Publish")]
+        public ActionResult Publish(ECMSView view_)
+        {
+            try
+            {
+                view_.ViewType = ContentViewType.PUBLISH;
+                SaveView(view_);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
+                return View(GetControllerView("index"));
+            }
+        }
+
+        private void SaveView(ECMSView view_)
+        {
+            view_.SiteId = ECMSSettings.Current.SiteId;
+            view_.LastModifiedBy = this.CMSUser.UserName;
+            view_.LastModifiedOn = DateTime.Now;
+            _viewRepository.Save(view_);
         }
 
         private SelectList GetViewTypeList()
@@ -99,27 +147,7 @@ namespace ECMS.WebV2.Controllers
             return new SelectList(ECMSSettings.CMSSettingsList.Values, "SiteId", "PortalHostName");
         }
 
-        //
-        // POST: /ECMSView/Create
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult Create(ECMSView view_)
-        {
-            try
-            {
-                view_.SiteId = ECMSSettings.Current.SiteId;
-                view_.LastModifiedBy = this.CMSUser.UserName;
-                view_.LastModifiedOn = DateTime.Now;
-                _viewRepository.Save(view_);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
-                DependencyManager.Logger.Log(info);
-                return View(GetControllerView("index"));
-            }
-        }
+        
 
         //
         // GET: /ECMSView/Edit/5
@@ -134,16 +162,36 @@ namespace ECMS.WebV2.Controllers
             return View(GetControllerView("edit"), view);
         }
 
-        //
-        // POST: /ECMSView/Edit/5
         [HttpPost]
+        [AcceptParameter(ButtonName = "Edit")]
         [ValidateInput(false)]
         public ActionResult Edit(Guid id, ECMSView view_)
         {
             //try
             //{
             view_.LastModifiedOn = DateTime.Now;
+            view_.ViewType = ContentViewType.PREVIEW;
             view_.LastModifiedBy = this.CMSUser.UserName;
+            _viewRepository.Update(view_);
+            return RedirectToAction("Index");
+            //}
+            //catch
+            //{
+            // return View(GetControllerView("index"));
+            //}
+        }
+
+        [HttpPost]
+        [ActionName("Edit")]
+        [AcceptParameter(ButtonName = "EditAndPublish")]
+        [ValidateInput(false)]
+        public ActionResult EditAndPublish(Guid id, ECMSView view_)
+        {
+            //try
+            //{
+            view_.LastModifiedOn = DateTime.Now;
+            view_.LastModifiedBy = this.CMSUser.UserName;
+            view_.ViewType = ContentViewType.PUBLISH;
             _viewRepository.Update(view_);
             return RedirectToAction("Index");
             //}
@@ -157,7 +205,7 @@ namespace ECMS.WebV2.Controllers
         // GET: /ECMSView/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View(GetControllerView("edit"));
+            return View(GetControllerView("delete"));
         }
 
         //

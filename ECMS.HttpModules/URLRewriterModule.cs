@@ -67,6 +67,10 @@ namespace ECMS.HttpModules
                             break;
                     }
                 }
+                else
+                {
+                    HandleError(context, siteId, 404);
+                }
             }
             catch (KeyNotFoundException ex)
             {

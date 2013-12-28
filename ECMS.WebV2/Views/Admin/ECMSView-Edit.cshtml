@@ -34,8 +34,7 @@
             @Html.LabelFor(model => model.ViewType)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.ViewType, ViewData["ViewTypes"] as SelectList)
-            @Html.ValidationMessageFor(model => model.ViewType)
+            @Html.DisplayTextFor(model=>model.ViewType)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Html)
@@ -45,7 +44,8 @@
             @Html.ValidationMessageFor(model => model.Html)
         </div>
         <p>
-            <input type="submit" value="Save" />
+            <input type="submit" name="Edit" value="Save" />
+            <input type="submit" name="EditAndPublish" value="Save & Publish" />
         </p>
     </fieldset>
 }

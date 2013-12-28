@@ -543,7 +543,6 @@
     <Content Include="Views\0\Ecms-Error-Handler.cshtml" />
     <Content Include="Views\0\Footer-Default.cshtml" />
     <Content Include="Views\0\Header-Default.cshtml" />
-    <Content Include="Views\0\home.cshtml" />
     <Content Include="Views\0\Index.cshtml" />
     <Content Include="Views\0\Layout-Default.cshtml" />
     <Content Include="Views\0\Partial1.cshtml" />

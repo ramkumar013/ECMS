@@ -21,6 +21,7 @@ namespace ECMS.Services.ContentRepository
         private static Dictionary<string, JObject> ContentHeadList = new Dictionary<string, JObject>();
         private static Dictionary<int, Dictionary<Guid, JObject>> ContentBodyList = null;
         private const string ECMS_FILE_EXTENSION = ".etxt";
+
         static FileSystemRepository()
         {
             //TODO:headcontent and body content directories should be created at app init.
@@ -76,6 +77,11 @@ namespace ECMS.Services.ContentRepository
         private JObject LoadPageContents(ValidUrl url_, ContentViewType viewType_, bool forBodyContent_)
         {
             string filePath = ConstructPath(url_, viewType_, forBodyContent_);
+            if (!File.Exists(filePath))
+            {
+                ECMSView view = DependencyManager.ViewRepository.GetByViewName(url_.View);
+                filePath = ConstructPath(view, forBodyContent_);
+            }
             return ReadPageContentFromDisk(filePath);
         }
 
@@ -110,7 +116,6 @@ namespace ECMS.Services.ContentRepository
                 }
             }
         }
-
 
         public override ContentItem GetById(ValidUrl url_, ContentViewType viewType_)
         {
@@ -216,22 +221,31 @@ namespace ECMS.Services.ContentRepository
                 }
             }
         }
+
         public override ContentItem GetContentForEditing(ECMSView view_)
         {
-            string bodyContentFilePath = ConstructPath(view_, true);
             string headContentFilePath = ConstructPath(view_, false);
-            ContentItem contentItem = new ContentItem();
-            using (StreamReader streamReader = new StreamReader(headContentFilePath))
+            string bodyContentFilePath = ConstructPath(view_, true);
+
+            ContentItem contentItem = null;
+            if (File.Exists(headContentFilePath))
             {
-                using (var csv = new CsvReader(streamReader))
+                contentItem = new ContentItem();
+                using (StreamReader streamReader = new StreamReader(headContentFilePath))
                 {
-                    while (csv.Read())
+                    using (var csv = new CsvReader(streamReader))
                     {
-                        contentItem.Head = csv.GetRecord<ContentItemHead>();
+                        while (csv.Read())
+                        {
+                            contentItem.Head = csv.GetRecord<ContentItemHead>();
+                        }
                     }
                 }
             }
-            contentItem.Body = (dynamic)File.ReadAllText(bodyContentFilePath);
+            if (File.Exists(bodyContentFilePath))
+            {
+                contentItem.Body = (dynamic)File.ReadAllText(bodyContentFilePath);    
+            }
             return contentItem;
         }
 

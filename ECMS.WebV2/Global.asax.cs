@@ -22,7 +22,7 @@ namespace ECMS.WebV2
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            DependencyManager.ViewRepository = new ECMSViewRepository();
             DependencyManager.URLRepository = new ValidUrlMongoDBRepository();
             DependencyManager.ContentRepository = new FileSystemRepository();
             DependencyManager.CachingService = new InProcCachingService();

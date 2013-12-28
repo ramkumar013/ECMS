@@ -76,7 +76,7 @@ namespace ECMS.WebV2.Controllers
             view.SiteId = ECMSSettings.Current.SiteId;
             ViewData["sites"] = GetSiteList();
             ViewData["ViewTypes"] = GetViewTypeList();
-            view = _viewRepository.Get(view);
+            view = _viewRepository.GetById(id);
             return View(GetControllerView("details"), view);
         }
 
@@ -158,7 +158,7 @@ namespace ECMS.WebV2.Controllers
             view.SiteId = ECMSSettings.Current.SiteId;
             ViewData["sites"] = GetSiteList();
             ViewData["ViewTypes"] = GetViewTypeList();
-            view = _viewRepository.Get(view);
+            view = _viewRepository.GetById(id);
             return View(GetControllerView("edit"), view);
         }
 
@@ -241,7 +241,7 @@ namespace ECMS.WebV2.Controllers
         //[ValidateInput(false)]
         public ActionResult DefaultDataAdd(Guid id, ContentItem item_)
         {
-            ECMSView view = _viewRepository.Get(new ECMSView { Id = id });
+            ECMSView view = _viewRepository.GetById(id);
             DependencyManager.ContentRepository.Save(item_, view);
             return View(GetControllerView("DefaultDataAdd"));
         }
@@ -249,7 +249,7 @@ namespace ECMS.WebV2.Controllers
         [HttpGet]
         public ActionResult DefaultDataEdit(Guid id)
         {
-            ECMSView ecmsView = _viewRepository.Get(new ECMSView { Id = id });
+            ECMSView ecmsView = _viewRepository.GetById(id);
             ViewBag.ViewName = ecmsView.ViewName;
             ViewBag.ViewType = ecmsView.ViewType;
             ContentItem item = DependencyManager.ContentRepository.GetContentForEditing(ecmsView);

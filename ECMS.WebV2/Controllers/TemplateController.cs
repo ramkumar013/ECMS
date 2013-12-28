@@ -29,7 +29,9 @@ namespace WebSite.Controllers
         public ActionResult Compose()
         {
             var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl, this.ViewType);            
-            return View(this.GetView(), model);
+            ViewResult result= View(this.GetView(),null, model);
+            
+            return result;
         }
 
         public ActionResult HandleServerError()

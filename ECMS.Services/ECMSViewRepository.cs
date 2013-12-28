@@ -32,12 +32,11 @@ namespace ECMS.Services
             _db.GetCollection<ECMSView>(COLLNAME).Save<ECMSView>(view_);
         }
 
-        public ECMSView Get(ECMSView view_)
-        {
-            view_ = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.Id == view_.Id).FirstOrDefault<ECMSView>();
-            view_.Html = File.ReadAllText(GetViewPath(view_));
-            return view_;
-        }
+        //public ECMSView Get(ECMSView view_)
+        //{
+           
+        //}
+
 
         public void Update(ECMSView view_)
         {
@@ -112,6 +111,21 @@ namespace ECMS.Services
         public ECMSView GetArchieved(int siteId_, Guid id_)
         {
             return _db.GetCollection<ECMSView>(ARC_COLLNAME).AsQueryable<ECMSView>().Where(x => x.SiteId == siteId_ && x.Id == id_).FirstOrDefault();
+        }
+
+
+        public ECMSView GetById(Guid id_)
+        {
+            ECMSView view = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.Id == id_).FirstOrDefault<ECMSView>();
+            view.Html = File.ReadAllText(GetViewPath(view));
+            return view;
+        }
+
+        public ECMSView GetByViewName(string viewName_)
+        {
+            ECMSView view = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.ViewName == viewName_).FirstOrDefault<ECMSView>();
+            view.Html = File.ReadAllText(GetViewPath(view));
+            return view;
         }
     }
 }

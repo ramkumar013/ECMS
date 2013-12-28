@@ -45,9 +45,5 @@ namespace ECMS.WebV2
             return string.Format("<a href={0}>{1}</a>", url_, text);
         }
 
-        //public static string Include(string view_)
-        //{ 
-        //    new HtmlHelper()
-        //}
     }
 }

@@ -10,7 +10,8 @@ namespace ECMS.Core.Interfaces
     public interface IViewRepository
     {
         void Save(ECMSView view_);
-        ECMSView Get(ECMSView view_);
+        ECMSView GetById(Guid id);
+        ECMSView GetByViewName(string viewName_);
         List<ECMSView> GetAll(int siteId_);
         List<ECMSView> GetAllArchieved(int siteId_,string viewName_);
         ECMSView GetArchieved(int siteId_, Guid id_);

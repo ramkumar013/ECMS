@@ -18,5 +18,7 @@ namespace ECMS.Core
 
         public static ContentRepositoryBase ContentRepository { get; set; }
 
+        public static IViewRepository ViewRepository { get; set; }
+
     }
 }

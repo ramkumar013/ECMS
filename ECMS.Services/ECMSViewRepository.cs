@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ECMS.Core.Interfaces;
-using ECMS.Core.Entities;
-using MongoDB.Driver;
-using MongoDB.Bson.Serialization;
-using System.IO;
-using MongoDB.Driver.Linq;
+﻿using ECMS.Core.Entities;
 using ECMS.Core.Framework;
+using ECMS.Core.Interfaces;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using MongoDB.Driver.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 namespace ECMS.Services
 {
     public class ECMSViewRepository : IViewRepository
@@ -117,14 +117,14 @@ namespace ECMS.Services
         public ECMSView GetById(Guid id_)
         {
             ECMSView view = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.Id == id_).FirstOrDefault<ECMSView>();
-            view.Html = File.ReadAllText(GetViewPath(view));
+            //view.Html = File.ReadAllText(GetViewPath(view));
             return view;
         }
 
         public ECMSView GetByViewName(string viewName_)
         {
             ECMSView view = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.ViewName == viewName_).FirstOrDefault<ECMSView>();
-            view.Html = File.ReadAllText(GetViewPath(view));
+            //view.Html = File.ReadAllText(GetViewPath(view));
             return view;
         }
     }

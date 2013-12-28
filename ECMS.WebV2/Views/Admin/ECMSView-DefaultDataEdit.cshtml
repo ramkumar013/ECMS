@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add or Edit Default Data to View "@ViewBag.ViewName" for @ViewBag.ViewType</h2>
+<h2>Add or Edit Default Content to View "@ViewBag.ViewName" for @ViewBag.ViewType</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -46,7 +46,7 @@
             @Html.LabelFor(model => model.Body)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Body, new { @width="950px", @height="200px"})
+            @Html.TextAreaFor(model =>model.Body, new { @width="950px", @height="200px"})
             @Html.ValidationMessageFor(model => model.Body)
         </div>
         <p>

@@ -127,3 +127,5 @@ bin
 /ECMS.Services/obj
 /ecms.v11.suo
 /WebSite.Tests/bin
+/ECMS.WebV2/Static/1/sitemap-0.xml.gz
+/ECMS.WebV2/Static/1/sitemapindex.xml

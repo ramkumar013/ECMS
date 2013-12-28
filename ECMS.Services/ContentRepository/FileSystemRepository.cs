@@ -1,18 +1,14 @@
-﻿using ECMS.Core.Interfaces;
+﻿using CsvHelper;
+using ECMS.Core;
 using ECMS.Core.Entities;
+using ECMS.Core.Extensions;
+using ECMS.Core.Framework;
+using Newtonsoft.Json.Linq;
+using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using ECMS.Core.Framework;
 using System.IO;
-using CsvHelper;
-using RazorEngine.Templating;
-using ECMS.Core;
-using Newtonsoft.Json.Linq;
-using ECMS.Core.Extensions;
+using System.Threading.Tasks;
 
 namespace ECMS.Services.ContentRepository
 {
@@ -264,7 +260,10 @@ namespace ECMS.Services.ContentRepository
                     }
                 }
             }
-            contentItem.Body = (dynamic)File.ReadAllText(bodyContentFilePath);
+            if (File.Exists(bodyContentFilePath))
+            {
+                contentItem.Body = (dynamic)File.ReadAllText(bodyContentFilePath);
+            }
             return contentItem;
         }
     }

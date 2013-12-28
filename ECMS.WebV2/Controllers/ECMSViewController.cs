@@ -253,6 +253,7 @@ namespace ECMS.WebV2.Controllers
             ViewBag.ViewName = ecmsView.ViewName;
             ViewBag.ViewType = ecmsView.ViewType;
             ContentItem item = DependencyManager.ContentRepository.GetContentForEditing(ecmsView);
+            
             if (item != null)
             {
                 return View(GetControllerView("DefaultDataEdit"), item);
@@ -267,6 +268,8 @@ namespace ECMS.WebV2.Controllers
         [ValidateInput(false)]
         public ActionResult DefaultDataEdit(Guid id, ContentItem item_)
         {
+            item_.LastModifiedBy = this.CMSUser.UserName;
+            item_.LastModifiedOn = DateTime.Now;
             DefaultDataAdd(id, item_);
             return Index();
         }

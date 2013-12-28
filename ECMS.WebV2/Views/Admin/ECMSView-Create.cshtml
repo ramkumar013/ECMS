@@ -28,6 +28,13 @@
             @Html.EditorFor(model => model.ViewName)
             @Html.ValidationMessageFor(model => model.ViewName)
         </div>
+          <div class="editor-label">
+            @Html.LabelFor(model => model.IsPartial)
+        </div>
+        <div class="editor-field">
+            @Html.CheckBoxFor(model => model.IsPartial)
+            @Html.ValidationMessageFor(model => model.IsPartial)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Html)
         </div>

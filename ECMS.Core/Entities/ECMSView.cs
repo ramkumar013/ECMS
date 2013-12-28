@@ -11,5 +11,6 @@ namespace ECMS.Core.Entities
         public string LastModifiedBy { get; set; }
         public int SiteId { get; set; }
         public ContentViewType ViewType { get; set; }
+        public bool IsPartial { get; set; }
     }
 }

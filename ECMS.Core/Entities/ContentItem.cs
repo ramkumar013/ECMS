@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECMS.Core.Framework;
 
 namespace ECMS.Core.Entities
 {
     public class ContentItem
     {
+        public Guid Id { get; set; }
+        public ContentItem() {
+            ContentId = Guid.NewGuid();
+        }
         public ContentItemHead Head { get; set; }
         public Guid ContentId { get; set; }
         public dynamic Body { get; set; }
         public ValidUrl Url { get; set; }
+        public ECMSView ContentView { get; set; }
+        public string LastModifiedBy { get; set; }
+        public DateTime LastModifiedOn { get; set; }
     }
 
     public class ContentItemHead

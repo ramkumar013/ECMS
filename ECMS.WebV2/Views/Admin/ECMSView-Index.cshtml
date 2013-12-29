@@ -64,7 +64,8 @@
 				@Html.DisplayFor(modelItem => item.ViewType)
 			</td>
 			<td>
-				@item.Html.Substring(0, (item.Html.Length > 25 ? 25 : item.Html.Length))...
+				@*@item.Html.Substring(0, (!string.IsNullOrEmpty(item.Html) && item.Html.Length > 25 ? 25 : item.Html.Length))...*@
+				@(!string.IsNullOrEmpty(item.Html) && item.Html.Length > 25 ? item.Html.Substring(0,25) : item.Html)...
 			</td>
 
 			<td>

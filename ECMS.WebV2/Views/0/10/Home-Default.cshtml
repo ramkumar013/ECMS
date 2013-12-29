@@ -2,32 +2,24 @@
 @using ECMS.WebV2.AppCode
 @model ECMS.Core.Entities.ContentItem
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="@ECMSSettings.Current.CDNPath/styles/style.css" rel="stylesheet" type="text/css" />
-    <title>@Model.Head.Title</title>
-</head>
-<body>
-    @Html.SSI("Header-Default");
-        <div id="about">
-            <div id="about-section-left">
-                <h1>@Model.Body.MainHeading</h1>                
-                <div class="line"></div>
-                <h2 align="justify">
-                    @Model.Body.Para1Content.ToString()
-                    <br />
-                    <br />
-                    @Model.Body.Para2Content.ToString()</h2>
-            </div>
-            <div id="social">
-                <img src="@ECMSSettings.Current.CDNPath/img/social.jpg" />
-            </div>
-            <div id="about-section-right">
-                <img src="@ECMSSettings.Current.CDNPath/img/partners.jpg" width="323" height="373" /><img src="@ECMSSettings.Current.CDNPath/img/banner.jpg" width="323" height="271" />
-            </div>
-        </div>
-     @Html.SSI("Footer-Default");
-</body>
-</html>
+<p>@Model.Head.Title</p>
+
+<p>@Html.SSI("Header-Default")</p>
+<h2>@DateTime.Now.ToString()</h2>
+<div id="about">
+<div id="about-section-left">
+<h1>@Model.Body.MainHeading</h1>
+
+<div class="line">&nbsp;</div>
+
+<h2>@Model.Body.Para1Content.ToString()<br />
+<br />
+@Model.Body.Para2Content.ToString()</h2>	
+</div>
+
+<div id="social"><img src="@ECMSSettings.Current.CDNPath/img/social.jpg" /></div>
+
+<div id="about-section-right"><img src="@ECMSSettings.Current.CDNPath/img/partners.jpg" style="height:373px; width:323px" /><img src="@ECMSSettings.Current.CDNPath/img/banner.jpg" style="height:271px; width:323px" /></div>
+</div>
+
+<p>@Html.SSI("Footer-Default");</p>

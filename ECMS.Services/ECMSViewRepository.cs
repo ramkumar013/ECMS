@@ -24,6 +24,8 @@ namespace ECMS.Services
                 cm.AutoMap();
                 cm.SetIdMember(cm.GetMemberMap(c => c.Id));
                 cm.IdMemberMap.SetIdGenerator(MongoDB.Bson.Serialization.IdGenerators.GuidGenerator.Instance);
+                cm.UnmapProperty(c => c.Html);
+                cm.SetIgnoreExtraElements(true);
             });
         }
         public void Save(ECMSView view_)
@@ -113,18 +115,17 @@ namespace ECMS.Services
             return _db.GetCollection<ECMSView>(ARC_COLLNAME).AsQueryable<ECMSView>().Where(x => x.SiteId == siteId_ && x.Id == id_).FirstOrDefault();
         }
 
-
         public ECMSView GetById(Guid id_)
         {
             ECMSView view = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.Id == id_).FirstOrDefault<ECMSView>();
-            //view.Html = File.ReadAllText(GetViewPath(view));
+            view.Html = File.ReadAllText(GetViewPath(view));
             return view;
         }
 
         public ECMSView GetByViewName(string viewName_)
         {
             ECMSView view = _db.GetCollection<ECMSView>(COLLNAME).AsQueryable().Where(x => x.ViewName == viewName_).FirstOrDefault<ECMSView>();
-            //view.Html = File.ReadAllText(GetViewPath(view));
+            view.Html = File.ReadAllText(GetViewPath(view));
             return view;
         }
     }

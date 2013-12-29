@@ -194,6 +194,7 @@
     <Compile Include="AppCode\CustomErrorHandlerAttribute.cs" />
     <Compile Include="AppCode\DefaultUserProfileService.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
+    <Compile Include="AppCode\FakePageOutputCache.cs" />
     <Compile Include="AppCode\HtmlExtension.cs" />
     <Compile Include="AppCode\Member.cs" />
     <Compile Include="AppCode\SubmitActionSelector.cs" />

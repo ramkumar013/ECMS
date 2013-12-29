@@ -15,10 +15,10 @@ namespace ECMS.HttpModules
 {
     public class URLRewriter : IHttpModule
     {
-        
+
         public void Dispose()
         {
-            
+
         }
 
         public void Init(HttpApplication context)
@@ -29,7 +29,7 @@ namespace ECMS.HttpModules
         void context_BeginRequest(object sender, EventArgs e)
         {
             string url = string.Empty;
-            int siteId=-1; 
+            int siteId = -1;
             HttpContext context = HttpContext.Current;
             bool isPublish = true;
             try
@@ -41,12 +41,12 @@ namespace ECMS.HttpModules
                     return;
                 }
                 url = context.Request.Url.AbsolutePath;
-                isPublish =Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)) == ContentViewType.PUBLISH;
+                isPublish = Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)) == ContentViewType.PUBLISH;
                 ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url, isPublish);
                 if (validUrl != null)
                 {
                     validUrl.SiteId = siteId;
-                    
+
                     context.Items.Add("validUrl", validUrl);
                     switch (validUrl.StatusCode)
                     {
@@ -69,6 +69,7 @@ namespace ECMS.HttpModules
                 }
                 else
                 {
+                    DependencyManager.Logger.Log(new LogEventInfo(LogLevel.Debug, ECMSSettings.DEFAULT_LOGGER, url + ":: Not Found "));
                     HandleError(context, siteId, 404);
                 }
             }
@@ -109,7 +110,7 @@ namespace ECMS.HttpModules
                         break;
                     case "equal":
                         strs = item.InvalidValue.Split(new char[] { ',' });
-                        result = !strs.Any(x => url==x.ToLower());
+                        result = !strs.Any(x => url == x.ToLower());
                         break;
                     default:
                         break;

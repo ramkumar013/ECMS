@@ -26,11 +26,12 @@ namespace WebSite.Controllers
         }
 
         [ViewExecutionActionFilter]
+        [OutputCache(CacheProfile = "ActionResultOutputCache")]
+        //[OutputCache(Duration=600,VaryByParam="*",Location=System.Web.UI.OutputCacheLocation.Server )]
         public ActionResult Compose()
         {
-            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl, this.ViewType);            
-            ViewResult result= View(this.GetView(),null, model);
-            
+            var model = DependencyManager.ContentRepository.GetById(this.CurrentUrl, this.ViewType);
+            ViewResult result = View(this.GetView(), null, model);
             return result;
         }
 

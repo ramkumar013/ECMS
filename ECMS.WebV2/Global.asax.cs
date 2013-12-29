@@ -5,6 +5,7 @@ using ECMS.Services.ContentRepository;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -104,6 +105,36 @@ namespace ECMS.WebV2
                 info.Properties.Add("ClientIP", Utility.GetClientIP());
                 DependencyManager.Logger.Log(info);
             }
+        }
+
+        public override string GetOutputCacheProviderName(HttpContext context)
+        {
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["UseFakePageOutputCache"]))
+            {
+                return "FakePageOutputCache";
+            }
+            return base.GetOutputCacheProviderName(context);
+        }
+        public override string GetVaryByCustomString(HttpContext context, string custom)
+        {
+            if (custom.ToLower() == "actionresultcache")
+            {
+                if (context.Request.IsAuthenticated)
+                {
+                    return Guid.NewGuid().ToString();
+                }
+                //if (Request.QueryString["vm"] != null || Request.Headers["ecmsrefresh"] != null)
+                //{
+                //    return Guid.NewGuid().ToString();
+                //}
+                else
+                {
+                    // we want to include querystring and form in the vary by param. 
+                    // TODO : Remove some extra querystring param.
+                    return Request.RawUrl + Request.QueryString.ToString();
+                }
+            }
+            return base.GetVaryByCustomString(context, custom);
         }
     }
 }

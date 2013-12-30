@@ -30,7 +30,7 @@
             @Html.EditorFor(model => model.ViewName)
             @Html.ValidationMessageFor(model => model.ViewName)
         </div>
-         <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.IsPartial)
         </div>
         <div class="editor-field">
@@ -41,13 +41,14 @@
             @Html.LabelFor(model => model.ViewType)
         </div>
         <div class="editor-field">
-            @Html.DisplayTextFor(model=>model.ViewType)
+            @Html.DisplayTextFor(model => model.ViewType)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Html)
         </div>
         <div class="editor-field">
-            @Html.TextAreaFor(model => model.Html, new { @class = "adminRichText" })
+            @*@Html.TextAreaFor(model => model.Html, new { @class = "adminRichText" })*@
+             @Html.TextAreaFor(model => model.Html, new { rows=25, cols=100,width="200px"})
             @Html.ValidationMessageFor(model => model.Html)
         </div>
         <p>
@@ -68,7 +69,15 @@
 <script type="text/javascript" src="@Url.Content("~/content/javascript/ckeditor.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/content/javascript/adapters/jquery.js")"></script>
 <script lang="javascript" type="text/javascript">
-    $(document).ready(function () {
-        $(".adminRichText").ckeditor();
-    });
+    //$(document).ready(function () {
+    //    //$(".adminRichText").ckeditor({
+    //    //    forceEnterMode:true,
+    //    //    //shiftEnterMode: CKEDITOR.ENTER_P,
+    //    //    fillEmptyBlocks: false,
+    //    //    FormatSource : false
+    //    //});
+
+    //    $(".adminRichText").ckeditor();
+    //});
+
 </script>

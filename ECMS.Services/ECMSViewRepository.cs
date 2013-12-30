@@ -24,8 +24,6 @@ namespace ECMS.Services
                 cm.AutoMap();
                 cm.SetIdMember(cm.GetMemberMap(c => c.Id));
                 cm.IdMemberMap.SetIdGenerator(MongoDB.Bson.Serialization.IdGenerators.GuidGenerator.Instance);
-                cm.UnmapProperty(c => c.Html);
-                cm.SetIgnoreExtraElements(true);
             });
         }
         public void Save(ECMSView view_)

@@ -35,21 +35,29 @@ namespace ECMS.Services
             {
                 lock (UrlLock)
                 {
-                    if (dict ==null)
+                    if (dict == null)
                     {
-                        dict = LoadFromDisk(siteId_);
-                        DependencyManager.CachingService.Set<Dictionary<string, ValidUrl>>(siteId_.ToString(), dict);
+                        foreach (var directory in Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + siteId_ + "\\"))
+                        {
+                            foreach (var file in new DirectoryInfo(directory).GetFiles("active-urls.json"))
+                            {
+                                LoadFromDisk(dict, siteId_, true, file.FullName);
+                            }
+                        }
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + siteId_ + "\\urls" + ((loadActiveUrls_) ? "active.json" : "inactive.json");
+                        if (dict.Keys.Count() > 0)
+                        {
+                            DependencyManager.CachingService.Set<Dictionary<string, ValidUrl>>(siteId_.ToString(), dict);
+                        }
                     }
                 }
             }
-
             return dict[friendlyurl_];
         }
 
-        private Dictionary<string, ValidUrl> LoadFromDisk(int siteId_)
+        private Dictionary<string, ValidUrl> LoadFromDisk(Dictionary<string, ValidUrl> dict_, int siteId_,bool loadActiveUrls_,string filePath_)
         {
-            Dictionary<string, ValidUrl> dict = new Dictionary<string, ValidUrl>();
-            string path = AppDomain.CurrentDomain.BaseDirectory + "\\app_data\\" + siteId_ + "\\urls.json";
+            string path = filePath_;
             ValidUrl temp = null;
             using (StreamReader sreader = new StreamReader(path))
             {
@@ -90,7 +98,7 @@ namespace ECMS.Services
                                         break;
                                     case "StatusCode":
                                         jreader.Read();
-                                        temp.StatusCode = Convert.ToInt32(jreader.Value);
+                                        temp.StatusCode = Convert.ToInt16(jreader.Value);
                                         break;
                                     case "Id":
                                         jreader.Read();
@@ -120,20 +128,20 @@ namespace ECMS.Services
                             }
                             else if (jreader.TokenType == JsonToken.EndObject)
                             {
-                                if (!dict.ContainsKey(temp.FriendlyUrl.ToLower())) // TODO : To remove this if condition
+                                if (!dict_.ContainsKey(temp.FriendlyUrl.ToLower())) // TODO : To remove this if condition
                                 {
-                                    dict.Add(temp.FriendlyUrl.ToLower(), temp);
+                                    dict_.Add(temp.FriendlyUrl.ToLower(), temp);
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            DependencyManager.Logger.Fatal("Error while reading urls for siteid: " + siteId_ + "\r\n" + ex.ToString());
+                            DependencyManager.Logger.Error("Error while reading urls for siteid: " + siteId_ + "\r\n" + ex.ToString());
                         }
                     }
                 }
             }
-            return dict;
+            return dict_;
         }
 
         public ValidUrl GetByFriendlyUrl(int siteId_, string friendlyurl_, bool isPublish_)
@@ -148,7 +156,7 @@ namespace ECMS.Services
 
         public void Save(ValidUrl url_)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Update(ValidUrl url_)
@@ -179,4 +187,6 @@ namespace ECMS.Services
             throw new NotImplementedException();
         }
     }
+
+
 }

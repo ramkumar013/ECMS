@@ -83,6 +83,7 @@
     <Compile Include="RouteRepository.cs" />
     <Compile Include="ValidUrl\ValidUrlFileRepository.cs" />
     <Compile Include="ValidUrl\ValidUrlMongoDBRepository.cs" />
+    <Compile Include="ValidUrl\ValidUrlSQLRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -119,7 +119,8 @@ namespace ECMS.Services.ContentRepository
 
         public override ContentItem GetContentForEditing(ValidUrl url_, ContentViewType viewType_)
         {
-            ContentItem item = _db.GetCollection<ContentItem>(COLLNAME).AsQueryable<ContentItem>().Where(x => x.Url.Id == url_.Id && x.Url.View == url_.View && x.ContentView.ViewType == viewType_).FirstOrDefault<ContentItem>();
+            //ContentItem item = _db.GetCollection<ContentItem>(COLLNAME).AsQueryable<ContentItem>().Where(x => x.Url.Id == url_.Id && x.Url.View == url_.View && Convert.ToInt32(x.ContentView.ViewType) == Convert.ToInt32(viewType_)).FirstOrDefault<ContentItem>();
+            ContentItem item = _db.GetCollection<ContentItem>(COLLNAME).Find(Query.And(Query.EQ("Url.Id", url_.Id), Query.EQ("ContentView.ViewName", url_.View), Query.EQ("ContentView.ViewType", Convert.ToInt32(viewType_)))).FirstOrDefault<ContentItem>();
             if (item != null)
             {
                 item.Body = item.Body[0];

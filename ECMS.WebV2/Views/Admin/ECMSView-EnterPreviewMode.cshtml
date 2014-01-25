@@ -2,13 +2,24 @@
     ViewBag.Title = "ECMSView-EnterPreviewMode.cshtml";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<label id="lblMsg">&nbsp;</label>
-<script src="~/scripts/jquery-2.0.3.js"></script>
-<script src="~/scripts/jquery.cookie.js"></script>
-<input type="button" id="enterPreviewMode" value="EnterPreviewMode" />
-<input type="button" id="exitPreviewMode" value="ExitPreviewMode" />
+<label id="lblMsg">@ViewBag.Message</label>
+@*<script src="~/scripts/jquery-2.0.3.js"></script>
+<script src="~/scripts/jquery.cookie.js"></script>*@
+@*<input type="button" id="enterPreviewMode" value="EnterPreviewMode" />*@
 
-<script type="text/javascript">
+@if (ViewBag.ShowEntryButton!=null && ViewBag.ShowEntryButton)
+{
+@Html.ActionLink("EnterPreviewMode", "EnterPreviewMode")    
+}
+
+@if (ViewBag.ShowExitButton != null && ViewBag.ShowExitButton)
+{
+    @Html.ActionLink("ExitPreviewMode", "ExitPreviewMode")
+}
+
+
+
+@*<script type="text/javascript">
     function enterPreviewMode() {
         $.cookie("ECMS-Preview-Mode", "true", {path:'/',domain:"/"});
         $("#lblMsg").html("You entered in preview mode now!!!");
@@ -22,4 +33,5 @@
         $("#enterPreviewMode").click(enterPreviewMode);
         $("#exitPreviewMode").click(exitPreviewMode);
     });
-</script>
+</script>*@
+

@@ -24,6 +24,7 @@ namespace ECMS.WebV2
         {
             AreaRegistration.RegisterAllAreas();
             DependencyManager.ViewRepository = new ECMSViewRepository();
+            //DependencyManager.URLRepository = new ValidUrlFileRepository();
             DependencyManager.URLRepository = new ValidUrlMongoDBRepository();
             //DependencyManager.ContentRepository = new FileSystemRepository();
             DependencyManager.ContentRepository = new MongoDBRepository();
@@ -123,10 +124,10 @@ namespace ECMS.WebV2
                 {
                     return Guid.NewGuid().ToString();
                 }
-                //if (Request.QueryString["vm"] != null || Request.Headers["ecmsrefresh"] != null)
-                //{
-                //    return Guid.NewGuid().ToString();
-                //}
+                if (Request.QueryString["vm"] != null || Request.Headers["ecmsrefresh"] != null)
+                {
+                    return Guid.NewGuid().ToString();
+                }
                 else
                 {
                     // we want to include querystring and form in the vary by param. 

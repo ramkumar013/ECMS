@@ -48,7 +48,7 @@ namespace ECMS.Core.Utilities
         {
             if (context_ != null && context_.Request != null)
             {
-                if (context_.Request.Cookies["ECMS-Preview-Mode"] != null)
+                if (context_.Request.Cookies["ECMS-View-Mode"] != null)
                 {
                     return ContentViewType.PREVIEW;
                 }

@@ -227,6 +227,37 @@ namespace ECMS.WebV2.Controllers
         [HttpGet]
         public ActionResult EnterPreviewMode()
         {
+            if (Request.Cookies["ECMS-View-Mode"] == null)
+            {
+                var c = new HttpCookie("ECMS-View-Mode", "Preview");
+                c.Expires = DateTime.Now.AddDays(1);
+                Response.SetCookie(c);
+            }
+            else
+            {
+                var c = Request.Cookies["ECMS-View-Mode"];
+                c.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Add(c);
+                Response.SetCookie(c);                
+            }
+            ViewBag.Message = "You entered in preview mode. Click below to exit any time.";
+            ViewBag.ShowExitButton = true;
+
+            return View(GetControllerView("EnterPreviewMode"));
+        }
+        [HttpGet]
+        public ActionResult ExitPreviewMode()
+        {
+            if (Request.Cookies["ECMS-View-Mode"] != null)
+            {
+                var c = Request.Cookies["ECMS-View-Mode"];
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+                Response.Cookies.Remove("ECMS-View-Mode");
+                ViewBag.Message = "You exit from preview mode!!!";                
+            }
+            ViewBag.ShowEntryButton = true;
+
             return View(GetControllerView("EnterPreviewMode"));
         }
 

@@ -29,12 +29,12 @@ namespace ECMS.HttpModules
         void context_BeginRequest(object sender, EventArgs e)
         {
             string url = string.Empty;
-            int siteId = -1;
+            short siteId = -1;
             HttpContext context = HttpContext.Current;
             bool isPublish = true;
             try
             {
-                siteId = Utility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower());
+                siteId = Convert.ToInt16(Utility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower()));
                 context.Items.Add("siteid", siteId);
                 if (siteId < 0 || !IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {

@@ -18,5 +18,10 @@ namespace ECMS.WebV2.AppCode
             var viewName = string.Format("~/Views/{0}/{1}/{2}.cshtml", ECMSSettings.Current.SiteId, (int)Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)), partialViewName);
             return htmlHelper.Partial(viewName);
         }
+
+        public static MvcHtmlString DebuggerView(this HtmlHelper htmlhelper)
+        {
+            return htmlhelper.Partial("~/Views/Common/DebugMessage.cshtml");
+        }
     } 
 }

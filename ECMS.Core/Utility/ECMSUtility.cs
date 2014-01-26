@@ -5,6 +5,7 @@ using System.Web;
 using ECMS.Core.Framework;
 using System;
 using NLog;
+using System.Threading.Tasks;
 namespace ECMS.Core.Utilities
 {
     public class Utility
@@ -67,6 +68,7 @@ namespace ECMS.Core.Utilities
                 return ContentViewType.PUBLISH;
             }
         }
+
+       
     }
 }
-       

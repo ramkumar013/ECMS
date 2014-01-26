@@ -1,7 +1,11 @@
-﻿@{
+﻿@using ECMS.WebV2.AppCode
+
+@{
     ViewBag.Title = "Ecms-Error-Handler";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 @{
     if (ViewData.Model != null)
@@ -27,3 +31,5 @@
         }
     }
 }
+
+@Html.DebuggerView()

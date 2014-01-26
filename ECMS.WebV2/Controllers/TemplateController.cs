@@ -11,6 +11,7 @@ using ECMS.Core.Utilities;
 using ECMS.Services.Logging;
 using ECMS.Core.Framework;
 using ECMS.WebV2;
+using MvcApplication1.AppCode;
 namespace WebSite.Controllers
 {
     public class TemplateController : CMSBaseController
@@ -25,7 +26,8 @@ namespace WebSite.Controllers
             return View("~/Views/Common/Guid.cshtml");
         }
 
-        [ViewExecutionActionFilter]
+        //[ViewExecutionActionFilter]
+        [NlogMVCActionFilter]
         [OutputCache(CacheProfile = "ActionResultOutputCache")]
         //[OutputCache(Duration=600,VaryByParam="*",Location=System.Web.UI.OutputCacheLocation.Server )]
         public ActionResult Compose()

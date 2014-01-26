@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ECMS.Core.Utilities;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -72,7 +74,8 @@ namespace ECMS.Core
             }
             catch (Exception ex)
             {
-                DependencyManager.Logger.Debug(string.Format("Error while reading config file at : {0}", dirInfo_.FullName) + "\r\n" + ex.ToString());
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, string.Format("Error while reading config file at : {0}", dirInfo_.FullName) + "\r\n" + ex.ToString());
+                DependencyManager.Logger.Log(info);
             }
             return setting;
         }
@@ -157,7 +160,8 @@ namespace ECMS.Core
             }
             catch (Exception ex)
             {
-                DependencyManager.Logger.Error(ex.ToString());
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
             }
         }
 

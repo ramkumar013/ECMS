@@ -3,15 +3,18 @@ using ECMS.Core.Utilities;
 using ECMS.Services;
 using ECMS.Services.ContentRepository;
 using NLog;
+using NLog.Config;
+using NLog.Interface;
+using NLog.Targets;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using ECMS.Core.Extensions;
 
 namespace ECMS.WebV2
 {
@@ -20,6 +23,7 @@ namespace ECMS.WebV2
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        private Guid _loggerName = Guid.Empty;
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -29,15 +33,46 @@ namespace ECMS.WebV2
             //DependencyManager.ContentRepository = new FileSystemRepository();
             DependencyManager.ContentRepository = new MongoDBRepository();
             DependencyManager.CachingService = new InProcCachingService();
-            DependencyManager.Logger = new NLog.Interface.LoggerAdapter(NLog.LogManager.GetLogger("default"));
-
+            DependencyManager.Logger = ECMSLogger.Instance;
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
         }
+        public override void Init()
+        {
+            this.BeginRequest += MvcApplication_BeginRequest;
+            this.EndRequest += MvcApplication_EndRequest;
+            base.Init();
+        }
+        void MvcApplication_EndRequest(object sender, EventArgs e)
+        {
+            MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.AllTargets[LogManager.Configuration.AllTargets.Count - 1];
+            if (memTarget != null)
+            {
+                memTarget.Dispose();
+                LogManager.Configuration.LoggingRules.RemoveAt(LogManager.Configuration.LoggingRules.Count - 1);
+                LogManager.Configuration.RemoveTarget(memTarget.Name);
+                LogManager.Configuration.Reload();
+            }
+        }
 
+        void MvcApplication_BeginRequest(object sender, EventArgs e)
+        {
+            MemoryTarget _logTarget = null;
+            _loggerName = Guid.NewGuid();
+            HttpContext.Current.Items.Add("LoggerName", _loggerName);
+            _logTarget = new MemoryTarget();
+            _logTarget.Name = _loggerName.ToString();
+
+            LoggingRule rule = new LoggingRule(_loggerName.ToString(), _logTarget);
+            rule.EnableLoggingForLevel(LogLevel.Debug);
+
+            LogManager.Configuration.LoggingRules.Add(rule);
+
+            LogManager.Configuration.Reload();
+        }
 
         void Application_Error(object sender, EventArgs e)
         {
@@ -47,6 +82,7 @@ namespace ECMS.WebV2
                 var currentController = string.Empty;
                 var currentAction = string.Empty;
                 var currentRouteData = RouteTable.Routes.GetRouteData(new HttpContextWrapper(httpContext));
+                Logger logger = LogManager.GetLogger(_loggerName.ToString());
 
                 if (currentRouteData != null)
                 {
@@ -60,7 +96,6 @@ namespace ECMS.WebV2
                         currentAction = currentRouteData.Values["action"].ToString();
                     }
                     LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, currentController + "--" + currentAction);
-                    info.Properties.Add("ClientIP", Utility.GetClientIP());
                     DependencyManager.Logger.Log(info);
                 }
 
@@ -71,7 +106,6 @@ namespace ECMS.WebV2
                 if (ex != null)
                 {
                     LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
-                    info.Properties.Add("ClientIP", Utility.GetClientIP());
                     DependencyManager.Logger.Log(info);
                 }
                 if (ex is HttpException)
@@ -98,12 +132,17 @@ namespace ECMS.WebV2
                 routeData.Values["action"] = action;
 
                 controller.ViewData.Model = new HandleErrorInfo(ex, currentController, currentAction);
+                MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.AllTargets[LogManager.Configuration.AllTargets.Count - 1];
+                if (memTarget != null)
+                {
+                    controller.ViewData["Logs"] = memTarget.Logs;
+                }
+
                 ((IController)controller).Execute(new RequestContext(new HttpContextWrapper(httpContext), routeData));
             }
             catch (Exception ex)
             {
                 LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
-                info.Properties.Add("ClientIP", Utility.GetClientIP());
                 DependencyManager.Logger.Log(info);
             }
         }

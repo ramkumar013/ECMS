@@ -59,6 +59,7 @@
     <Compile Include="DependencyManager.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="ECMSContextActionFilter.cs" />
+    <Compile Include="ECMSLogger.cs" />
     <Compile Include="Entities\ECMSView.cs" />
     <Compile Include="Framework\ContentRepositoryBase.cs" />
     <Compile Include="Framework\Enums.cs" />

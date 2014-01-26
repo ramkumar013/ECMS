@@ -5,6 +5,7 @@ using System.Text;
 using ECMS.Core.Interfaces;
 using NLog.Interface;
 using ECMS.Core.Framework;
+using ECMS.Core.Extensions;
 
 namespace ECMS.Core
 {
@@ -12,7 +13,7 @@ namespace ECMS.Core
     {
         public static IValidURLRepository URLRepository { get; set; }
 
-        public static ILogger Logger { get; set; }
+        public static ECMSLogger Logger { get; set; }
 
         public static ICachingService CachingService { get; set; }
 

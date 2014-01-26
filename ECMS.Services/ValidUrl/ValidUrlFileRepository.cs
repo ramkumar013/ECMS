@@ -11,6 +11,7 @@ using System.IO;
 using System.Diagnostics;
 using ECMS.Core;
 using System.Configuration;
+using NLog;
 
 namespace ECMS.Services
 {
@@ -136,7 +137,8 @@ namespace ECMS.Services
                         }
                         catch (Exception ex)
                         {
-                            DependencyManager.Logger.Error("Error while reading urls for siteid: " + siteId_ + "\r\n" + ex.ToString());
+                            LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, "Error while reading urls for siteid: " + siteId_ + "\r\n" + ex.ToString());
+                            DependencyManager.Logger.Log(info);
                         }
                     }
                 }

@@ -200,6 +200,7 @@
     <Compile Include="AppCode\FakePageOutputCache.cs" />
     <Compile Include="AppCode\HtmlExtension.cs" />
     <Compile Include="AppCode\Member.cs" />
+    <Compile Include="AppCode\NlogMVCActionFilter.cs" />
     <Compile Include="AppCode\SubmitActionSelector.cs" />
     <Compile Include="AppCode\ViewHelper.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\csvtable.css" />
     <Content Include="Content\javascript\adapters\jquery.js" />
     <Content Include="Content\javascript\build-config.js" />
     <Content Include="Content\javascript\ckeditor.js" />
@@ -688,6 +690,9 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.csvToTable.js" />
+    <Content Include="Scripts\jquery.tablesorter.dev.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -835,6 +840,7 @@
     <Content Include="Views\0\10\Home-Default.cshtml" />
     <Content Include="Views\Admin\ECMSView-EnterPreviewMode.cshtml" />
     <Content Include="Views\0\10\_ViewStart.cshtml" />
+    <Content Include="Views\Common\DebugMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Static\0\" />

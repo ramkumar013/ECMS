@@ -1,10 +1,14 @@
 ﻿using ECMS.Core.Entities;
+using ECMS.Core.Framework;
 using Newtonsoft.Json.Linq;
+using NLog;
+using NLog.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ECMS.Core.Extensions
@@ -35,5 +39,19 @@ namespace ECMS.Core.Extensions
                 }
             }
         }
+
+        //public static void Log(this LoggerAdapter loggerAdapter_, LogEventInfo info, HttpContextBase context_)
+        //{
+        //    if (context_ != null && context_.Items["LoggerName"] != null && ECMS.Core.Utilities.Utility.CurrentViewType(context_) == ContentViewType.PREVIEW)
+        //    {
+        //        string _loggerName = ((System.Guid)context_.Items["LoggerName"]).ToString();
+        //        Logger logger = LogManager.GetLogger(_loggerName);
+        //        if (logger != null)
+        //        {
+        //            logger.Debug(info);
+        //        }
+        //    }
+        //    DependencyManager.Logger.Log(info);
+        //}
     }
 }

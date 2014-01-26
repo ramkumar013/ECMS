@@ -27,8 +27,7 @@ namespace ECMS.Core
         }
         public void Log(LogEventInfo info)
         {
-            //if (HttpContext.Current != null && HttpContext.Current.Items["LoggerName"] != null && Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)) == ContentViewType.PREVIEW)
-            if (HttpContext.Current != null && HttpContext.Current.Items["LoggerName"] != null)
+            if (HttpContext.Current != null && HttpContext.Current.Items["LoggerName"] != null && Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)) == ContentViewType.PREVIEW)
             {
                 string _loggerName = ((System.Guid)HttpContext.Current.Items["LoggerName"]).ToString();
                 Logger contextualLogger = LogManager.GetLogger(_loggerName);

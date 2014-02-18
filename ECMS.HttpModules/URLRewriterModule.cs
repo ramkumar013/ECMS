@@ -45,8 +45,8 @@ namespace ECMS.HttpModules
                 ValidUrl validUrl = DependencyManager.URLRepository.GetByFriendlyUrl(siteId, url, isPublish);
                 if (validUrl != null)
                 {
+                    DependencyManager.Logger.Log(new LogEventInfo(LogLevel.Debug, ECMSSettings.DEFAULT_LOGGER, validUrl.Id + "....Found "));
                     validUrl.SiteId = siteId;
-
                     context.Items.Add("validUrl", validUrl);
                     switch (validUrl.StatusCode)
                     {

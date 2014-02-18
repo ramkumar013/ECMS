@@ -9,6 +9,8 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using CsvHelper;
+using NLog;
+using ECMS.Core;
 namespace ECMS.Services.ContentRepository
 {
     public class MongoDBRepository : ContentRepositoryBase
@@ -53,6 +55,7 @@ namespace ECMS.Services.ContentRepository
             
             if (item == null)
             {
+                DependencyManager.Logger.Log(new LogEventInfo(LogLevel.Debug, ECMSSettings.DEFAULT_LOGGER, "Specific content not found now going to search for default content."));
                 item = _db.GetCollection<ContentItem>(COLLNAME).Find(Query.And(Query.EQ("ContentView.SiteId", url_.SiteId), Query.EQ("ContentView.ViewName", url_.View), Query.EQ("ContentView.ViewType", Convert.ToInt32(viewType_)))).FirstOrDefault<ContentItem>();
             }
 

@@ -129,3 +129,5 @@ bin
 /WebSite.Tests/bin
 /ECMS.WebV2/Static/1/sitemap-0.xml.gz
 /ECMS.WebV2/Static/1/sitemapindex.xml
+/ECMS.WebV2/Static/0/sitemapindex.xml
+/ECMS.WebV2/Static/0/sitemap-0.xml.gz

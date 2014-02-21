@@ -48,7 +48,7 @@ namespace ECMS.WebV2
         }
         void MvcApplication_EndRequest(object sender, EventArgs e)
         {
-            MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.AllTargets[LogManager.Configuration.AllTargets.Count - 1];
+            MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.FindTargetByName(Convert.ToString(HttpContext.Current.Items["LoggerName"]));
             if (memTarget != null)
             {
                 memTarget.Dispose();

@@ -13,6 +13,8 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using ECMS.Core;
 using MongoDB.Bson;
+using System.Reflection;
+using System.IO;
 namespace ECMS.Services
 {
     public class ValidUrlMongoDBRepository : IValidURLRepository
@@ -138,6 +140,17 @@ namespace ECMS.Services
         public long GetTotalUrlCount(int siteId_)
         {
             return _db.GetCollection<ValidUrl>(GetCollName(siteId_)).Count();
+        }
+
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Directory.GetParent(Path.GetDirectoryName(path)).FullName;
+            }
         }
     }
 }

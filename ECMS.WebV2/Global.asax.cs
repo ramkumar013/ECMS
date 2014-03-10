@@ -15,6 +15,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using ECMS.Core.Extensions;
+using System.IO;
+using System.Reflection;
 
 namespace ECMS.WebV2
 {
@@ -26,53 +28,26 @@ namespace ECMS.WebV2
         private Guid _loggerName = Guid.Empty;
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
             DependencyManager.ViewRepository = new ECMSViewRepository();
-            //DependencyManager.URLRepository = new ValidUrlFileRepository();
             DependencyManager.URLRepository = new ValidUrlMongoDBRepository();
-            //DependencyManager.ContentRepository = new FileSystemRepository();
             DependencyManager.ContentRepository = new MongoDBRepository();
             DependencyManager.CachingService = new InProcCachingService();
             DependencyManager.Logger = ECMSLogger.Instance;
+            AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
         }
+
         public override void Init()
         {
-            this.BeginRequest += MvcApplication_BeginRequest;
-            this.EndRequest += MvcApplication_EndRequest;
+            //this.BeginRequest += MvcApplication_BeginRequest;
+            //this.EndRequest += MvcApplication_EndRequest;
             base.Init();
         }
-        void MvcApplication_EndRequest(object sender, EventArgs e)
-        {
-            MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.FindTargetByName(Convert.ToString(HttpContext.Current.Items["LoggerName"]));
-            if (memTarget != null)
-            {
-                memTarget.Dispose();
-                LogManager.Configuration.LoggingRules.RemoveAt(LogManager.Configuration.LoggingRules.Count - 1);
-                LogManager.Configuration.RemoveTarget(memTarget.Name);
-                LogManager.Configuration.Reload();
-            }
-        }
-
-        void MvcApplication_BeginRequest(object sender, EventArgs e)
-        {
-            MemoryTarget _logTarget = null;
-            _loggerName = Guid.NewGuid();
-            HttpContext.Current.Items.Add("LoggerName", _loggerName);
-            _logTarget = new MemoryTarget();
-            _logTarget.Name = _loggerName.ToString();
-
-            LoggingRule rule = new LoggingRule(_loggerName.ToString(), _logTarget);
-            rule.EnableLoggingForLevel(LogLevel.Debug);
-
-            LogManager.Configuration.LoggingRules.Add(rule);
-
-            LogManager.Configuration.Reload();
-        }
+       
 
         void Application_Error(object sender, EventArgs e)
         {
@@ -175,6 +150,78 @@ namespace ECMS.WebV2
                 }
             }
             return base.GetVaryByCustomString(context, custom);
+        }
+
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Directory.GetParent(Path.GetDirectoryName(path)).FullName;
+            }
+        }
+
+
+        void Application_End()
+        {
+
+            HttpRuntime runtime = (HttpRuntime)typeof(System.Web.HttpRuntime).InvokeMember("_theRuntime",
+                                                                                            BindingFlags.NonPublic
+                                                                                            | BindingFlags.Static
+                                                                                            | BindingFlags.GetField,
+                                                                                            null,
+                                                                                            null,
+                                                                                            null);
+
+            if (runtime == null)
+                return;
+
+            string shutDownMessage = (string)runtime.GetType().InvokeMember("_shutDownMessage",
+                                                                             BindingFlags.NonPublic
+                                                                             | BindingFlags.Instance
+                                                                             | BindingFlags.GetField,
+                                                                             null,
+                                                                             runtime,
+                                                                             null);
+
+            string shutDownStack = (string)runtime.GetType().InvokeMember("_shutDownStack",
+                                                                           BindingFlags.NonPublic
+                                                                           | BindingFlags.Instance
+                                                                           | BindingFlags.GetField,
+                                                                           null,
+                                                                           runtime,
+                                                                           null);
+
+            File.AppendAllText(AssemblyDirectory + "\\Logs\\ECMSLogs.txt", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:ffff") + " : shutDownMessage--" + shutDownMessage + " : shutDownStack--" + shutDownStack);
+        }
+        void MvcApplication_EndRequest(object sender, EventArgs e)
+        {
+            MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.FindTargetByName(Convert.ToString(HttpContext.Current.Items["LoggerName"]));
+            if (memTarget != null)
+            {
+                memTarget.Dispose();
+                LogManager.Configuration.LoggingRules.RemoveAt(LogManager.Configuration.LoggingRules.Count - 1);
+                LogManager.Configuration.RemoveTarget(memTarget.Name);
+                LogManager.Configuration.Reload();
+            }
+        }
+
+        void MvcApplication_BeginRequest(object sender, EventArgs e)
+        {
+            MemoryTarget _logTarget = null;
+            _loggerName = Guid.NewGuid();
+            HttpContext.Current.Items.Add("LoggerName", _loggerName);
+            _logTarget = new MemoryTarget();
+            _logTarget.Name = _loggerName.ToString();
+
+            LoggingRule rule = new LoggingRule(_loggerName.ToString(), _logTarget);
+            rule.EnableLoggingForLevel(LogLevel.Debug);
+
+            LogManager.Configuration.LoggingRules.Add(rule);
+
+            LogManager.Configuration.Reload();
         }
     }
 }

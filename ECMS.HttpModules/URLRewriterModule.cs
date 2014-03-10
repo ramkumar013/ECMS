@@ -10,6 +10,9 @@ using NLog;
 using ECMS.Core.Utilities;
 using System.Configuration;
 using ECMS.Core.Framework;
+using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace ECMS.HttpModules
 {
@@ -23,6 +26,7 @@ namespace ECMS.HttpModules
 
         public void Init(HttpApplication context)
         {
+            string callingmehtodname = new StackFrame(1, true).GetMethod().Name;
             context.BeginRequest += context_BeginRequest;
         }
 
@@ -75,14 +79,22 @@ namespace ECMS.HttpModules
             }
             catch (KeyNotFoundException ex)
             {
-                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, url + "::" + ex.ToString());
-                DependencyManager.Logger.Log(info);
+                Exception temp = ex;
+                while (temp != null)
+                {
+                    LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, url + "::" + ex.ToString());
+                    DependencyManager.Logger.Log(info);
+                }
                 HandleError(context, siteId, 404);
             }
             catch (Exception ex)
             {
-                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, url + "::" + ex.ToString());
-                DependencyManager.Logger.Log(info);
+                Exception temp = ex;
+                while (temp != null)
+                {
+                    LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, url + "::" + ex.ToString());
+                    DependencyManager.Logger.Log(info);
+                }
                 HandleError(context, siteId, 500);
             }
         }
@@ -121,6 +133,17 @@ namespace ECMS.HttpModules
                 }
             }
             return result;
+        }
+
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Directory.GetParent(Path.GetDirectoryName(path)).FullName;
+            }
         }
     }
 }

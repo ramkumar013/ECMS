@@ -15,6 +15,13 @@ namespace ECMS.WebV2.AppCode
     {
         public static MvcHtmlString SSI(this HtmlHelper htmlHelper, string partialViewName)
         {
+            //var viewName = string.Format("~/Views/{0}/{1}/{2}.cshtml", ECMSSettings.Current.SiteId, (int)Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)), partialViewName);
+            //return htmlHelper.Partial(viewName);
+            throw new Exception("This method is deprecated. Use Html.Include instead.");
+        }
+
+        public static MvcHtmlString Include(this HtmlHelper htmlHelper, string partialViewName)
+        {
             var viewName = string.Format("~/Views/{0}/{1}/{2}.cshtml", ECMSSettings.Current.SiteId, (int)Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)), partialViewName);
             return htmlHelper.Partial(viewName);
         }
@@ -23,5 +30,5 @@ namespace ECMS.WebV2.AppCode
         {
             return htmlhelper.Partial("~/Views/Shared/DebugMessage.cshtml");
         }
-    } 
+    }
 }

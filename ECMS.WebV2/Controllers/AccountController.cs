@@ -12,6 +12,7 @@ using ECMS.WebV2.Models;
 using System.Configuration;
 using ECMS.Core;
 using ExtendedMongoMembership;
+using System.Security.Principal;
 
 namespace ECMS.WebV2.Controllers
 {
@@ -58,7 +59,9 @@ namespace ECMS.WebV2.Controllers
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
-
+            Session.Abandon();
+            ControllerContext.HttpContext.Response.Cookies.Clear();
+            ControllerContext.HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
             return View("~/Views/Account/LogOff.cshtml");
         }
 

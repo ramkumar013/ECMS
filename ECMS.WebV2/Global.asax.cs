@@ -43,8 +43,8 @@ namespace ECMS.WebV2
 
         public override void Init()
         {
-            //this.BeginRequest += MvcApplication_BeginRequest;
-            //this.EndRequest += MvcApplication_EndRequest;
+            this.BeginRequest += MvcApplication_BeginRequest;
+            this.EndRequest += MvcApplication_EndRequest;
             base.Init();
         }
        
@@ -107,7 +107,7 @@ namespace ECMS.WebV2
                 routeData.Values["action"] = action;
 
                 controller.ViewData.Model = new HandleErrorInfo(ex, currentController, currentAction);
-                MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.AllTargets[LogManager.Configuration.AllTargets.Count - 1];
+                MemoryTarget memTarget = LogManager.Configuration.AllTargets[LogManager.Configuration.AllTargets.Count - 1] as MemoryTarget;
                 if (memTarget != null)
                 {
                     controller.ViewData["Logs"] = memTarget.Logs;

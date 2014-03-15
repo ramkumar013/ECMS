@@ -21,7 +21,7 @@ namespace ECMS.WebV2.AppCode
 
         public static MvcHtmlString DebuggerView(this HtmlHelper htmlhelper)
         {
-            return htmlhelper.Partial("~/Views/Common/DebugMessage.cshtml");
+            return htmlhelper.Partial("~/Views/Shared/DebugMessage.cshtml");
         }
     } 
 }

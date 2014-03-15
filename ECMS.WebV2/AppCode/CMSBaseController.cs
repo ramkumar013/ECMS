@@ -40,7 +40,7 @@ namespace ECMS.WebV2
             }
             else
             {
-                return "~/Views/Common/Ecms-Error-Handler.cshtml";
+                return "~/Views/Shared/Ecms-Error-Handler.cshtml";
             }
         }
 

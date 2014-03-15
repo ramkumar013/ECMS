@@ -23,7 +23,7 @@ namespace WebSite.Controllers
 
         public ActionResult Guid()
         {
-            return View("~/Views/Common/Guid.cshtml");
+            return View("~/Views/Shared/Guid.cshtml");
         }
 
         //[ViewExecutionActionFilter]

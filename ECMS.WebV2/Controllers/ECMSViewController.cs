@@ -301,6 +301,7 @@ namespace ECMS.WebV2.Controllers
         {
             item_.LastModifiedBy = this.CMSUser.UserName;
             item_.LastModifiedOn = DateTime.Now;
+            //item_.Body = item_.Body[0].ToString().Replace("\"", "\"\"");
             DefaultDataAdd(id, item_);
             return Index();
         }

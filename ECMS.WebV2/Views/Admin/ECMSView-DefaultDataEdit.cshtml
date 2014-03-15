@@ -50,6 +50,16 @@
             @Html.ValidationMessageFor(model => model.Body)
         </div>
         <p>
+            Rules are simple:
+            <ul>
+                <li>Content must be in CSV format.</li>
+                <li>There must be one row for header and another for data.A line break required between header and data row. e.g.<br /><span>Year,Model,Engine,Remark<br />1997,Ford,E350,Super Luxurious truck.  </span></li>
+                <li>Fields in the data row with commas must be quoted. e.g.<br /><span>1997,Ford,E350,<u><b>"Super, luxurious truck"</b></u></span></li>
+                <li>Fields in the data row with line breaks must be quoted. e.g.<br /><span>1997,Ford,E350,<u><b>"Go get one now<br />
+they are going fast"</b></u></span></li>
+            </ul>
+        </p>
+        <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>

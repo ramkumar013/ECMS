@@ -11,6 +11,8 @@ using System.IO;
 using CsvHelper;
 using NLog;
 using ECMS.Core;
+using LumenWorks.Framework.IO.Csv;
+using System.Collections.Generic;
 namespace ECMS.Services.ContentRepository
 {
     public class MongoDBRepository : ContentRepositoryBase
@@ -45,14 +47,14 @@ namespace ECMS.Services.ContentRepository
                 //cm.MapMember(c => c.ViewType);
                 //cm.MapMember(c => c.Url.Id);
                 //cm.MapMember(c => c.Url.View);
-            }); 
+            });
         }
 
         public override ContentItem GetById(ValidUrl url_, ContentViewType viewType_)
         {
             //ContentItem item = _db.GetCollection<ContentItem>(COLLNAME).AsQueryable<ContentItem>().Where(x => x.Url.Id == url_.Id && x.ContentView.ViewType == viewType_).FirstOrDefault<ContentItem>();
             ContentItem item = _db.GetCollection<ContentItem>(COLLNAME).Find(Query.And(Query.EQ("Url.Id", url_.Id), Query.EQ("ViewType", Convert.ToInt32(viewType_)))).FirstOrDefault<ContentItem>();
-            
+
             if (item == null)
             {
                 DependencyManager.Logger.Log(new LogEventInfo(LogLevel.Debug, ECMSSettings.DEFAULT_LOGGER, "Specific content not found now going to search for default content."));
@@ -64,16 +66,41 @@ namespace ECMS.Services.ContentRepository
             {
                 using (StringReader streamReader = new StringReader(item.Body[0].ToString()))
                 {
-                    using (var csv = new CsvReader(streamReader))
+                    using (var csv = new CsvHelper.CsvReader(streamReader))
                     {
+                        //csv.Configuration.IgnoreQuotes = true;
                         csv.Read();
-                        item.Body = JObject.FromObject(csv.GetRecord<object>());
+                        item.Body = JObject.FromObject(csv.GetRecord(typeof(object)));
                     }
                 }
             }
             return item;
         }
-
+        public static void ReadSV(TextReader reader, params string[] separators)
+        {
+            using (Microsoft.VisualBasic.FileIO.TextFieldParser MyReader = new Microsoft.VisualBasic.FileIO.TextFieldParser(reader))
+            {
+                MyReader.TextFieldType = Microsoft.VisualBasic.FileIO.FieldType.Delimited;
+                MyReader.SetDelimiters(",");
+                MyReader.HasFieldsEnclosedInQuotes = true;
+                string[] currentRow = null;
+                while (!MyReader.EndOfData)
+                {
+                    try
+                    {
+                        currentRow = MyReader.ReadFields();
+                        string currentField = null;
+                        foreach (string currentField_loopVariable in currentRow)
+                        {
+                            currentField = currentField_loopVariable;
+                        }
+                    }
+                    catch (Microsoft.VisualBasic.FileIO.MalformedLineException ex)
+                    {
+                    }
+                }
+            }
+        }
         public override ContentItem GetByUrl(ValidUrl url_, ContentViewType viewType_)
         {
             throw new NotImplementedException();
@@ -83,7 +110,7 @@ namespace ECMS.Services.ContentRepository
         {
             //ContentItem previousItem = _db.GetCollection<ContentItem>(COLLNAME).AsQueryable<ContentItem>().Where(x => x.ContentId ==  content_.ContentId && x.ViewType == viewType_).FirstOrDefault<ContentItem>();
             ContentItem previousItem = _db.GetCollection<ContentItem>(COLLNAME).Find(Query.And(Query.EQ("ContentId", content_.ContentId), Query.EQ("ViewType", Convert.ToInt32(viewType_)))).FirstOrDefault<ContentItem>();
-            
+
             if (previousItem != null)
             {
                 previousItem.ContentId = Guid.Empty;
@@ -113,7 +140,7 @@ namespace ECMS.Services.ContentRepository
         {
             //return _db.GetCollection<ContentItem>(COLLNAME).AsQueryable<ContentItem>().Where(x => x.Url != null && x.Url.SiteId == view_.SiteId && x.Url.View == view_.ViewName && Convert.ToInt32(x.ViewType) == Convert.ToInt32(view_.ViewType)).FirstOrDefault<ContentItem>();
             ContentItem item = _db.GetCollection<ContentItem>(COLLNAME).Find(Query.And(Query.EQ("ContentView.SiteId", view_.SiteId), Query.EQ("ContentView.ViewName", view_.ViewName), Query.EQ("ContentView.ViewType", Convert.ToInt32(view_.ViewType)))).FirstOrDefault<ContentItem>();
-            if (item!=null)
+            if (item != null)
             {
                 item.Body = item.Body[0];
             }

@@ -96,6 +96,7 @@ namespace ECMS.WebV2
                 url_.LastModifiedBy = this.CMSUser.UserName;
                 url_.SitemapPriority = float.Parse(url_.SitemapPriority.ToString("N1"));
                 url_.Action = ECMSSettings.Current.DefaultURLRewriteAction;
+                url_.SiteId = (short)this.GetSiteIdFromContext();
                 if (url_.Id == Guid.Empty)
                 {
                     url_.Id = Guid.NewGuid();

@@ -640,6 +640,7 @@
     <Content Include="Content\javascript\plugins\wsc\README.md" />
     <Content Include="Content\javascript\README.md" />
     <Content Include="Content\javascript\skins\moono\readme.md" />
+    <None Include="Properties\PublishProfiles\Local.Debug.Publish.pubxml" />
     <None Include="Properties\PublishProfiles\LocalReleaseModePublish.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />

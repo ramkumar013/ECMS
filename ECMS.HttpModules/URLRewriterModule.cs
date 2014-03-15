@@ -26,7 +26,6 @@ namespace ECMS.HttpModules
 
         public void Init(HttpApplication context)
         {
-            string callingmehtodname = new StackFrame(1, true).GetMethod().Name;
             context.BeginRequest += context_BeginRequest;
         }
 
@@ -39,7 +38,7 @@ namespace ECMS.HttpModules
             try
             {
                 siteId = Convert.ToInt16(Utility.GetSiteId(context.Request.Url.DnsSafeHost.ToLower()));
-                context.Items.Add("siteid", siteId);
+                context.Items.Add("SiteId", siteId);
                 if (siteId < 0 || !IsValidUrlForRewrite(new HttpContextWrapper(HttpContext.Current)))
                 {
                     return;

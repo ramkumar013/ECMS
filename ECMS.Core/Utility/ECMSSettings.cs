@@ -88,9 +88,9 @@ namespace ECMS.Core
         {
             get
             {
-                if (HttpContext.Current != null && HttpContext.Current.Items["siteid"] != null)
+                if (HttpContext.Current != null && HttpContext.Current.Items["SiteId"] != null)
                 {
-                    return CMSSettingsList[Convert.ToInt32(HttpContext.Current.Items["siteid"])];
+                    return CMSSettingsList[Convert.ToInt32(HttpContext.Current.Items["SiteId"])];
                 }
                 else
                 {

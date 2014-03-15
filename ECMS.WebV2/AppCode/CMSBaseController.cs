@@ -46,14 +46,14 @@ namespace ECMS.WebV2
 
         public int GetSiteIdFromContext()
         {
-            return Convert.ToInt32(this.HttpContext.Items["SiteId"]);
+            return Convert.ToInt32(ControllerContext.HttpContext.Items["SiteId"]);
         }
 
         public int GetErrorStatusCode()
         {
-            if (this.HttpContext != null && this.HttpContext.Items["ResponseStatusCode"] != null)
+            if (this.HttpContext != null && ControllerContext.HttpContext.Items["ResponseStatusCode"] != null)
             {
-                return Convert.ToInt32(this.HttpContext.Items["ResponseStatusCode"]);
+                return Convert.ToInt32(ControllerContext.HttpContext.Items["ResponseStatusCode"]);
             }
             else {
                 return 500;

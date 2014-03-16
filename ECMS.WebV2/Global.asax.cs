@@ -223,17 +223,21 @@ namespace ECMS.WebV2
 
         void MvcApplication_EndRequest(object sender, EventArgs e)
         {
-            var rule = LogManager.Configuration.LoggingRules.Where(x => x.NameMatches(HttpContext.Current.Items["LoggerName"].ToString())).FirstOrDefault();
-            if (rule != null && rule.Targets.Count > 0)
+            var loggerName = Convert.ToString(HttpContext.Current.Items["LoggerName"]);
+            if (!string.IsNullOrEmpty(loggerName))
             {
-                MemoryTarget target = rule.Targets.Where(x => x.Name == _loggerName).FirstOrDefault() as MemoryTarget;
-                if (target != null)
+                var rule = LogManager.Configuration.LoggingRules.Where(x => x.NameMatches(loggerName)).FirstOrDefault();
+                if (rule != null && rule.Targets.Count > 0)
                 {
-                    target.Dispose();
-                    LogManager.Configuration.LoggingRules.Remove(rule);
-                    LogManager.Configuration.RemoveTarget(target.Name);
-                    LogManager.Configuration.Reload();
-                }
+                    MemoryTarget target = rule.Targets.Where(x => x.Name == _loggerName).FirstOrDefault() as MemoryTarget;
+                    if (target != null)
+                    {
+                        target.Dispose();
+                        LogManager.Configuration.LoggingRules.Remove(rule);
+                        LogManager.Configuration.RemoveTarget(target.Name);
+                        LogManager.Configuration.Reload();
+                    }
+                }    
             }
         }
     }

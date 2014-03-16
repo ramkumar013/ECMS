@@ -1,5 +1,6 @@
 ﻿@using ECMS.Core
 @using ECMS.WebV2.AppCode
+@using ECMS.WebV2
 @model ECMS.Core.Entities.ContentItem
 @{
     Layout = null;
@@ -30,6 +31,8 @@
             <div id="about-section-right">
                 <img src="@ECMSSettings.Current.CDNPath/img/partners.jpg" width="323" height="373" /><img src="@ECMSSettings.Current.CDNPath/img/banner.jpg" width="323" height="271" />
             </div>
+
+            @ViewHelper.GetHref("/flights-to-" + ViewHelper.GetBaseDataVal("CityLocations","CityCode","NYC","CityName","LC")+"-"+ViewHelper.GetQueryString("CityCode","LC")+"-"+ViewHelper.GetBaseDataVal("","","","",""),"Flights","")
         </div>
      @Html.Partial("~/Views/1/Footer-Default.cshtml");
 </body>

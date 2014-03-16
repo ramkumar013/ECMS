@@ -45,5 +45,14 @@ namespace ECMS.WebV2
             return string.Format("<a href={0}>{1}</a>", url_, text);
         }
 
+        public static string GetBaseDataVal(string tableName_, string colNametoLookup_, string valToCompare_, string colToReturn_, string fn_)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string GetQueryString(string p1, string p2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

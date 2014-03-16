@@ -1,23 +1,19 @@
 ﻿using ECMS.Core;
-using ECMS.Core.Utilities;
 using ECMS.Services;
 using ECMS.Services.ContentRepository;
 using NLog;
 using NLog.Config;
-using NLog.Interface;
 using NLog.Targets;
 using System;
 using System.Configuration;
-using System.Threading.Tasks;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using ECMS.Core.Extensions;
-using System.IO;
-using System.Reflection;
-using System.Linq;
 namespace ECMS.WebV2
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -166,78 +162,99 @@ namespace ECMS.WebV2
 
         void Application_End()
         {
+            try
+            {
+                HttpRuntime runtime = (HttpRuntime)typeof(System.Web.HttpRuntime).InvokeMember("_theRuntime",
+                                                                                           BindingFlags.NonPublic
+                                                                                           | BindingFlags.Static
+                                                                                           | BindingFlags.GetField,
+                                                                                           null,
+                                                                                           null,
+                                                                                           null);
 
-            HttpRuntime runtime = (HttpRuntime)typeof(System.Web.HttpRuntime).InvokeMember("_theRuntime",
-                                                                                            BindingFlags.NonPublic
-                                                                                            | BindingFlags.Static
-                                                                                            | BindingFlags.GetField,
-                                                                                            null,
-                                                                                            null,
-                                                                                            null);
+                if (runtime == null)
+                    return;
 
-            if (runtime == null)
-                return;
+                string shutDownMessage = (string)runtime.GetType().InvokeMember("_shutDownMessage",
+                                                                                 BindingFlags.NonPublic
+                                                                                 | BindingFlags.Instance
+                                                                                 | BindingFlags.GetField,
+                                                                                 null,
+                                                                                 runtime,
+                                                                                 null);
 
-            string shutDownMessage = (string)runtime.GetType().InvokeMember("_shutDownMessage",
-                                                                             BindingFlags.NonPublic
-                                                                             | BindingFlags.Instance
-                                                                             | BindingFlags.GetField,
-                                                                             null,
-                                                                             runtime,
-                                                                             null);
+                string shutDownStack = (string)runtime.GetType().InvokeMember("_shutDownStack",
+                                                                               BindingFlags.NonPublic
+                                                                               | BindingFlags.Instance
+                                                                               | BindingFlags.GetField,
+                                                                               null,
+                                                                               runtime,
+                                                                               null);
 
-            string shutDownStack = (string)runtime.GetType().InvokeMember("_shutDownStack",
-                                                                           BindingFlags.NonPublic
-                                                                           | BindingFlags.Instance
-                                                                           | BindingFlags.GetField,
-                                                                           null,
-                                                                           runtime,
-                                                                           null);
-
-            File.AppendAllText(AssemblyDirectory + "\\Logs\\ECMSLogs.txt", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:ffff") + " : shutDownMessage--" + shutDownMessage + " : shutDownStack--" + shutDownStack);
+                File.AppendAllText(AssemblyDirectory + "\\Logs\\ECMSLogs.txt", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:ffff") + " : shutDownMessage--" + shutDownMessage + " : shutDownStack--" + shutDownStack);
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(AssemblyDirectory + "\\Logs\\ECMSLogs.txt", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:ffff") + " : Error while shutdown " + ex.ToString());
+            }
         }
         void MvcApplication_BeginRequest(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Request.QueryString["vm"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["vm"]) == 10)
+            try
             {
-                MemoryTarget _logTarget = null;
-                _loggerName = Guid.NewGuid().ToString().Replace("-", string.Empty);
-                //_loggerName = "*";
-                HttpContext.Current.Items.Add("LoggerName", _loggerName);
-                _logTarget = new MemoryTarget();
-                _logTarget.Name = _loggerName.ToString();
+                if (HttpContext.Current.Request.QueryString["vm"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["vm"]) == 10)
+                {
+                    MemoryTarget _logTarget = null;
+                    _loggerName = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                    HttpContext.Current.Items.Add("LoggerName", _loggerName);
+                    _logTarget = new MemoryTarget();
+                    _logTarget.Name = _loggerName.ToString();
 
-                LoggingRule rule = new LoggingRule(_loggerName, _logTarget);
-                rule.EnableLoggingForLevel(LogLevel.Debug);
-                rule.EnableLoggingForLevel(LogLevel.Trace);
-                rule.EnableLoggingForLevel(LogLevel.Info);
-                rule.EnableLoggingForLevel(LogLevel.Warn);
-                rule.EnableLoggingForLevel(LogLevel.Error);
-                rule.EnableLoggingForLevel(LogLevel.Fatal);
+                    LoggingRule rule = new LoggingRule(_loggerName, _logTarget);
+                    rule.EnableLoggingForLevel(LogLevel.Debug);
+                    rule.EnableLoggingForLevel(LogLevel.Trace);
+                    rule.EnableLoggingForLevel(LogLevel.Info);
+                    rule.EnableLoggingForLevel(LogLevel.Warn);
+                    rule.EnableLoggingForLevel(LogLevel.Error);
+                    rule.EnableLoggingForLevel(LogLevel.Fatal);
 
-                LogManager.Configuration.LoggingRules.Add(rule);
+                    LogManager.Configuration.LoggingRules.Add(rule);
 
-                LogManager.Configuration.Reload();
+                    LogManager.Configuration.Reload();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                ECMSLogger.Instance.Log(info);
             }
         }
 
         void MvcApplication_EndRequest(object sender, EventArgs e)
         {
-            var loggerName = Convert.ToString(HttpContext.Current.Items["LoggerName"]);
-            if (!string.IsNullOrEmpty(loggerName))
+            try
             {
-                var rule = LogManager.Configuration.LoggingRules.Where(x => x.NameMatches(loggerName)).FirstOrDefault();
-                if (rule != null && rule.Targets.Count > 0)
+                var loggerName = Convert.ToString(HttpContext.Current.Items["LoggerName"]);
+                if (!string.IsNullOrEmpty(loggerName))
                 {
-                    MemoryTarget target = rule.Targets.Where(x => x.Name == _loggerName).FirstOrDefault() as MemoryTarget;
-                    if (target != null)
+                    var rule = LogManager.Configuration.LoggingRules.Where(x => x.NameMatches(loggerName)).FirstOrDefault();
+                    if (rule != null && rule.Targets.Count > 0)
                     {
-                        target.Dispose();
-                        LogManager.Configuration.LoggingRules.Remove(rule);
-                        LogManager.Configuration.RemoveTarget(target.Name);
-                        LogManager.Configuration.Reload();
+                        MemoryTarget target = rule.Targets.Where(x => x.Name == _loggerName).FirstOrDefault() as MemoryTarget;
+                        if (target != null)
+                        {
+                            target.Dispose();
+                            LogManager.Configuration.LoggingRules.Remove(rule);
+                            LogManager.Configuration.RemoveTarget(target.Name);
+                            LogManager.Configuration.Reload();
+                        }
                     }
-                }    
+                }
+            }
+            catch (Exception ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                ECMSLogger.Instance.Log(info);
             }
         }
     }

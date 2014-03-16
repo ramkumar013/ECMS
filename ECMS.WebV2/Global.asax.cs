@@ -17,7 +17,7 @@ using System.Web.Routing;
 using ECMS.Core.Extensions;
 using System.IO;
 using System.Reflection;
-
+using System.Linq;
 namespace ECMS.WebV2
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -25,7 +25,7 @@ namespace ECMS.WebV2
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private Guid _loggerName = Guid.Empty;
+        private string _loggerName = string.Empty;
         protected void Application_Start()
         {
             DependencyManager.ViewRepository = new ECMSViewRepository();
@@ -47,7 +47,7 @@ namespace ECMS.WebV2
             this.EndRequest += MvcApplication_EndRequest;
             base.Init();
         }
-       
+
 
         void Application_Error(object sender, EventArgs e)
         {
@@ -57,7 +57,7 @@ namespace ECMS.WebV2
                 var currentController = string.Empty;
                 var currentAction = string.Empty;
                 var currentRouteData = RouteTable.Routes.GetRouteData(new HttpContextWrapper(httpContext));
-                Logger logger = LogManager.GetLogger(_loggerName.ToString());
+                Logger logger = LogManager.GetLogger(_loggerName);
 
                 if (currentRouteData != null)
                 {
@@ -196,32 +196,45 @@ namespace ECMS.WebV2
 
             File.AppendAllText(AssemblyDirectory + "\\Logs\\ECMSLogs.txt", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:ffff") + " : shutDownMessage--" + shutDownMessage + " : shutDownStack--" + shutDownStack);
         }
-        void MvcApplication_EndRequest(object sender, EventArgs e)
+        void MvcApplication_BeginRequest(object sender, EventArgs e)
         {
-            MemoryTarget memTarget = (MemoryTarget)LogManager.Configuration.FindTargetByName(Convert.ToString(HttpContext.Current.Items["LoggerName"]));
-            if (memTarget != null)
+            if (HttpContext.Current.Request.QueryString["vm"] != null && Convert.ToInt32(HttpContext.Current.Request.QueryString["vm"]) == 10)
             {
-                memTarget.Dispose();
-                LogManager.Configuration.LoggingRules.RemoveAt(LogManager.Configuration.LoggingRules.Count - 1);
-                LogManager.Configuration.RemoveTarget(memTarget.Name);
+                MemoryTarget _logTarget = null;
+                _loggerName = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                //_loggerName = "*";
+                HttpContext.Current.Items.Add("LoggerName", _loggerName);
+                _logTarget = new MemoryTarget();
+                _logTarget.Name = _loggerName.ToString();
+
+                LoggingRule rule = new LoggingRule(_loggerName, _logTarget);
+                rule.EnableLoggingForLevel(LogLevel.Debug);
+                rule.EnableLoggingForLevel(LogLevel.Trace);
+                rule.EnableLoggingForLevel(LogLevel.Info);
+                rule.EnableLoggingForLevel(LogLevel.Warn);
+                rule.EnableLoggingForLevel(LogLevel.Error);
+                rule.EnableLoggingForLevel(LogLevel.Fatal);
+
+                LogManager.Configuration.LoggingRules.Add(rule);
+
                 LogManager.Configuration.Reload();
             }
         }
 
-        void MvcApplication_BeginRequest(object sender, EventArgs e)
+        void MvcApplication_EndRequest(object sender, EventArgs e)
         {
-            MemoryTarget _logTarget = null;
-            _loggerName = Guid.NewGuid();
-            HttpContext.Current.Items.Add("LoggerName", _loggerName);
-            _logTarget = new MemoryTarget();
-            _logTarget.Name = _loggerName.ToString();
-
-            LoggingRule rule = new LoggingRule(_loggerName.ToString(), _logTarget);
-            rule.EnableLoggingForLevel(LogLevel.Debug);
-
-            LogManager.Configuration.LoggingRules.Add(rule);
-
-            LogManager.Configuration.Reload();
+            var rule = LogManager.Configuration.LoggingRules.Where(x => x.NameMatches(HttpContext.Current.Items["LoggerName"].ToString())).FirstOrDefault();
+            if (rule != null && rule.Targets.Count > 0)
+            {
+                MemoryTarget target = rule.Targets.Where(x => x.Name == _loggerName).FirstOrDefault() as MemoryTarget;
+                if (target != null)
+                {
+                    target.Dispose();
+                    LogManager.Configuration.LoggingRules.Remove(rule);
+                    LogManager.Configuration.RemoveTarget(target.Name);
+                    LogManager.Configuration.Reload();
+                }
+            }
         }
     }
 }

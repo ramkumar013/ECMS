@@ -39,7 +39,7 @@ namespace MvcApplication1.AppCode
             string message = null;
             if (context_.Items["LoggerName"]!=null)
             {
-                _loggerName = ((System.Guid)context_.Items["LoggerName"]).ToString();
+                _loggerName = context_.Items["LoggerName"].ToString();
                 Logger logger = LogManager.GetLogger(_loggerName);
                 if (logger != null)
                 {

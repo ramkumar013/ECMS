@@ -29,7 +29,7 @@ namespace ECMS.Core
         {
             if (HttpContext.Current != null && HttpContext.Current.Items["LoggerName"] != null && Utility.CurrentViewType(new HttpContextWrapper(HttpContext.Current)) == ContentViewType.PREVIEW)
             {
-                string _loggerName = ((System.Guid)HttpContext.Current.Items["LoggerName"]).ToString();
+                string _loggerName = HttpContext.Current.Items["LoggerName"].ToString();
                 Logger contextualLogger = LogManager.GetLogger(_loggerName);
                 if (contextualLogger != null)
                 {

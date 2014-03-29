@@ -40,8 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExtendedMongoMembership">
-      <HintPath>..\..\EMongoMembership\ExtendedMongoMembership\bin\Debug\ExtendedMongoMembership.dll</HintPath>
+    <Reference Include="ExtendedMongoMembership, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\EMongoMembership\ExtendedMongoMembership\bin\Release\ExtendedMongoMembership.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualBasic" />
@@ -159,7 +160,6 @@
     <Compile Include="AppCode\CustomErrorHandlerAttribute.cs" />
     <Compile Include="AppCode\DefaultUserProfileService.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
-    <Compile Include="AppCode\EncryptDecrypt.cs" />
     <Compile Include="AppCode\FakePageOutputCache.cs" />
     <Compile Include="AppCode\HtmlExtension.cs" />
     <Compile Include="AppCode\Member.cs" />

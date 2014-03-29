@@ -84,6 +84,7 @@
     <Compile Include="MongoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteRepository.cs" />
+    <Compile Include="SecurityHelper.cs" />
     <Compile Include="ValidUrl\ValidUrlFileRepository.cs" />
     <Compile Include="ValidUrl\ValidUrlMongoDBRepository.cs" />
     <Compile Include="ValidUrl\ValidUrlSQLRepository.cs" />

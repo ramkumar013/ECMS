@@ -13,6 +13,7 @@ using System.Configuration;
 using ECMS.Core;
 using ExtendedMongoMembership;
 using System.Security.Principal;
+using ECMS.Services;
 
 namespace ECMS.WebV2.Controllers
 {
@@ -40,7 +41,7 @@ namespace ECMS.WebV2.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
+                DefaultUserProfileService service = new DefaultUserProfileService(SecurityHelper.Decrypt(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString, true));
                 ECMSMember member = service.GetProfileByUserName(model.UserName);
                 DependencyManager.CachingService.Set<ECMSMember>("LoggedInUser", member);
                 return RedirectToLocal(returnUrl);

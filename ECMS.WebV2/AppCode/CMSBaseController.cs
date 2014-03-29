@@ -2,6 +2,7 @@
 using ECMS.Core.Entities;
 using ECMS.Core.Framework;
 using ECMS.Core.Utilities;
+using ECMS.Services;
 using ECMS.WebV2.Locale;
 using NLog;
 using System;
@@ -94,7 +95,7 @@ namespace ECMS.WebV2
                 ECMSMember member = DependencyManager.CachingService.Get<ECMSMember>("LoggedInUser");
                 if (member == null && HttpContext.User != null && HttpContext.User.Identity.IsAuthenticated)
                 {
-                    DefaultUserProfileService service = new DefaultUserProfileService(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString);
+                    DefaultUserProfileService service = new DefaultUserProfileService(SecurityHelper.Decrypt(ConfigurationManager.ConnectionStrings["mongodb"].ConnectionString, true));
                     member = service.GetProfileByUserName(HttpContext.User.Identity.Name);
                     if (member != null)
                     {

@@ -1,4 +1,5 @@
 @using ECMS.Core
+@using ECMS.WebV2
 
 <div id="bottom-part">
 <div id="bottom-sec1">
@@ -24,7 +25,7 @@
 <h1>Travel Info</h1>
 
 <ul>
-	<li><a href="#">Travel Info</a></li>
+	<li>@ViewHelper.GetHref("/test1","<a href='{0}'>"+ViewHelper.GetBaseDataVal("CityLocations|CityCode|NYC|CityName","TC")+"</a>")</li>
 	<li><a href="#">Airline guides</a></li>
 	<li><a href="#">Airlines and agents A-Z</a></li>
 	<li><a href="#">Airport guides</a></li>

@@ -1,5 +1,6 @@
 @using ECMS.Core
-
+@using ECMS.WebV2
+@using ECMS.Core.Extensions
 <div id="bottom-part">
 <div id="bottom-sec1">
 <h1>ExploTravel</h1>
@@ -14,7 +15,7 @@
 	<li><a href="#">About Us </a></li>
 	<li><a href="#">Stay with us </a></li>
 	<li><a href="#">Help</a></li>
-	<li><a href="#">Contact Us</a></li>
+	<li><a href="#">Contact Us</a></li>f
 </ul>
 </div>
 
@@ -25,7 +26,10 @@
 
 <ul>
 	<li><a href="#">Travel Info</a></li>
-	<li><a href="#">Airline guides</a></li>
+	<li>@ViewHelper.GetHref("/test1", "<a href='{0}'>" + ViewHelper.GetBaseDataVal("CityLocations|CityCode|NYC|CityName").ToHtmlString().ToTitle()+ "</a>")</li>
+	<li>@ViewHelper.GetHref("/test1", "<a href='{0}'>" + ViewHelper.GetBaseDataVal("CityLocations|CityCode|NYC|CityName").ToHtmlString().ToUpper() + "</a>")</li>
+	<li>@ViewHelper.GetHref("/test1", "<a href='{0}'>" + ViewHelper.GetBaseDataVal("CityLocations|CityCode|NYC|CityName").ToHtmlString().ToLower() + "</a>")</li>
+	<li>@ViewHelper.GetHref("/test1", "<a href='{0}'>" + ViewHelper.GetBaseDataVal("CityLocations|CityCode|NYC|CityName").ToHtmlString().ToUpper() + "</a>")</li>
 	<li><a href="#">Airlines and agents A-Z</a></li>
 	<li><a href="#">Airport guides</a></li>
 	<li><a href="#">Business class flights</a></li>

@@ -33,11 +33,13 @@ namespace ECMS.Core
         public string PortalHostName { get; set; }
         public int XmlSitemapRefreshFrequency { get; set; }
         public string DefaultURLRewriteAction = "/Template/Compose";
+        public DataSet DomainData { get; set; }
         #endregion
 
         #region Static Constructor
         static ECMSSettings()
         {
+            //TODO : Shall be called at app_Start. Will give problems at the time of unit testing.
             BeginLoadAppSettings();
         }
         #endregion
@@ -70,6 +72,7 @@ namespace ECMS.Core
                     setting.XmlSitemapRefreshFrequency = Convert.ToInt32(ds.Tables["configuration"].Rows[0]["XmlSitemapRefreshFrequency"]);
                     setting.SiteId = Convert.ToInt32(dirInfo_.Name);
                     setting.InitiateXMLSiteMapGenerator();
+                    setting.LoadDomainData();
                 }
             }
             catch (Exception ex)
@@ -78,6 +81,27 @@ namespace ECMS.Core
                 DependencyManager.Logger.Log(info);
             }
             return setting;
+        }
+
+        private void LoadDomainData()
+        {
+            DomainData = new DataSet();
+            DomainData.Tables.Add(LoadCityLocationsTable());
+        }
+
+        private DataTable LoadCityLocationsTable()
+        {
+            DataTable table = new DataTable();
+            table.TableName = "CityLocations";
+            table.Columns.Add("CityName");
+            table.Columns.Add("CityCode");
+            table.Columns.Add("StateCountyCode");
+            table.Columns.Add("CountryCode");
+            table.Columns.Add("Latitude");
+            table.Columns.Add("Longitude");
+            table.Columns.Add("RegionCode");
+            table.Rows.Add(new object[] { "New York City", "NYC", "NY", "US", "-1", "-1" });
+            return table;
         }
         #endregion
 

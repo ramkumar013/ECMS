@@ -4,17 +4,29 @@ using ECMS.Core.Utilities;
 using NLog;
 using RazorEngine.Templating;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Data;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using System.Globalization;
 
 namespace ECMS.WebV2
 {
     public class ViewHelper
     {
+        private static RegexOptions ro = new RegexOptions();
+        private static Regex hrefRegex = null;
+        private static MvcHtmlString emptyMVCHtmlString = new MvcHtmlString(string.Empty);
+        static ViewHelper()
+        {
+            ro = RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.Compiled;
+
+            hrefRegex = new Regex("<a.*?(href)=[\"'](?<url>.*?)(\"\\s|'\\s|\">|'>)(?<=>)(?<name>.*?[^<])</a>", ro);
+        }
+
+
         public static string Eval(string expression)
         {
             try
@@ -39,20 +51,64 @@ namespace ECMS.WebV2
             }
         }
 
-        public static string GetHref(string url_, string text, string attributes_)
+        public static MvcHtmlString GetHref(string url_, string hrefTemplate_)
         {
-            // TODO : Check if url is active or not.
-            return string.Format("<a href={0}>{1}</a>", url_, text);
+            try
+            {
+                ValidUrl vu = DependencyManager.URLRepository.GetByFriendlyUrl(1, url_);
+                if (vu != null && vu.StatusCode == 200)
+                {
+                    return new MvcHtmlString(string.Format(hrefTemplate_, vu.FriendlyUrl));
+                }
+                else
+                {
+                    Match match = hrefRegex.Match(hrefTemplate_);
+                    if (match != null && match.Groups != null && match.Groups.Count > 0 && match.Groups["name"] != null)
+                    {
+                        return new MvcHtmlString(match.Groups["name"].Value);
+                    }
+                    else
+                    {
+                        return emptyMVCHtmlString;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
+                return emptyMVCHtmlString;
+            }
         }
 
-        public static string GetBaseDataVal(string tableName_, string colNametoLookup_, string valToCompare_, string colToReturn_, string fn_)
+        public static MvcHtmlString GetBaseDataVal(string expression_)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string[] temp = expression_.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                string tableName = temp[0];
+                string lookUpColumnName = temp[1];
+                string valueToLookUp = temp[2];
+                string returnCol = temp[3];
+                var result = from item in ECMSSettings.Current.DomainData.Tables[tableName].AsEnumerable()
+                             where item[lookUpColumnName].Equals(valueToLookUp)
+                             select item[returnCol];
+
+                return new MvcHtmlString(result.FirstOrDefault().ToString());
+            }
+            catch (Exception ex)
+            {
+                LogEventInfo info = new LogEventInfo(LogLevel.Error, ECMSSettings.DEFAULT_LOGGER, ex.ToString());
+                DependencyManager.Logger.Log(info);
+                return emptyMVCHtmlString;
+            }
         }
 
-        public static string GetQueryString(string p1, string p2)
+        
+
+        public static MvcHtmlString GetQueryString(string p1)
         {
-            throw new NotImplementedException();
+            return new MvcHtmlString(HttpContext.Current.Request.QueryString[p1]);
         }
     }
 }

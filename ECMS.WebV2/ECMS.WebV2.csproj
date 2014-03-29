@@ -44,6 +44,7 @@
       <HintPath>..\..\EMongoMembership\ExtendedMongoMembership\bin\Debug\ExtendedMongoMembership.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
@@ -158,6 +159,7 @@
     <Compile Include="AppCode\CustomErrorHandlerAttribute.cs" />
     <Compile Include="AppCode\DefaultUserProfileService.cs" />
     <Compile Include="AppCode\DynamicViewPage.cs" />
+    <Compile Include="AppCode\EncryptDecrypt.cs" />
     <Compile Include="AppCode\FakePageOutputCache.cs" />
     <Compile Include="AppCode\HtmlExtension.cs" />
     <Compile Include="AppCode\Member.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
+    <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Controllers\XmlSitemapController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -805,6 +808,7 @@
     <Content Include="Views\1\10\Home-Default.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Admin\EncryptConnectionString.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\1\10\" />
